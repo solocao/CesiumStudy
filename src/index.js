@@ -47,15 +47,20 @@ popup.style.position = "absolute";
 popup.style.display = "none";
 
 const scene = viewer.scene;
+//开启地形深度检测
+    // scene.globe.depthTestAgainstTerrain=true
 
 viewer.screenSpaceEventHandler.setInputAction(evt => {
-
+    // scene.globe.depthTestAgainstTerrain = true;
     let feature = scene.pick(evt.position);
     //返回笛卡尔坐标
     let position = viewer.scene.pickPosition(evt.position);
-    //转为wgs84坐标系，弧度
-    // let cartographic = Cesium.Cartographic.fromCartesian(position);
-    // console.log(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height);
+    // 转为wgs84坐标系，弧度
+    if (position) {
+        let cartographic = Cesium.Cartographic.fromCartesian(position);
+        console.log(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height);
+    }
+    // scene.globe.depthTestAgainstTerrain=false
     if (Cesium.defined(feature)) {
         if (!popup.position) {
             Object.defineProperty(popup, "position", {
