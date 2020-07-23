@@ -40,6 +40,7 @@ viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvi
     show: false,
 
 }))
+viewer.scene.postProcessStages.fxaa.enabled=true
 const popup = document.createElement('div');
 popup.className = "popup";
 document.getElementById("app").appendChild(popup);

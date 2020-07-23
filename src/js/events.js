@@ -83,9 +83,6 @@ export default function (viewer) {
       lineEntities.forEach(entity => {
         ds.entities.add(entity)
       })
-      setTimeout(() => {
-        lineEntities[1].polyline.positions.push(...[113.55980876195005, 32.3774384596593])
-      }, 3000)
       viewer.flyTo(ds)
     } else {
       datasource.show = !datasource.show
@@ -138,8 +135,7 @@ export default function (viewer) {
           let cartographic = Cesium.Cartographic.fromCartesian(
             polyCenter
           );
-          entity.position = Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude),entity.polygon.extrudedHeight.getValue()+50000);
-          
+          entity.position = Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), entity.polygon.extrudedHeight.getValue() + 50000);
           // entity.label = {
           //   text: data.toFixed(2),
           //   font: "12px",
@@ -158,10 +154,6 @@ export default function (viewer) {
     }
   })
 }
-
-
-
-
 
 
 function elBindClick(id, cb) {

@@ -1,19 +1,22 @@
-let arr=[[141.32092413346064,35.84288787589721],[137.15661425829046,35.02026637244219] ,[133.5040436298469,34.17577990362141],[130.68020615646589,33.334906727581426 ],[117.33055116076375,28.28434224076602]]
+let arr = [[141.32092413346064, 35.84288787589721], [137.15661425829046, 35.02026637244219], [133.5040436298469, 34.17577990362141], [130.68020615646589, 33.334906727581426], [117.33055116076375, 28.28434224076602], [125.39948490680999, 36.64823877391628], [131.17544713752238, 32.44545647661215]]
+arr = insert(arr, 12000)
 let entities = [
   new Cesium.Entity({
-
     polyline: {
       positions: Cesium.Cartesian3.fromDegreesArray([117.74524327559975, 35.38476706965578, 114.20500875723677, 33.32715123237522]),
       width: 5,
-      arcType: Cesium.ArcType.RHUMB,
-      material: Cesium.Color.GREEN,
+      // arcType: Cesium.ArcType.RHUMB,
+      show:false,
+      material: new Cesium.ImageMaterialProperty({
+        image:require("../assets/line.png")
+      })
     }
   }),
   {
     name: "Glowing blue line on the surface",
     polyline: {
       positions: Cesium.Cartesian3.fromDegreesArray([
-        116.76429925632405,36.79108566378312,
+        116.76429925632405, 36.79108566378312,
         112.00380347159373, 33.67223639192952
       ]),
       width: 10,
@@ -46,8 +49,8 @@ let entities = [
     name: "Purple straight arrow at height",
     polyline: {
       positions: Cesium.Cartesian3.fromDegreesArray([
-        115.41319698360863,38.83939088425705,
-        111.08894163084776 ,36.138115252480915 
+        115.41319698360863, 38.83939088425705,
+        111.08894163084776, 36.138115252480915
       ]),
       width: 10,
       arcType: Cesium.ArcType.NONE,
@@ -109,6 +112,12 @@ let entities = [
       cornerType: Cesium.CornerType.ROUNDED,
       material: Cesium.Color.BLUE,
     }
+  },
+  {
+    polyline: {
+      positions: getLine(),
+      width: 5
+    }
   }
 ];
 function computeCircle(radius) {
@@ -137,5 +146,54 @@ function computeStar(arms, rOuter, rInner) {
     );
   }
   return positions;
+}
+let index = 1
+function getLine() {
+  let array = [...arr[0]];
+  let time1 = 0
+  return new Cesium.CallbackProperty((time, result) => {
+    time1 += 1
+    if (index < arr.length && parseInt(time1) == index) {
+      array.push(...arr[index]);
+      index++
+    }
+     else if (index >= arr.length) {
+      index = 1;
+      array = [...arr[0]];
+      time1 = 0
+    }
+    return Cesium.Cartesian3.fromDegreesArray(array);
+  }, false)
+}
+function insert(arr, step) {
+  let buf = [];
+  for (let i = 0; i < arr.length - 1; i++) {
+    buf.push(arr[i]);
+    let distance = getDistance(arr[i], arr[i + 1]);
+    let percent = step / distance;
+    if (distance > step) {
+      let disbuf = 0;
+      let start = arr[i];
+      let end = arr[i + 1];
+      let radio = 0.0;
+      while ((distance - disbuf) > step) {
+        radio += percent
+        let x = start[0] + (end[0] - start[0]) * radio;
+        let y = start[1] + (end[1] - start[1]) * radio;
+        buf.push([x, y]);
+        disbuf += step;
+      }
+    }
+  }
+  buf.push(arr[arr.length - 1]);
+  return buf;
+}
+function getDistance(point1, point2) {
+  var geodesic = new Cesium.EllipsoidGeodesic();
+  var point1cartographic = Cesium.Cartographic.fromDegrees(...point1);
+  var point2cartographic = Cesium.Cartographic.fromDegrees(...point2);
+  geodesic.setEndPoints(point1cartographic, point2cartographic);
+  var s = geodesic.surfaceDistance;
+  return s
 }
 export default entities
