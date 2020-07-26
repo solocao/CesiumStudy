@@ -6,7 +6,7 @@ let entities = [
       positions: Cesium.Cartesian3.fromDegreesArray([117.74524327559975, 35.38476706965578, 114.20500875723677, 33.32715123237522]),
       width: 5,
       // arcType: Cesium.ArcType.RHUMB,
-      show:false,
+      // show:false,
       material: new Cesium.ImageMaterialProperty({
         image:require("../assets/line.png")
       })

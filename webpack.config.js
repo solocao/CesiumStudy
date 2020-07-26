@@ -17,36 +17,43 @@ module.exports = {
 
     module: {
         rules: [{
-                test: /\.css$/,
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            },
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    'file-loader'
-                ]
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    'file-loader'
-                ]
-            },
-            {
-                test: /\.(csv|tsv)$/,
-                use: [
-                    'csv-loader'
-                ]
-            },
-            {
-                test: /\.xml$/,
-                use: [
-                    'xml-loader'
-                ]
+            test: /\.css$/,
+            use: [
+                'style-loader',
+                'css-loader'
+            ]
+        },
+        {
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/
+        },
+        {
+            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            loader: 'url-loader',
+            options: {
+                limit: 7000000,
+                name: 'img/[name].[hash:7].[ext]'
             }
+        },
+        {
+            test: /\.(woff|woff2|eot|ttf|otf)$/,
+            use: [
+                'file-loader'
+            ]
+        },
+        {
+            test: /\.(csv|tsv)$/,
+            use: [
+                'csv-loader'
+            ]
+        },
+        {
+            test: /\.xml$/,
+            use: [
+                'xml-loader'
+            ]
+        }
 
         ]
     },
@@ -71,9 +78,9 @@ module.exports = {
                 //     '^/tile': '/'
                 // }
             },
-            '/geoserver':{
-                target:'http://localhost:8080',
-                changeOrigin:true
+            '/geoserver': {
+                target: 'http://localhost:8080',
+                changeOrigin: true
             }
         }
     },
