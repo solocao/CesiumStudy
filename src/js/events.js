@@ -1,7 +1,6 @@
 import pointEntities from "./points"
 import lineEntities from "./lines"
 import polygonEntities from "./polygons"
-import img from "../assets/地理.png";
 export default function (viewer) {
   let scene = viewer.scene;
   let camera = viewer.camera;
@@ -157,13 +156,14 @@ export default function (viewer) {
   elBindClick("Billboard", () => {
     let billboard = viewer.entities.getById('billboard');
     if (!billboard) {
-      viewer.entities.add({
+      let entity=viewer.entities.add({
         id:"billboard",
         position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
         billboard: {
           image:require("../assets/地理.png").default,
-        },
+        }
       })
+      viewer.flyTo(entity)
     } else {
       billboard.show = !billboard.show;
       if (billboard.show) {
