@@ -8,8 +8,9 @@ let entities = [
       // arcType: Cesium.ArcType.RHUMB,
       // show:false,
       material: new Cesium.ImageMaterialProperty({
-        image:require("../assets/line.png")
-      })
+        image: require("../assets/line.png").default,
+        repeat: new Cesium.Cartesian2(2.0, 1.0)
+      }),
     }
   }),
   {
@@ -116,6 +117,7 @@ let entities = [
   {
     polyline: {
       positions: getLine(),
+      material: getMateria(),
       width: 5
     }
   }
@@ -150,20 +152,25 @@ function computeStar(arms, rOuter, rInner) {
 let index = 1
 function getLine() {
   let array = [...arr[0]];
-  let time1 = 0
-  return new Cesium.CallbackProperty((time, result) => {
-    time1 += 1
-    if (index < arr.length && parseInt(time1) == index) {
+  let cbp=new Cesium.CallbackProperty((time, result) => {
+    if (index < arr.length ) {
       array.push(...arr[index]);
       index++
     }
-     else if (index >= arr.length) {
-      index = 1;
-      array = [...arr[0]];
-      time1 = 0
+    else {
+      cbp.setCallback(()=>{
+        return Cesium.Cartesian3.fromDegreesArray(array);
+      },true)
     }
     return Cesium.Cartesian3.fromDegreesArray(array);
   }, false)
+  return cbp
+}
+function getMateria() {
+  return new Cesium.ImageMaterialProperty({
+    image: require("../assets/line.png").default,
+    repeat: new Cesium.Cartesian2(1.0, 1.0)
+  })
 }
 function insert(arr, step) {
   let buf = [];

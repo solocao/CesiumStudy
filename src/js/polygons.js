@@ -1,20 +1,40 @@
+let rotation = Cesium.Math.toRadians(30);
+
+function getRotationValue() {
+  rotation += 0.005;
+  return rotation;
+}
 let entities = [
   {
-    name: "Red polygon on surface",
-    polygon: {
-      hierarchy: Cesium.Cartesian3.fromDegreesArray([
-        -115.0,
-        37.0,
-        -115.0,
-        32.0,
-        -107.0,
-        33.0,
-        -102.0,
-        31.0,
-        -102.0,
-        35.0,
-      ]),
-      material: Cesium.Color.RED,
+    name: "Rotating rectangle with rotating texture coordinate",
+    rectangle: {
+      coordinates: Cesium.Rectangle.fromDegrees(-92.0, 30.0, -76.0, 40.0),
+      material: require("../assets/Cesium_Logo_Color.jpg").default,
+      rotation: new Cesium.CallbackProperty(getRotationValue, false),
+      stRotation: new Cesium.CallbackProperty(getRotationValue, false),
+      classificationType: Cesium.ClassificationType.TERRAIN,
+    },
+  },
+  {
+    name: "Rotating rectangle with rotating texture coordinate",
+    rectangle: {
+      coordinates: Cesium.Rectangle.fromDegrees(-122.0, 30.0, -106.0, 40.0),
+      material: new Cesium.Material({
+        fabric: {
+          type: "Water",
+          uniforms: {
+            // specularMap: "../images/earthspec1k.jpg",
+            normalMap:
+              "/waterNormals.jpg",
+            frequency: 10000.0,
+            animationSpeed: 0.01,
+            amplitude: 1.0,
+          },
+        },
+      }),
+      // rotation: new Cesium.CallbackProperty(getRotationValue, false),
+      // stRotation: new Cesium.CallbackProperty(getRotationValue, false),
+      // classificationType: Cesium.ClassificationType.TERRAIN,
     },
   },
   {
