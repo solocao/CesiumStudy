@@ -81,7 +81,7 @@ let entities = [
         114.55661320458698, 30.302251829648743
       ]),
       shape: computeCircle(60000.0),
-      material: Cesium.Color.RED,
+      material: require("../assets/墙面.png").default,
     }
   },
   {
@@ -98,7 +98,10 @@ let entities = [
         new Cesium.Cartesian2(-50000, 50000),
       ],
       cornerType: Cesium.CornerType.BEVELED,
-      material: Cesium.Color.GREEN.withAlpha(0.5),
+      material: new Cesium.ImageMaterialProperty({
+        image: require("../assets/墙面.png").default,
+        repeat: new Cesium.Cartesian3(2, 2,5)
+      }),
       outline: true,
       outlineColor: Cesium.Color.BLACK,
     },
@@ -116,6 +119,43 @@ let entities = [
   },
   {
     polyline: getLine()
+  },
+  {
+    name: "Blue extruded corridor with beveled corners and outline",
+    corridor: {
+      positions: Cesium.Cartesian3.fromDegreesArray([
+        -80.0,
+        40.0,
+        -85.0,
+        40.0,
+        -85.0,
+        35.0,
+      ]),
+      height: 200000.0,
+      extrudedHeight: 100000.0,
+      width: 200000.0,
+      cornerType: Cesium.CornerType.BEVELED,
+      material: require("../assets/墙面.png").default,
+      outline: true, // height or extrudedHeight must be set for outlines to display
+      outlineColor: Cesium.Color.WHITE,
+    },
+  },
+  {
+    name: "Red box with black outline",
+    position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
+    box: {
+      dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 40000.0),
+      material: new Cesium.ImageMaterialProperty({
+        image:require("../assets/墙面.png").default,
+        repeat:{
+          x:1,
+          y:3/4,
+          z:0.1
+        }
+      }),
+      // outline: true,
+      // outlineColor: Cesium.Color.BLACK,
+    },
   }
 ];
 function computeCircle(radius) {
@@ -147,7 +187,7 @@ function computeStar(arms, rOuter, rInner) {
 }
 
 function getLine() {
-  let index=1;
+  let index = 1;
   let array = [...arr[0]];
   let cbp1 = new Cesium.CallbackProperty((time, result) => {
     if (index < arr.length) {
@@ -168,9 +208,9 @@ function getLine() {
       // cbp.setCallback(()=>{
       //   return new Cesium.Cartesian2(time/arr.length*4, 1.0)
       // },true)
-    } 
+    }
     return new Cesium.Cartesian2(index / arr.length * 4, 1.0)
-  },false)
+  }, false)
   return {
     positions: cbp1,
     material: new Cesium.ImageMaterialProperty({
@@ -182,7 +222,7 @@ function getLine() {
 }
 let time = 1
 function getMateria() {
-  
+
 }
 function insert(arr, step) {
   let buf = [];

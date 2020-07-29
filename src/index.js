@@ -1,27 +1,28 @@
 import './css/common.css';
 import events from "./js/events"
 const viewer = new Cesium.Viewer("app", {
-    animation: false,
-    scene3DOnly: true,
-    timeline: false,
-    navigationHelpButton: false,
-    sceneModePicker: false,
-    // vrButton: false,
-    baseLayerPicker: false,
-    // infoBox: true,
-    fullscreenButton: false,
-    geocoder: false,
-    homeButton: false,
+    // animation: false,
+    // scene3DOnly: true,
+    // timeline: false,
+    // navigationHelpButton: false,
+    // sceneModePicker: false,
+    // // vrButton: false,
+    // baseLayerPicker: false,
+    infoBox: false,
+    // fullscreenButton: false,
+    // geocoder: false,
+    // homeButton: false,
     selectionIndicator: false,
-    navigationInstructionsInitiallyVisible: false,
-    skyBox: false,
-    automaticallyTrackDataSourceClocks: false,
+    // navigationInstructionsInitiallyVisible: false,
+    // skyBox: false,
+    // automaticallyTrackDataSourceClocks: false,
     // globe: false
     // showRenderLoopErrors: false
     // contextOptions: false
     // navigationInstructionsInitiallyVisible: false,
     // imageryProvider: 
 });
+
 viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
     url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
     layer: "tdtBasicLayer",
@@ -40,7 +41,7 @@ viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvi
     show: false,
 
 }))
-viewer.scene.postProcessStages.fxaa.enabled=true;
+// viewer.scene.postProcessStages.fxaa.enabled = false;
 const popup = document.createElement('div');
 popup.className = "popup";
 document.getElementById("app").appendChild(popup);
@@ -49,13 +50,16 @@ popup.style.display = "none";
 
 const scene = viewer.scene;
 //开启地形深度检测
-    // scene.globe.depthTestAgainstTerrain=true
+// scene.globe.depthTestAgainstTerrain=true
 
 viewer.screenSpaceEventHandler.setInputAction(evt => {
     // scene.globe.depthTestAgainstTerrain = true;
     let feature = scene.pick(evt.position);
     //返回笛卡尔坐标
-    let position = viewer.scene.pickPosition(evt.position);
+    let position = viewer.camera.pickEllipsoid(
+        evt.position,
+        scene.globe.ellipsoid
+    );
     // 转为wgs84坐标系，弧度
     if (position) {
         let cartographic = Cesium.Cartographic.fromCartesian(position);
@@ -71,10 +75,13 @@ viewer.screenSpaceEventHandler.setInputAction(evt => {
         } else {
             popup.position = position;
         }
-        popup.innerHTML = `<h1>${feature.id.properties.NAME.getValue()}</h1>`;
+        console.log(feature.id.properties);
+        popup.innerHTML = `<h1>${feature.id.properties.propertyNames.map(key => {
+            return `${key}:${feature.id.properties[key].getValue()}`
+        }).join('\n')}</h1>`;
         popup.style.left = evt.position.x + 'px';
         popup.style.top = evt.position.y + 'px';
-        popup.style.display = "block"
+        popup.style.display = "block";
         // let coords=Cesium.SceneTransforms.wgs84ToWindowCoordinates
     } else {
         popup.style.display = "none"
@@ -114,3 +121,5 @@ tile.readyPromise.then(tileset => {
     // viewer.flyTo(tileset);
 })
 events(viewer)
+
+//绘图

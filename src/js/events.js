@@ -64,10 +64,17 @@ export default function (viewer) {
     if (!datasource) {
       let ds = new Cesium.CustomDataSource("points");
       viewer.dataSources.add(ds);
-      pointEntities.forEach(entity => {
-        ds.entities.add(entity)
+      pointEntities.forEach((entity, index) => {
+        let e = ds.entities.add(entity);
+        if (index == 0) {
+          viewer.trackedEntity=e
+          setInterval(()=>{
+            let coords=Cesium.Cartographic.fromCartesian(e.position.getValue());
+            e.position=Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(coords.longitude)+0.05,Cesium.Math.toDegrees(coords.latitude),5000)
+          },10)
+        }
       });
-      viewer.flyTo(ds)
+      // viewer.flyTo(ds)
     } else {
       datasource.show = !datasource.show
       if (datasource.show) {
@@ -190,7 +197,7 @@ export default function (viewer) {
           geometry: new Cesium.PolygonGeometry({
             polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
             //extrudedHeight: 0,//注释掉此属性可以只显示水面
-            //perPositionHeight : true//注释掉此属性水面就贴地了
+            // perPositionHeight : true//注释掉此属性水面就贴地了
           })
         }),
         // 可以设置内置的水面shader
@@ -204,7 +211,7 @@ export default function (viewer) {
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
                 normalMap: require('../assets/waterNormals.jpg').default,
-                frequency: 100.0,
+                frequency: 200.0,
                 animationSpeed: 0.002,
                 amplitude: 10.0
               }
@@ -236,24 +243,137 @@ export default function (viewer) {
 
   })
   let videoEntity;
-  let videoElement=document.getElementById('video')
+  let videoElement = document.getElementById('video')
   elBindClick("playvideo", () => {
     if (!videoEntity) {
       videoEntity = new Cesium.Entity({
         name: "Rotating rectangle with rotating texture coordinate",
         rectangle: {
           coordinates: Cesium.Rectangle.fromDegrees(-122.0, 30.0, -106.0, 40.0),
-          material:videoElement ,
+          material: videoElement,
         },
       });
       viewer.entities.add(videoEntity);
-      videoElement.style.display="block"
+      videoElement.style.display = "block"
       viewer.flyTo(videoEntity)
     } else {
       videoEntity.show = !videoEntity.show;
-      videoElement.style.display=(videoEntity.show?"block":"none")
+      videoElement.style.display = (videoEntity.show ? "block" : "none")
       videoEntity.show && viewer.flyTo(videoEntity)
 
+    }
+  })
+  let handler;
+  let drawDataSource = new Cesium.CustomDataSource();
+  viewer.dataSources.add(drawDataSource)
+  elBindClick("draw", () => {
+    var drawingMode = "line"
+
+    if (!viewer.scene.pickPositionSupported) {
+      alert("This browser does not support pickPosition.");
+    }
+    if (!handler) {
+      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
+        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+      );
+      let promt = prompt("请输入type（0:线；1:面）:")
+      drawingMode = (promt == 0 ? "line" : "polygon");
+      var activeShapePoints = [];
+      var activeShape;
+      var floatingPoint;
+      handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+      handler.setInputAction(function (event) {
+        // We use `viewer.scene.pickPosition` here instead of `viewer.camera.pickEllipsoid` so that
+        // we get the correct point when mousing over terrain.
+        var earthPosition = viewer.camera.pickEllipsoid(
+          event.position,
+          scene.globe.ellipsoid
+        );
+        // `earthPosition` will be undefined if our mouse is not over the globe.
+        if (Cesium.defined(earthPosition)) {
+          if (activeShapePoints.length === 0) {
+            floatingPoint = createPoint(earthPosition);
+            activeShapePoints.push(earthPosition);
+            var dynamicPositions = new Cesium.CallbackProperty(function () {
+              if (drawingMode === "polygon") {
+                return new Cesium.PolygonHierarchy(activeShapePoints);
+              }
+              return activeShapePoints;
+            }, false);
+            activeShape = drawShape(dynamicPositions);
+          }
+          activeShapePoints.push(earthPosition);
+          createPoint(earthPosition);
+        }
+      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+      handler.setInputAction(function (event) {
+        if (Cesium.defined(floatingPoint)) {
+          var newPosition = viewer.camera.pickEllipsoid(
+            event.endPosition,
+            scene.globe.ellipsoid
+          );
+          if (Cesium.defined(newPosition)) {
+            floatingPoint.position.setValue(newPosition);
+            activeShapePoints.pop();
+            activeShapePoints.push(newPosition);
+          }
+        }
+      }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+      // Redraw the shape so it's not dynamic and remove the dynamic shape.
+      function terminateShape() {
+        activeShapePoints.pop();
+        drawShape(activeShapePoints);
+        drawDataSource.entities.remove(floatingPoint);
+        drawDataSource.entities.remove(activeShape);
+        floatingPoint = undefined;
+        activeShape = undefined;
+        activeShapePoints = [];
+      }
+      handler.setInputAction(function (event) {
+        terminateShape();
+      }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+    } else {
+      handler.destroy();
+      drawDataSource.entities.removeAll()
+      handler = null;
+    }
+    function drawShape(positionData) {
+      var shape;
+      if (drawingMode === "line") {
+        shape = drawDataSource.entities.add({
+          polyline: {
+            positions: positionData,
+            clampToGround: false,
+            width: 3,
+          },
+        });
+      } else if (drawingMode === "polygon") {
+        shape = drawDataSource.entities.add({
+          polygon: {
+            hierarchy: positionData,
+            // material: new Cesium.ColorMaterialProperty(
+            //   Cesium.Color.WHITE.withAlpha(0.7)
+            // ),
+            fill: false,
+            outline: true,
+            outlineWidth: 5,
+            outlineColor: Cesium.Color.YELLOW
+          },
+        });
+      }
+      return shape;
+    }
+    function createPoint(worldPosition) {
+      var point = drawDataSource.entities.add({
+        position: worldPosition,
+        point: {
+          color: Cesium.Color.WHITE,
+          pixelSize: 5,
+          heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+        },
+      });
+      return point;
     }
   })
 }
