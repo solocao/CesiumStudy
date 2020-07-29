@@ -16,28 +16,6 @@ let entities = [
     },
   },
   {
-    name: "Rotating rectangle with rotating texture coordinate",
-    rectangle: {
-      coordinates: Cesium.Rectangle.fromDegrees(-122.0, 30.0, -106.0, 40.0),
-      material: new Cesium.Material({
-        fabric: {
-          type: "Water",
-          uniforms: {
-            // specularMap: "../images/earthspec1k.jpg",
-            normalMap:
-              "/waterNormals.jpg",
-            frequency: 10000.0,
-            animationSpeed: 0.01,
-            amplitude: 1.0,
-          },
-        },
-      }),
-      // rotation: new Cesium.CallbackProperty(getRotationValue, false),
-      // stRotation: new Cesium.CallbackProperty(getRotationValue, false),
-      // classificationType: Cesium.ClassificationType.TERRAIN,
-    },
-  },
-  {
     name: "Green extruded polygon",
     polygon: {
       hierarchy: Cesium.Cartesian3.fromDegreesArray([

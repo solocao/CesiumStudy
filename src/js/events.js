@@ -175,52 +175,86 @@ export default function (viewer) {
       }
     }
   })
+  let waterPrimitive;
   elBindClick("water", () => {
-    var waterFace = [
-      130.0, 30.0, 0,
-      150.0, 30.0, 0,
-      150.0, 10.0, 0,
-      130.0, 10.0, 0];
-    var waterPrimitive = new Cesium.Primitive({
-      // show: true,// 默认隐藏
-      allowPicking: false,
-      geometryInstances: new Cesium.GeometryInstance({
-        geometry: new Cesium.PolygonGeometry({
-          polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
-          //extrudedHeight: 0,//注释掉此属性可以只显示水面
-          //perPositionHeight : true//注释掉此属性水面就贴地了
-        })
-      }),
-      // 可以设置内置的水面shader
-      appearance: new Cesium.EllipsoidSurfaceAppearance({
-        material: new Cesium.Material({
-          fabric: {
-            type: 'Water',
-            uniforms: {
-              //baseWaterColor:new Cesium.Color(0.0, 0.0, 1.0, 0.5),
-              //blendColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
-              //specularMap: 'gray.jpg',
-              //normalMap: '../assets/waterNormals.jpg',
-              normalMap: '/waterNormals.jpg',
-              frequency: 500.0,
-              animationSpeed: 0.01,
-              amplitude: 10.0
-            }
-          }
+    if (!waterPrimitive) {
+      let waterFace = [
+        130.0, 30.0, 0,
+        150.0, 30.0, 0,
+        150.0, 10.0, 0,
+        130.0, 10.0, 0];
+      waterPrimitive = new Cesium.Primitive({
+        // show: true,// 默认隐藏
+        allowPicking: false,
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: new Cesium.PolygonGeometry({
+            polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
+            //extrudedHeight: 0,//注释掉此属性可以只显示水面
+            //perPositionHeight : true//注释掉此属性水面就贴地了
+          })
         }),
-//         fragmentShaderSource: 'varying vec3 v_positionMC;\nvarying vec3 v_positionEC;\nvarying vec2 v_st;\nvoid main()\n{\nczm_materialInput materialInput;\nvec3 normalEC = normalize(czm_normal3D * czm_geodeticSurfaceNormal(v_positionMC, vec3(0.0), vec3(1.0)));\n#ifdef FACE_FORWARD\nnormalEC = faceforward(normalEC, vec3(0.0, 0.0, 1.0), -normalEC);\n#endif\nmaterialInput.s = v_st.s;\nmaterialInput.st = v_st;\nmaterialInput.str = vec3(v_st, 0.0);\nmaterialInput.normalEC = normalEC;\nmaterialInput.tangentToEyeMatrix = czm_eastNorthUpToEyeCoordinates(v_positionMC, materialInput.normalEC);\nvec3 positionToEyeEC = -v_positionEC;\nmaterialInput.positionToEyeEC = positionToEyeEC;\nczm_material material = czm_getMaterial(materialInput);\n#ifdef FLAT\ngl_FragColor = vec4(material.diffuse + material.emission, material.alpha);\n#else\ngl_FragColor = czm_phong(normalize(positionToEyeEC), material);\
-// gl_FragColor.a=0.5;\n#endif\n}\n'//重写shader，修改水面的透明度
-      })
-    });
-    viewer.scene.primitives.add(waterPrimitive);
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(140, 20, 6000000.0),
-      orientation: {
-        heading: Cesium.Math.toRadians(0.0), //默认朝北0度，顺时针方向，东是90度
-        pitch: Cesium.Math.toRadians(-90), //默认朝下看-90,0为水平看，
-        roll: Cesium.Math.toRadians(0) //默认0
-      }
-    });
+        // 可以设置内置的水面shader
+        appearance: new Cesium.EllipsoidSurfaceAppearance({
+          material: new Cesium.Material({
+            fabric: {
+              type: 'Water',
+              uniforms: {
+                // baseWaterColor:new Cesium.Color(45/255, 152/255, 218/255,0.5),
+                //blendColor: new Cesium.Color(0.0, 0.0, 1.0, 0.5),
+                //specularMap: 'gray.jpg',
+                //normalMap: '../assets/waterNormals.jpg',
+                normalMap: require('../assets/waterNormals.jpg').default,
+                frequency: 100.0,
+                animationSpeed: 0.002,
+                amplitude: 10.0
+              }
+            }
+          }),
+        })
+      });
+      viewer.scene.primitives.add(waterPrimitive);
+      viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(140, 20, 6000000.0),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0), //默认朝北0度，顺时针方向，东是90度
+          pitch: Cesium.Math.toRadians(-90), //默认朝下看-90,0为水平看，
+          roll: Cesium.Math.toRadians(0) //默认0
+        }
+      });
+    } else {
+      waterPrimitive.show = !waterPrimitive.show;
+      waterPrimitive.show && viewer.camera.flyTo({
+        destination: Cesium.Cartesian3.fromDegrees(140, 20, 6000000.0),
+        orientation: {
+          heading: Cesium.Math.toRadians(0.0), //默认朝北0度，顺时针方向，东是90度
+          pitch: Cesium.Math.toRadians(-90), //默认朝下看-90,0为水平看，
+          roll: Cesium.Math.toRadians(0) //默认0
+        }
+      });
+    }
+
+
+  })
+  let videoEntity;
+  let videoElement=document.getElementById('video')
+  elBindClick("playvideo", () => {
+    if (!videoEntity) {
+      videoEntity = new Cesium.Entity({
+        name: "Rotating rectangle with rotating texture coordinate",
+        rectangle: {
+          coordinates: Cesium.Rectangle.fromDegrees(-122.0, 30.0, -106.0, 40.0),
+          material:videoElement ,
+        },
+      });
+      viewer.entities.add(videoEntity);
+      videoElement.style.display="block"
+      viewer.flyTo(videoEntity)
+    } else {
+      videoEntity.show = !videoEntity.show;
+      videoElement.style.display=(videoEntity.show?"block":"none")
+      videoEntity.show && viewer.flyTo(videoEntity)
+
+    }
   })
 }
 

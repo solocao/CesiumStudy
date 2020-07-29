@@ -115,11 +115,7 @@ let entities = [
     }
   },
   {
-    polyline: {
-      positions: getLine(),
-      material: getMateria(),
-      width: 5
-    }
+    polyline: getLine()
   }
 ];
 function computeCircle(radius) {
@@ -149,28 +145,44 @@ function computeStar(arms, rOuter, rInner) {
   }
   return positions;
 }
-let index = 1
+
 function getLine() {
+  let index=1;
   let array = [...arr[0]];
-  let cbp=new Cesium.CallbackProperty((time, result) => {
-    if (index < arr.length ) {
+  let cbp1 = new Cesium.CallbackProperty((time, result) => {
+    if (index < arr.length) {
       array.push(...arr[index]);
       index++
     }
     else {
-      cbp.setCallback(()=>{
-        return Cesium.Cartesian3.fromDegreesArray(array);
-      },true)
+      index = 1;
+      array = [...arr[0]]
+      // cbp.setCallback(()=>{
+      //   return Cesium.Cartesian3.fromDegreesArray(array);
+      // },true)
     }
     return Cesium.Cartesian3.fromDegreesArray(array);
   }, false)
-  return cbp
+  let cbp2 = new Cesium.CallbackProperty(() => {
+    if (index >= arr.length) {
+      // cbp.setCallback(()=>{
+      //   return new Cesium.Cartesian2(time/arr.length*4, 1.0)
+      // },true)
+    } 
+    return new Cesium.Cartesian2(index / arr.length * 4, 1.0)
+  },false)
+  return {
+    positions: cbp1,
+    material: new Cesium.ImageMaterialProperty({
+      image: require("../assets/line.png").default,
+      repeat: cbp2
+    }),
+    width: 5
+  }
 }
+let time = 1
 function getMateria() {
-  return new Cesium.ImageMaterialProperty({
-    image: require("../assets/line.png").default,
-    repeat: new Cesium.Cartesian2(1.0, 1.0)
-  })
+  
 }
 function insert(arr, step) {
   let buf = [];
