@@ -67,11 +67,8 @@ export default function (viewer) {
       pointEntities.forEach((entity, index) => {
         let e = ds.entities.add(entity);
         if (index == 0) {
-          viewer.trackedEntity=e
-          setInterval(()=>{
-            let coords=Cesium.Cartographic.fromCartesian(e.position.getValue());
-            e.position=Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(coords.longitude)+0.05,Cesium.Math.toDegrees(coords.latitude),5000)
-          },10)
+          viewer.trackedEntity = e
+
         }
       });
       // viewer.flyTo(ds)
@@ -374,6 +371,28 @@ export default function (viewer) {
         },
       });
       return point;
+    }
+  })
+  elBindClick("model", () => {
+    let entity = viewer.entities.getById('plane');
+    if (!entity) {
+      let e = viewer.entities.add({
+        id: 'plane',
+        position: Cesium.Cartesian3.fromDegrees(114.6200877719163, 33.442230242824415, 5000),
+        model: {
+          uri: "/Cesium_Air.glb",
+          minimumPixelSize: 128,
+          maximumScale: 20000
+        }
+      });
+      viewer.trackedEntity = e;
+      setInterval(() => {
+        let coords = Cesium.Cartographic.fromCartesian(e.position.getValue());
+        e.position = Cesium.Cartesian3.fromDegrees(Cesium.Math.toDegrees(coords.longitude) + 0.05, Cesium.Math.toDegrees(coords.latitude), 5000)
+      }, 10)
+    } else {
+      entity.show = !entity.show;
+      entity.show && (viewer.trackedEntity = entity);
     }
   })
 }

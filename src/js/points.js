@@ -5,7 +5,7 @@ let entities = [
     model: {
       uri: "/Cesium_Air.glb",
       minimumPixelSize: 128,
-      maximumScale: 20000,
+      maximumScale: 20000
     }
   }),
   {
