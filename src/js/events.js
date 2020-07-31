@@ -391,6 +391,7 @@ export default function (viewer) {
       }, 10)
     } else {
       entity.show = !entity.show;
+      (!entity.show)&&(viewer.trackedEntity=undefined)
       entity.show && (viewer.trackedEntity = entity);
     }
   })
@@ -598,7 +599,7 @@ export default function (viewer) {
     }
   })
   let myBox;
-  let matrix='translate';
+  let matrix = 'translate';
   elBindClick('pandm', () => {
     if (!myBox) {
       let boxLength = 20.0;
@@ -732,37 +733,51 @@ export default function (viewer) {
         asynchronous: false
       }));
       viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(position, 30));
-      document.onkeydown=(e)=>{
+      document.onkeydown = (e) => {
         console.log(e.keyCode);
-        if(matrix=="translate"){
-          switch(e.keyCode){
+        if (matrix == "translate") {
+          switch (e.keyCode) {
             case 37:
-              let translate=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(-1,0,0));
-              Cesium.Matrix4.multiply(myBox.modelMatrix,translate,myBox.modelMatrix)
+              let translate = new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(-1, 0, 0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix, translate, myBox.modelMatrix)
               break;
             case 38:
-              let translate1=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0,1,0));
-              Cesium.Matrix4.multiply(myBox.modelMatrix,translate1,myBox.modelMatrix)
+              let translate1 = new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0, 1, 0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix, translate1, myBox.modelMatrix)
               break;
             case 39:
-              let translate2=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(1,0,0));
-              Cesium.Matrix4.multiply(myBox.modelMatrix,translate2,myBox.modelMatrix)
+              let translate2 = new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(1, 0, 0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix, translate2, myBox.modelMatrix)
               break;
             case 40:
-              let translate3=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0,-1,0));
-              Cesium.Matrix4.multiply(myBox.modelMatrix,translate3,myBox.modelMatrix)
+              let translate3 = new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0, -1, 0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix, translate3, myBox.modelMatrix)
               break;
           }
-        }else if(matrix=="scale"){
-          switch(e.keyCode){
+        } else if (matrix == "scale") {
+          switch (e.keyCode) {
             case 187:
-              let scale=new Cesium.Matrix4.fromScale
+              let scale = new Cesium.Matrix4.fromScale(new Cesium.Cartesian3(1.05, 1.05, 1.05))
+              Cesium.Matrix4.multiply(myBox.modelMatrix, scale, myBox.modelMatrix)
               break;
             case 189:
+              let scale1 = new Cesium.Matrix4.fromScale(new Cesium.Cartesian3(0.95, 0.95, 0.95))
+              Cesium.Matrix4.multiply(myBox.modelMatrix, scale1, myBox.modelMatrix)
               break;
           }
-        }else if(matrix=="rotate"){
-
+        } else if (matrix == "rotate") {
+          switch (e.keyCode) {
+            case 187:
+              let mat3RoateX = Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(45))
+              let rotate = Cesium.Matrix4.fromRotationTranslation(mat3RoateX)
+              Cesium.Matrix4.multiply(myBox.modelMatrix, rotate, myBox.modelMatrix)
+              break;
+            case 189:
+              let mat3RoateX1 = Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(-45))
+              let rotate1 = Cesium.Matrix4.fromRotationTranslation(mat3RoateX1)
+              Cesium.Matrix4.multiply(myBox.modelMatrix, rotate1, myBox.modelMatrix)
+              break;
+          }
         }
       }
     } else {
@@ -771,13 +786,13 @@ export default function (viewer) {
     }
   })
   elBindClick("translate", () => {
-    matrix="translate"
+    matrix = "translate"
   })
   elBindClick("rotate", () => {
-    matrix="rotate"
+    matrix = "rotate"
   })
   elBindClick('scale', () => {
-    matrix="scale"
+    matrix = "scale"
   })
 }
 
