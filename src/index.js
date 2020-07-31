@@ -1,21 +1,21 @@
 import './css/common.css';
 import events from "./js/events"
 const viewer = new Cesium.Viewer("app", {
-    // animation: false,
+    animation: false,
     // scene3DOnly: true,
-    // timeline: false,
-    // navigationHelpButton: false,
-    // sceneModePicker: false,
-    // // vrButton: false,
-    // baseLayerPicker: false,
+    timeline: false,//时间线
+    navigationHelpButton: false,
+    sceneModePicker: false,
+    vrButton: false,
+    baseLayerPicker: false,
     infoBox: false,
-    // fullscreenButton: false,
-    // geocoder: false,
-    // homeButton: false,
+    fullscreenButton: false,
+    geocoder: false,//搜索按钮
+    homeButton: false,
     selectionIndicator: false,
-    // navigationInstructionsInitiallyVisible: false,
-    // skyBox: false,
-    // automaticallyTrackDataSourceClocks: false,
+    navigationInstructionsInitiallyVisible: false,
+    skyBox: false,
+    automaticallyTrackDataSourceClocks: false,
     // globe: false
     // showRenderLoopErrors: false
     // contextOptions: false
@@ -41,7 +41,7 @@ viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvi
     show: false,
 
 }))
-// viewer.scene.postProcessStages.fxaa.enabled = false;
+viewer.scene.postProcessStages.fxaa.enabled = true;
 const popup = document.createElement('div');
 popup.className = "popup";
 document.getElementById("app").appendChild(popup);
@@ -51,10 +51,11 @@ popup.style.display = "none";
 const scene = viewer.scene;
 //开启地形深度检测
 // scene.globe.depthTestAgainstTerrain=true
-
-viewer.screenSpaceEventHandler.setInputAction(evt => {
+let handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+handler.setInputAction(evt => {
     // scene.globe.depthTestAgainstTerrain = true;
     let feature = scene.pick(evt.position);
+    console.log(feature);
     //返回笛卡尔坐标
     let position = viewer.camera.pickEllipsoid(
         evt.position,
@@ -122,4 +123,4 @@ tile.readyPromise.then(tileset => {
 })
 events(viewer)
 
-//绘图
+

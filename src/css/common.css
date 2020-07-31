@@ -53,6 +53,7 @@ body {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
+    color: rgb(120, 177, 241);
 }
 
 .cesium-viewer-bottom {

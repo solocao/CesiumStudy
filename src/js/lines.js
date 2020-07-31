@@ -38,6 +38,7 @@ let entities = [
         118.11463799246998, 34.824831814883176,
         250000,
       ]),
+      arcType:Cesium.ArcType.RHUMB,
       width: 5,
       material: new Cesium.PolylineOutlineMaterialProperty({
         color: Cesium.Color.ORANGE,
