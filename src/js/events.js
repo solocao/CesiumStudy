@@ -201,8 +201,8 @@ export default function (viewer) {
             fabric: {
               type: 'Water',
               uniforms: {
-                baseWaterColor: new Cesium.Color(45/255*1.0, 71/255*1.0, 140/255*1.0, 0.7),
-                blendColor: new Cesium.Color(255/255*1.0, 255/255*1.0, 255/255*1.0, 1.0),
+                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.8),
+                blendColor: new Cesium.Color(0 / 255 * 1.0, 0 / 255 * 1.0, 255 / 255 * 1.0, 1.0),
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
                 normalMap: require('../assets/waterNormals.jpg').default,
@@ -598,13 +598,14 @@ export default function (viewer) {
     }
   })
   let myBox;
+  let matrix='translate';
   elBindClick('pandm', () => {
     if (!myBox) {
       let boxLength = 20.0;
       let position = Cesium.Cartesian3.fromDegrees(116.39, 39.9, 0.5 * boxLength);
       let modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(position);
-      let scale = Cesium.Matrix4.fromScale(new Cesium.Cartesian3(2.0,1,1));
-      // //缩放
+      let scale = Cesium.Matrix4.fromScale(new Cesium.Cartesian3(2.0, 1, 1));
+      //缩放
       Cesium.Matrix4.multiply(modelMatrix, scale, modelMatrix);
       // 0 立方体顶点位置标号，以及坐标系示意图
       // 立方体
@@ -731,10 +732,52 @@ export default function (viewer) {
         asynchronous: false
       }));
       viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(position, 30));
+      document.onkeydown=(e)=>{
+        console.log(e.keyCode);
+        if(matrix=="translate"){
+          switch(e.keyCode){
+            case 37:
+              let translate=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(-1,0,0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix,translate,myBox.modelMatrix)
+              break;
+            case 38:
+              let translate1=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0,1,0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix,translate1,myBox.modelMatrix)
+              break;
+            case 39:
+              let translate2=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(1,0,0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix,translate2,myBox.modelMatrix)
+              break;
+            case 40:
+              let translate3=new Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(0,-1,0));
+              Cesium.Matrix4.multiply(myBox.modelMatrix,translate3,myBox.modelMatrix)
+              break;
+          }
+        }else if(matrix=="scale"){
+          switch(e.keyCode){
+            case 187:
+              let scale=new Cesium.Matrix4.fromScale
+              break;
+            case 189:
+              break;
+          }
+        }else if(matrix=="rotate"){
+
+        }
+      }
     } else {
       myBox.show = !myBox.show;
       myBox.show && viewer.camera.flyToBoundingSphere(new Cesium.BoundingSphere(Cesium.Cartesian3.fromDegrees(116.39, 39.9, 0.5 * 20), 30))
     }
+  })
+  elBindClick("translate", () => {
+    matrix="translate"
+  })
+  elBindClick("rotate", () => {
+    matrix="rotate"
+  })
+  elBindClick('scale', () => {
+    matrix="scale"
   })
 }
 

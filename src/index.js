@@ -1,9 +1,9 @@
 import './css/common.css';
 import events from "./js/events"
 const viewer = new Cesium.Viewer("app", {
-    animation: false,
+    // animation: false,
     // scene3DOnly: true,
-    timeline: false,//时间线
+    // timeline: false,//时间线
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
