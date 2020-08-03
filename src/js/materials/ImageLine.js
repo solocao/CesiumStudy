@@ -1,144 +1,293 @@
-// export function PolylineTrailLinkMaterialProperty(color, duration, image) {
+export function PolylineTrailLinkMaterialProperty(color, duration, image) {
 
-//   this._definitionChanged = new Cesium.Event();
+  this._definitionChanged = new Cesium.Event();
 
-//   this._color = undefined;
+  this._color = undefined;
 
-//   this._colorSubscription = undefined;
+  this._colorSubscription = undefined;
 
-//   this.color = color;
+  this.color = color;
 
-//   this.duration = duration;
+  this.duration = duration;
 
-//   this.image = image;
+  this.image = image;
 
-//   this._time = (new Date()).getTime();
+  this._time = (new Date()).getTime();
 
-// }
+}
 
-// Object.defineProperties(PolylineTrailLinkMaterialProperty.prototype, {
+Object.defineProperties(PolylineTrailLinkMaterialProperty.prototype, {
 
-//   isConstant: {
+  isConstant: {
 
-//     get: function () {
+    get: function () {
 
-//       return false;
+      return false;
 
-//     }
+    }
 
-//   },
+  },
 
-//   definitionChanged: {
+  definitionChanged: {
 
-//     get: function () {
+    get: function () {
 
-//       return this._definitionChanged;
+      return this._definitionChanged;
 
-//     }
+    }
 
-//   },
+  },
 
-//   color: Cesium.createPropertyDescriptor('color')
+  color: Cesium.createPropertyDescriptor('color')
 
-// });
+});
 
-// PolylineTrailLinkMaterialProperty.prototype.getType = function (time) {
+PolylineTrailLinkMaterialProperty.prototype.getType = function (time) {
 
-//   return 'PolylineTrailLink';
+  return 'PolylineTrailLink';
 
-// }
+}
 
-// PolylineTrailLinkMaterialProperty.prototype.getValue = function (time, result) {
+PolylineTrailLinkMaterialProperty.prototype.getValue = function (time, result) {
 
-//   if (!Cesium.defined(result)) {
+  if (!Cesium.defined(result)) {
 
-//     result = {};
+    result = {};
 
-//   }
+  }
 
-//   result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
+  result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
 
-//   result.image = this.image;
+  result.image = this.image;
 
-//   result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration;
+  result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration;
 
-//   return result;
+  return result;
 
-// }
+}
 
-// PolylineTrailLinkMaterialProperty.prototype.equals = function (other) {
+PolylineTrailLinkMaterialProperty.prototype.equals = function (other) {
 
-//   return this === other ||
+  return this === other ||
 
-//     (other instanceof PolylineTrailLinkMaterialProperty &&
+    (other instanceof PolylineTrailLinkMaterialProperty &&
 
-//       Cesium.Property.equals(this._color, other._color))
+      Cesium.Property.equals(this._color, other._color))
 
-// }
+}
 
-// Cesium.PolylineTrailLinkMaterialProperty = PolylineTrailLinkMaterialProperty;
+Cesium.PolylineTrailLinkMaterialProperty = PolylineTrailLinkMaterialProperty;
 
-// Cesium.Material.PolylineTrailLinkType = 'PolylineTrailLink';
+Cesium.Material.PolylineTrailLinkType = 'PolylineTrailLink';
 
-// // Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
-// // Cesium.Material.PolylineTrailLinkImage = require('@/assets/images/line1.png');
-// // Cesium.Material.PolylineTrailLinkImage = lineImg;
+// Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
+// Cesium.Material.PolylineTrailLinkImage = require('@/assets/images/line1.png');
+// Cesium.Material.PolylineTrailLinkImage = lineImg;
 
-// Cesium.Material.PolylineTrailLinkSource = `czm_material czm_getMaterial(czm_materialInput materialInput)
+Cesium.Material.PolylineTrailLinkSource = `czm_material czm_getMaterial(czm_materialInput materialInput)
 
-// {
+{
 	
 
-// 	czm_material material = czm_getDefaultMaterial(materialInput); 
+	czm_material material = czm_getDefaultMaterial(materialInput); 
 
-// 	vec2 st = materialInput.st; 
+	vec2 st = materialInput.st; 
 
-// 	vec4 colorImage = texture2D(image, vec2(fract(st.s - time), st.t)); 
-// 	// vec4 colorImage = texture2D(image, vec2(st.s, st.t)); 
+	vec4 colorImage = texture2D(image, vec2(fract(st.s - time), st.t)); 
+	// vec4 colorImage = texture2D(image, vec2(st.s, st.t)); 
 
-// 	material.alpha = 1.0;
+	material.alpha = 1.0;
 
-// 	// material.diffuse = (colorImage.rgb + color.rgb) / 2.0;
-// 	material.diffuse = colorImage.rgb;
-// 	// material.diffuse =   color.rgb; 
+	// material.diffuse = (colorImage.rgb + color.rgb) / 2.0;
+	material.diffuse = colorImage.rgb;
+	// material.diffuse =   color.rgb; 
 
-// 	material.specular=1.0;
-// 	// material.shininess=0.5;
-// 	// material.emission=vec3(0.5);
+	material.specular=1.0;
+	// material.shininess=0.5;
+	// material.emission=vec3(0.5);
 
-// 	return material; 
+	return material; 
 
-// } `;
+} `;
 
-// Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailLinkType, {
+Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailLinkType, {
 
-//   fabric: {
+  fabric: {
 
-//     // type: Cesium.Material.PolylineTrailLinkType,
-//     type: Cesium.Material.PolylineTrailLinkType,
+    // type: Cesium.Material.PolylineTrailLinkType,
+    type: Cesium.Material.PolylineTrailLinkType,
 
-//     uniforms: {
+    uniforms: {
 
-//       color: new Cesium.Color(1.0, 0.0, 0.0, 0.5),
+      color: new Cesium.Color(1.0, 0.0, 0.0, 0.5),
 
-//       image: '',
+      image: '',
 
-//       time: 0
+      time: 0
 
-//     },
+    },
 
-//     source: Cesium.Material.PolylineTrailLinkSource
+    source: Cesium.Material.PolylineTrailLinkSource
 
-//   },
+  },
 
-//   translucent: function (material) {
+  translucent: function (material) {
 
-//     return true;
+    return true;
 
-//   }
+  }
 
-// });
-
-
+});
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export function ODLineMaterialProperty(color, duration) {
+
+  this._definitionChanged = new Cesium.Event();
+
+  this._color = undefined;
+
+  this._colorSubscription = undefined;
+
+  this.color = color;
+
+  this.totoalFrameCount = duration;
+
+  this._time = (new Date()).getTime();
+
+}
+
+Object.defineProperties(ODLineMaterialProperty.prototype, {
+
+  isConstant: {
+
+    get: function () {
+
+      return false;
+
+    }
+
+  },
+
+  definitionChanged: {
+
+    get: function () {
+
+      return this._definitionChanged;
+
+    }
+
+  },
+
+  color: Cesium.createPropertyDescriptor('color')
+
+});
+
+ODLineMaterialProperty.prototype.getType = function (time) {
+
+  return 'ODLine';
+
+}
+
+ODLineMaterialProperty.prototype.getValue = function (time, result) {
+
+  if (!Cesium.defined(result)) {
+
+    result = {};
+
+  }
+
+  result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
+  result.totoalFrameCount = this.totoalFrameCount;
+  return result;
+}
+
+ODLineMaterialProperty.prototype.equals = function (other) {
+
+  return this === other ||
+
+    (other instanceof ODLineMaterialProperty &&
+
+      Cesium.Property.equals(this._color, other._color))
+
+}
+
+Cesium.ODLineMaterialProperty = ODLineMaterialProperty;
+
+Cesium.Material.ODLineType = 'ODLine';
+
+// Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
+// Cesium.Material.PolylineTrailLinkImage = require('@/assets/images/line1.png');
+// Cesium.Material.PolylineTrailLinkImage = lineImg;
+
+Cesium.Material.ODLineSource = `czm_material czm_getMaterial(czm_materialInput materialInput)
+{
+    czm_material material = czm_getDefaultMaterial(materialInput);
+    vec2 st = materialInput.st;
+    //float t = time;
+    float t = mod(czm_frameNumber, totoalFrameCount) / totoalFrameCount; 
+    t *= 1.03;
+    float alpha = smoothstep(t- 0.03, t, st.s) * step(-t, -st.s); 
+    alpha += 0.4;
+    //alpha *= step(-0.4, -abs(0.5-st.t));  
+    material.diffuse = color.rgb;
+    material.alpha = alpha;
+    return material;
+}`;
+
+Cesium.Material._materialCache.addMaterial(Cesium.Material.ODLineType, {
+  fabric: {
+    type: Cesium.Material.ODLineType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
+      totoalFrameCount:45
+    },
+    source: Cesium.Material.ODLineSource
+  }
+});

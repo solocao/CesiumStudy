@@ -154,7 +154,7 @@ let entities = [
       extrudedHeight: 50000,
       material: Cesium.Color.PURPLE,
       outline: true,
-      outlineColor: Cesium.Color.MAGENTA,
+      outlineColor: Cesium.Color.YELLOW,
       arcType: Cesium.ArcType.RHUMB,
     },
   }

@@ -7,12 +7,14 @@ let entities = [
       width: 5,
       // arcType: Cesium.ArcType.RHUMB,
       // show:false,
-      material: new Cesium.ImageMaterialProperty({
-        image: require("../assets/line.png").default,
-        repeat: new Cesium.Cartesian2(2.0, 1.0)
-      }),
+      material: new Cesium.ODLineMaterialProperty(
+        Cesium.Color.fromCssColorString("rgb(205, 97, 51)"),
+        100
+        // require("../assets/line.png").default
+      )
     }
   }),
+
   {
     name: "Glowing blue line on the surface",
     polyline: {
@@ -38,7 +40,7 @@ let entities = [
         118.11463799246998, 34.824831814883176,
         250000,
       ]),
-      arcType:Cesium.ArcType.RHUMB,
+      arcType: Cesium.ArcType.RHUMB,
       width: 5,
       material: new Cesium.PolylineOutlineMaterialProperty({
         color: Cesium.Color.ORANGE,
@@ -101,7 +103,7 @@ let entities = [
       cornerType: Cesium.CornerType.BEVELED,
       material: new Cesium.ImageMaterialProperty({
         image: require("../assets/墙面.png").default,
-        repeat: new Cesium.Cartesian3(2, 2,5)
+        repeat: new Cesium.Cartesian3(2, 2, 5)
       }),
       outline: true,
       outlineColor: Cesium.Color.BLACK,
@@ -147,11 +149,11 @@ let entities = [
     box: {
       dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 40000.0),
       material: new Cesium.ImageMaterialProperty({
-        image:require("../assets/墙面.png").default,
-        repeat:{
-          x:1,
-          y:3/4,
-          z:0.1
+        image: require("../assets/墙面.png").default,
+        repeat: {
+          x: 1,
+          y: 3 / 4,
+          z: 0.1
         }
       }),
       // outline: true,

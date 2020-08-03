@@ -348,13 +348,12 @@ export default function (viewer) {
         shape = drawDataSource.entities.add({
           polygon: {
             hierarchy: positionData,
-            material: new Cesium.ColorMaterialProperty(
-              Cesium.Color.WHITE.withAlpha(0.7)
-            ),
-            fill: true,
+            material:Cesium.Color.WHITE.withAlpha(0.7),
+            height:0,
             outline: true,
             outlineWidth: 5,
-            outlineColor: Cesium.Color.YELLOW
+            outlineColor: Cesium.Color.YELLOW,
+            arcType: Cesium.ArcType.RHUMB,
           },
         });
       }
@@ -391,7 +390,7 @@ export default function (viewer) {
       }, 10)
     } else {
       entity.show = !entity.show;
-      (!entity.show)&&(viewer.trackedEntity=undefined)
+      (!entity.show) && (viewer.trackedEntity = undefined)
       entity.show && (viewer.trackedEntity = entity);
     }
   })

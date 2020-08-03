@@ -1,5 +1,8 @@
 import './css/common.css';
-import events from "./js/events"
+import "./js/materials/ImageLine"
+import events from "./js/events";
+console.log(Cesium.Material.fromType("PolylineODType"));
+console.log(Cesium.Material.fromType("Image"));
 const viewer = new Cesium.Viewer("app", {
     // animation: false,
     // scene3DOnly: true,
@@ -124,3 +127,35 @@ tile.readyPromise.then(tileset => {
 events(viewer)
 
 
+
+
+
+
+var polylines = scene.primitives.add(new Cesium.PolylineCollection());
+let polyline = polylines.add({
+    positions: Cesium.PolylinePipeline.generateCartesianArc({
+        positions: Cesium.Cartesian3.fromDegreesArray([
+            -110.0,
+            42.0,
+            -85.0,
+            36.0,
+            -100.0,
+            25.0,
+            -77.0,
+            12.0,
+        ]),
+    }),
+    width: 10.0,
+    show: false,
+});
+let material =new Cesium.Material({
+    fabric: {
+        type: "PolylineODType",
+        uniforms: {
+            color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+            totoalFrameCount: 45,
+        }
+    }
+
+})
+polyline.material = material;
