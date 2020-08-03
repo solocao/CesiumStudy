@@ -286,8 +286,156 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.ODLineType, {
     type: Cesium.Material.ODLineType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
-      totoalFrameCount:45
+      totoalFrameCount: 45
     },
     source: Cesium.Material.ODLineSource
+  }
+});
+
+
+
+//扫描线
+`    float circle(vec2 uv, float r, float blur) {
+        float d = length(uv) * 2.0;
+        float c = smoothstep(r+blur, r, d);
+        return c;
+     }
+
+    uniform vec4 color;
+    uniform float time;
+    czm_material czm_getMaterial(czm_materialInput materialInput)
+    {
+      czm_material material = czm_getDefaultMaterial(materialInput);
+      vec2 st = materialInput.st - .5;
+      material.diffuse = color.rgb;
+      material.emission = vec3(0);
+      float t = time;
+      float s = 0.3;
+      float radius1 = smoothstep(.0, s, t) * 0.5;
+      float alpha1 = circle(st, radius1, 0.01) * circle(st, radius1, -0.01);
+      float alpha2 = circle(st, radius1, 0.01 - radius1) * circle(st, radius1, 0.01);
+      float radius2 = 0.5 + smoothstep(s, 1.0, t) * 0.5;
+      float alpha3 = circle(st, radius1, radius2 + 0.01 - radius1) * circle(st, radius1, -0.01);
+      material.alpha = smoothstep(1.0, s, t) * (alpha1 + alpha2*0.1 + alpha3*0.1);
+      material.alpha *= color.a;
+      return material;
+    }
+`
+
+export function ScanLineMaterialProperty(color, duration) {
+
+  this._definitionChanged = new Cesium.Event();
+
+  this._color = undefined;
+
+  this._colorSubscription = undefined;
+
+  this.color = color;
+
+  this.time = duration;
+
+  this._time = (new Date()).getTime();
+
+}
+
+Object.defineProperties(ScanLineMaterialProperty.prototype, {
+
+  isConstant: {
+
+    get: function () {
+
+      return false;
+
+    }
+
+  },
+
+  definitionChanged: {
+
+    get: function () {
+
+      return this._definitionChanged;
+
+    }
+
+  },
+
+  color: Cesium.createPropertyDescriptor('color')
+
+});
+
+ScanLineMaterialProperty.prototype.getType = function (time) {
+
+  return 'ScanLine';
+
+}
+
+ScanLineMaterialProperty.prototype.getValue = function (time, result) {
+
+  if (!Cesium.defined(result)) {
+
+    result = {};
+
+  }
+
+  result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
+  result.time = this.time;
+  return result;
+}
+
+ScanLineMaterialProperty.prototype.equals = function (other) {
+
+  return this === other ||
+
+    (other instanceof ScanLineMaterialProperty &&
+
+      Cesium.Property.equals(this._color, other._color))
+
+}
+
+Cesium.ODLineMaterialProperty = ScanLineMaterialProperty;
+Cesium.Material.ScanLineType = 'ScanLine';
+
+// Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
+// Cesium.Material.PolylineTrailLinkImage = require('@/assets/images/line1.png');
+// Cesium.Material.PolylineTrailLinkImage = lineImg;
+
+Cesium.Material.ScanLineSource = `    float circle(vec2 uv, float r, float blur) {
+  float d = length(uv) * 2.0;
+  float c = smoothstep(r+blur, r, d);
+  return c;
+}
+
+uniform vec4 color;
+uniform float time;
+czm_material czm_getMaterial(czm_materialInput materialInput)
+{
+czm_material material = czm_getDefaultMaterial(materialInput);
+vec2 st = materialInput.st - .5;
+material.diffuse = color.rgb;
+material.emission = vec3(0);
+float t = time;
+float s = 0.3;
+float radius1 = smoothstep(.0, s, t) * 0.5;
+float alpha1 = circle(st, radius1, 0.01) * circle(st, radius1, -0.01);
+float alpha2 = circle(st, radius1, 0.01 - radius1) * circle(st, radius1, 0.01);
+float radius2 = 0.5 + smoothstep(s, 1.0, t) * 0.5;
+float alpha3 = circle(st, radius1, radius2 + 0.01 - radius1) * circle(st, radius1, -0.01);
+
+material.alpha = smoothstep(1.0, s, t) * (alpha1 + alpha2*0.1 + alpha3*0.1);
+material.alpha *= color.a;
+
+return material;
+}
+`;
+
+Cesium.Material._materialCache.addMaterial(Cesium.Material.ScanLineType, {
+  fabric: {
+    type: Cesium.Material.ScanLineType,
+    uniforms: {
+      color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
+      time: 0.5
+    },
+    source: Cesium.Material.ScanLineSource
   }
 });

@@ -10,7 +10,6 @@ let entities = [
       material: new Cesium.ODLineMaterialProperty(
         Cesium.Color.fromCssColorString("rgb(205, 97, 51)"),
         100
-        // require("../assets/line.png").default
       )
     }
   }),

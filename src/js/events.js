@@ -2,6 +2,7 @@ import pointEntities from "./points"
 import lineEntities from "./lines"
 import polygonEntities from "./polygons"
 export default function (viewer) {
+  console.log(Cesium.Cartesian3.fromDegreesArray([117.74524327559975, 35.38476706965578, 114.20500875723677, 33.32715123237522]));
   let scene = viewer.scene;
   let camera = viewer.camera;
   elBindClick("modellocated", () => {
@@ -37,6 +38,7 @@ export default function (viewer) {
         roll: camera.roll
       }
     }).replace(/"/g, ""));
+    console.log(cartographic);
   })
   elBindClick("addGeojson", () => {
     let datasource = viewer.dataSources.getByName("ows")[0];
@@ -201,7 +203,7 @@ export default function (viewer) {
             fabric: {
               type: 'Water',
               uniforms: {
-                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.8),
+                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.6),
                 blendColor: new Cesium.Color(0 / 255 * 1.0, 0 / 255 * 1.0, 255 / 255 * 1.0, 1.0),
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
@@ -348,10 +350,10 @@ export default function (viewer) {
         shape = drawDataSource.entities.add({
           polygon: {
             hierarchy: positionData,
-            material:Cesium.Color.WHITE.withAlpha(0.7),
-            height:0,
+            material: Cesium.Color.WHITE.withAlpha(0.7),
+            height: 0,
             outline: true,
-            outlineWidth: 5,
+            outlineWidth: 2,
             outlineColor: Cesium.Color.YELLOW,
             arcType: Cesium.ArcType.RHUMB,
           },
@@ -792,6 +794,136 @@ export default function (viewer) {
   })
   elBindClick('scale', () => {
     matrix = "scale"
+  })
+  elBindClick('odline', () => {
+    let datasource = viewer.dataSources.getByName('odlines')[0];
+    if (!datasource) {
+      let ds = new Cesium.GeoJsonDataSource('odlines');
+      viewer.dataSources.add(ds)
+      ds.load(require("../js/车行路.json")).then(source => {
+        source.entities.values.forEach(en => {
+          en.polyline.material = new Cesium.ODLineMaterialProperty(
+            Cesium.Color.fromCssColorString(`rgb(${Math.random() * 255}, 183, 49,1.0)`),
+            100
+          )
+          en.polyline.width = 3
+        })
+        viewer.flyTo(source)
+      })
+    } else {
+      datasource.show = !datasource.show;
+      datasource.show && viewer.flyTo(datasource)
+    }
+  })
+  let rectang;
+  elBindClick('heatmap', () => {
+    if (!rectang) {
+      //heatmap
+      let canvasContainer = document.createElement("div");
+      canvasContainer.style.width = 968 + "px";
+      canvasContainer.style.height = 968 + "px";
+      var heatmapInstance = h337.create({
+        // only container is required, the rest will be defaults
+        container: canvasContainer,
+        width: 968,
+        height: 968
+      });
+
+      // now generate some random data
+      var points = [];
+      var max = 100;
+      var width = 968;
+      var height = 968;
+      var len = 1000;
+      while (len--) {
+        var val = Math.floor(Math.random() * 100);
+        // now also with custom radius
+        var radius = Math.floor(Math.random() * 30);
+        // max = Math.max(max, val);
+        var point = {
+          x: Math.floor(Math.random() * width),
+          y: Math.floor(Math.random() * height),
+          value: val,
+          // radius configuration on point basis
+          radius: radius
+        };
+        points.push(point);
+      }
+      // heatmap data format
+      var data = {
+        max: max,
+        data: points
+      };
+      // if you have a set of datapoints always use setData instead of addData
+      // for data initialization
+      heatmapInstance.setData(data);
+      rectang = scene.primitives.add(
+        new Cesium.Primitive({
+          geometryInstances: new Cesium.GeometryInstance({
+            geometry: new Cesium.RectangleGeometry({
+              rectangle: Cesium.Rectangle.fromDegrees(
+                -120.0,
+                0.0,
+                -80.0,
+                40.0
+              ),
+              vertexFormat: Cesium.EllipsoidSurfaceAppearance.VERTEX_FORMAT,
+            }),
+          }),
+          // appearance: ,
+          show: true,
+          allowPicking: false
+        })
+      );
+      rectang.appearance = new Cesium.EllipsoidSurfaceAppearance({
+        aboveGround: false,
+        material: new Cesium.Material({
+          fabric: {
+            type: "Image",
+            uniforms: {
+              image: canvasContainer.lastChild.toDataURL("image/png"),
+            },
+          },
+        })
+      })
+      viewer.camera.moveEnd.addEventListener(() => {
+        
+        let a=camera.positionCartographic.height;
+        if(a>9000000){
+          a=100
+        }else {
+          a=a/9000000*100
+        }
+        console.log(a);
+        points=points.map(p=>{
+          p.radius=Math.floor(Math.random()* a)
+          return p
+        })
+        // heatmap data format
+        var data = {
+          max: max,
+          data: points
+        };
+        // if you have a set of datapoints always use setData instead of addData
+        // for data initialization
+        heatmapInstance.setData(data);
+        rectang.appearance = new Cesium.EllipsoidSurfaceAppearance({
+          aboveGround: false,
+          material: new Cesium.Material({
+            fabric: {
+              type: "Image",
+              uniforms: {
+                image: canvasContainer.lastChild.toDataURL("image/png"),
+              },
+            },
+          })
+        })
+      })
+      camera.flyTo({ destination: { x: -1971975.4191203448, y: -14803000.39336014, z: 4949683.691860933 }, orientation: { heading: 0.007126499771088035, pitch: -1.5625996938330577, roll: 0 } })
+    } else {
+      rectang.show = !rectang.show
+      rectang.show && camera.flyTo({ destination: { x: -1971975.4191203448, y: -14803000.39336014, z: 4949683.691860933 }, orientation: { heading: 0.007126499771088035, pitch: -1.5625996938330577, roll: 0 } })
+    }
   })
 }
 
