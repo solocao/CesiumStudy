@@ -185,10 +185,10 @@ export default function (viewer) {
   elBindClick("water", () => {
     if (!waterPrimitive) {
       let waterFace = [
-        110.0, 30.0, 0,
-        150.0, 30.0, 0,
-        150.0, 10.0, 0,
-        110.0, 10.0, 0
+        114.57251422339812 ,33.575150066145426, 20,
+        114.58003494111719, 33.575150066145426, 20,
+        114.58003494111719 ,33.5691345278447, 20,
+        114.57251422339812, 33.5691345278447, 20
       ];
       waterPrimitive = new Cesium.Primitive({
         // show: true,// 默认隐藏
@@ -211,7 +211,7 @@ export default function (viewer) {
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
                 normalMap: require('../assets/waterNormals.jpg').default,
-                frequency: 3000.0,
+                frequency: 10000.0,
                 animationSpeed: 0.05,
                 amplitude: 1.0
               }
@@ -221,24 +221,10 @@ export default function (viewer) {
         })
       });
       viewer.scene.primitives.add(waterPrimitive);
-      viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(140, 20, 6000000.0),
-        orientation: {
-          heading: Cesium.Math.toRadians(0.0), //默认朝北0度，顺时针方向，东是90度
-          pitch: Cesium.Math.toRadians(-90), //默认朝下看-90,0为水平看，
-          roll: Cesium.Math.toRadians(0) //默认0
-        }
-      });
+      viewer.camera.flyTo({destination:{x:-2211970.4461358096,y:4838601.036226723,z:3507449.466319091},orientation:{heading:1.4972832138963152,pitch:-0.9015324417488282,roll:0.004969705240062794}});
     } else {
       waterPrimitive.show = !waterPrimitive.show;
-      waterPrimitive.show && viewer.camera.flyTo({
-        destination: Cesium.Cartesian3.fromDegrees(140, 20, 6000000.0),
-        orientation: {
-          heading: Cesium.Math.toRadians(0.0), //默认朝北0度，顺时针方向，东是90度
-          pitch: Cesium.Math.toRadians(-90), //默认朝下看-90,0为水平看，
-          roll: Cesium.Math.toRadians(0) //默认0
-        }
-      });
+      waterPrimitive.show && viewer.camera.flyTo({destination:{x:-2211970.4461358096,y:4838601.036226723,z:3507449.466319091},orientation:{heading:1.4972832138963152,pitch:-0.9015324417488282,roll:0.004969705240062794}});
     }
 
 
@@ -961,7 +947,7 @@ export default function (viewer) {
     var scanColor = new Cesium.Color(1.0, 0.0, 0.0, 1);
     lastStage = addRadarScanPostStage(viewer, cartographicCenter, 1000, scanColor, 3000);
   }
-  let flowingWall
+  let flowingWall;
   elBindClick('flowWall', () => {
     if (!flowingWall) {
       flowingWall=viewer.entities.add({
