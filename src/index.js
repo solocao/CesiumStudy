@@ -1,7 +1,6 @@
 import './css/common.css';
 import "./js/materials/ImageLine"
 import events from "./js/events";
-
 const viewer = new Cesium.Viewer("app", {
     // animation: false,
     // scene3DOnly: true,
@@ -128,40 +127,25 @@ events(viewer)
 
 
 
-
-// let polylines = scene.primitives.add(new Cesium.PolylineCollection());
-// let polyline = polylines.add({
-//     positions: Cesium.PolylinePipeline.generateCartesianArc({
-//         positions: Cesium.Cartesian3.fromDegreesArray([
-//             -110.0,
-//             42.0,
-//             -85.0,
-//             36.0,
-//             -100.0,
-//             25.0,
-//             -77.0,
-//             12.0,
-//         ]),
-//     }),
-//     width: 10.0,
-// });
-// console.log(polyline);
-// let material =new Cesium.Material({
-//     fabric: {
-//         type: "ODLine",
-//         uniforms: {
-//             color: new Cesium.Color(1.0, 1.0, 0.0, 1.0),
-//             totoalFrameCount: 45,
-//         }
-//     }
-
-// })
-// polyline.material = material;
-
-
 // document.onkeydown=(e)=>{
 //     if(e.keyCode==13){
 //         console.log(321);
 //         viewer.camera.moveForward(50000)
 //     }
 // }
+
+
+// var entity = viewer.entities.add({
+//     name: "点",
+//     position: Cesium.Cartesian3.fromDegrees(117.270739, 31.84309, 43.48),
+//     billboard: {
+//         image: "./marker/acting.png",
+//         scale: 1,
+//         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+//         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+//         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
+//     }
+// })
+// viewer.flyTo(entity)\
+
+

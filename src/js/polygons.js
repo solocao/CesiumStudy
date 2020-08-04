@@ -4,7 +4,25 @@ function getRotationValue() {
   rotation += 0.005;
   return rotation;
 }
+let radius = 0
 let entities = [
+  {
+    position: Cesium.Cartesian3.fromDegrees(-111.0, 40.0, 150000.0),
+    name: "Green circle at height with outline",
+    ellipse: {
+      semiMinorAxis: new Cesium.CallbackProperty(() => {
+        radius += 7000;
+        if (radius >= 500000) radius = 0;
+        return radius
+      }, false),
+      semiMajorAxis: new Cesium.CallbackProperty(() => {
+        return radius
+      }, false),
+      // fill:false,
+      material: new Cesium.ScanLineMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 0.5),
+      // outline: true, // height must be set for outline to display
+    },
+  },
   {
     name: "Rotating rectangle with rotating texture coordinate",
     rectangle: {

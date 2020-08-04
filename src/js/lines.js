@@ -223,9 +223,6 @@ function getLine() {
   }
 }
 let time = 1
-function getMateria() {
-
-}
 function insert(arr, step) {
   let buf = [];
   for (let i = 0; i < arr.length - 1; i++) {

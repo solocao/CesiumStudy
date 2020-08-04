@@ -93,10 +93,10 @@ Cesium.Material.PolylineTrailLinkSource = `czm_material czm_getMaterial(czm_mate
 
 	vec2 st = materialInput.st; 
 
-	vec4 colorImage = texture2D(image, vec2(fract(st.s - time), st.t)); 
+	vec4 colorImage = texture2D(image, vec2(fract(st.t - time), st.s)); 
 	// vec4 colorImage = texture2D(image, vec2(st.s, st.t)); 
 
-	material.alpha = 1.0;
+	material.alpha =colorImage.a;
 
 	// material.diffuse = (colorImage.rgb + color.rgb) / 2.0;
 	material.diffuse = colorImage.rgb;
@@ -393,7 +393,7 @@ ScanLineMaterialProperty.prototype.equals = function (other) {
 
 }
 
-Cesium.ODLineMaterialProperty = ScanLineMaterialProperty;
+Cesium.ScanLineMaterialProperty = ScanLineMaterialProperty;
 Cesium.Material.ScanLineType = 'ScanLine';
 
 // Cesium.Material.PolylineTrailLinkImage = "./sampledata/images/colors.png";
@@ -411,7 +411,7 @@ uniform float time;
 czm_material czm_getMaterial(czm_materialInput materialInput)
 {
 czm_material material = czm_getDefaultMaterial(materialInput);
-vec2 st = materialInput.st - .5;
+vec2 st = materialInput.st - 0.5;
 material.diffuse = color.rgb;
 material.emission = vec3(0);
 float t = time;
@@ -422,7 +422,7 @@ float alpha2 = circle(st, radius1, 0.01 - radius1) * circle(st, radius1, 0.01);
 float radius2 = 0.5 + smoothstep(s, 1.0, t) * 0.5;
 float alpha3 = circle(st, radius1, radius2 + 0.01 - radius1) * circle(st, radius1, -0.01);
 
-material.alpha = smoothstep(1.0, s, t) * (alpha1 + alpha2*0.1 + alpha3*0.1);
+material.alpha = smoothstep(1.0, s, t) * (alpha1*0.0 + alpha2*0.4 + alpha3*0.2);
 material.alpha *= color.a;
 
 return material;
