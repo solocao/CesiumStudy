@@ -122,30 +122,3 @@ tile.readyPromise.then(tileset => {
     // viewer.flyTo(tileset);
 })
 events(viewer)
-
-
-
-
-
-// document.onkeydown=(e)=>{
-//     if(e.keyCode==13){
-//         console.log(321);
-//         viewer.camera.moveForward(50000)
-//     }
-// }
-
-
-// var entity = viewer.entities.add({
-//     name: "点",
-//     position: Cesium.Cartesian3.fromDegrees(117.270739, 31.84309, 43.48),
-//     billboard: {
-//         image: "./marker/acting.png",
-//         scale: 1,
-//         horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-//         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-//         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
-//     }
-// })
-// viewer.flyTo(entity)\
-
-

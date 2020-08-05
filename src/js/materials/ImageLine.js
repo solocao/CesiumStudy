@@ -274,7 +274,7 @@ Cesium.Material.ODLineSource = `czm_material czm_getMaterial(czm_materialInput m
     float t = mod(czm_frameNumber, totoalFrameCount) / totoalFrameCount; 
     t *= 1.03;
     float alpha = smoothstep(t- 0.03, t, st.s) * step(-t, -st.s); 
-    alpha += 0.4;
+    alpha += 0.6;
     //alpha *= step(-0.4, -abs(0.5-st.t));  
     material.diffuse = color.rgb;
     material.alpha = alpha;
@@ -295,33 +295,6 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.ODLineType, {
 
 
 //扫描线
-`    float circle(vec2 uv, float r, float blur) {
-        float d = length(uv) * 2.0;
-        float c = smoothstep(r+blur, r, d);
-        return c;
-     }
-
-    uniform vec4 color;
-    uniform float time;
-    czm_material czm_getMaterial(czm_materialInput materialInput)
-    {
-      czm_material material = czm_getDefaultMaterial(materialInput);
-      vec2 st = materialInput.st - .5;
-      material.diffuse = color.rgb;
-      material.emission = vec3(0);
-      float t = time;
-      float s = 0.3;
-      float radius1 = smoothstep(.0, s, t) * 0.5;
-      float alpha1 = circle(st, radius1, 0.01) * circle(st, radius1, -0.01);
-      float alpha2 = circle(st, radius1, 0.01 - radius1) * circle(st, radius1, 0.01);
-      float radius2 = 0.5 + smoothstep(s, 1.0, t) * 0.5;
-      float alpha3 = circle(st, radius1, radius2 + 0.01 - radius1) * circle(st, radius1, -0.01);
-      material.alpha = smoothstep(1.0, s, t) * (alpha1 + alpha2*0.1 + alpha3*0.1);
-      material.alpha *= color.a;
-      return material;
-    }
-`
-
 export function ScanLineMaterialProperty(color, duration) {
 
   this._definitionChanged = new Cesium.Event();
