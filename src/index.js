@@ -55,7 +55,6 @@ const scene = viewer.scene;
 //开启地形深度检测
 // scene.globe.depthTestAgainstTerrain=true
 let handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-console.log("handle",handler);
 handler.setInputAction(evt => {
     // scene.globe.depthTestAgainstTerrain = true;
     let feature = scene.pick(evt.position);
@@ -80,6 +79,7 @@ handler.setInputAction(evt => {
         } else {
             popup.position = position;
         }
+        console.log(feature.id.properties);
         popup.innerHTML = `<h1>${feature.id.properties.propertyNames.map(key => {
             return `${key}:${feature.id.properties[key].getValue()}`
         }).join('\n')}</h1>`;

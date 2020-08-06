@@ -186,10 +186,10 @@ export default function (viewer) {
   elBindClick("water", () => {
     if (!waterPrimitive) {
       let waterFace = [
-        114.57764581645323, 33.57116444757951, 20,
-        114.57420069500392, 33.57116444757951, 20,
-        114.57420069500392, 33.57399014528327, 20,
-        114.57764581645323, 33.57399014528327, 20
+        114.57764581645323, 33.57116444757951, 32,
+        114.57420069500392, 33.57116444757951, 32,
+        114.57420069500392, 33.57399014528327, 32,
+        114.57764581645323, 33.57399014528327, 32
       ];
       waterPrimitive = new Cesium.Primitive({
         // show: true,// 默认隐藏
@@ -197,7 +197,7 @@ export default function (viewer) {
         geometryInstances: new Cesium.GeometryInstance({
           geometry: new Cesium.PolygonGeometry({
             polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
-            //extrudedHeight: 0,//注释掉此属性可以只显示水面
+            extrudedHeight: 10,//注释掉此属性可以只显示水面
             // perPositionHeight : true//注释掉此属性水面就贴地了
           })
         }),
