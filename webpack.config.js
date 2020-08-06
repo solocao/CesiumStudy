@@ -15,8 +15,18 @@ module.exports = {
         filename: '[name].bundle.js',
     },
 
+    resolve: {   // 需要打包的文件后缀
+        extensions: [".tsx", ".ts", ".js"]
+    },
     module: {
-        rules: [{
+        rules: [
+            {
+                test: /\.tsx?$/,
+                use: {
+                    loader: 'ts-loader'
+                }
+            },
+            {
             test: /\.css$/,
             use: [
                 'style-loader',

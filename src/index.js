@@ -5,11 +5,13 @@ const viewer = new Cesium.Viewer("app", {
     // animation: false,
     // scene3DOnly: true,
     // timeline: false,//时间线
+    // terrainShadows: Cesium.ShadowMode.ENABLED,
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
     baseLayerPicker: false,
     infoBox: false,
+    // shadows:true,
     fullscreenButton: false,
     geocoder: false,//搜索按钮
     homeButton: false,
@@ -23,7 +25,8 @@ const viewer = new Cesium.Viewer("app", {
     // navigationInstructionsInitiallyVisible: false,
     // imageryProvider: 
 });
-
+var shadowMap = viewer.shadowMap;
+shadowMap.maximumDistance = 10000.0;
 viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
     url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
     layer: "tdtBasicLayer",
