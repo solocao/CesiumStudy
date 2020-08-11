@@ -11,7 +11,7 @@ export default function () {
       contents.forEach((c,i)=>{
         console.log(i,e.target.value);
         if((i+1)==e.target.value){
-          c.style.display='block'
+          c.style.display='flex'
         }else{
           c.style.display='none'
         }
