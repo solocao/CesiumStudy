@@ -1,5 +1,5 @@
 import './css/common.css';
-import "./js/materials/ImageLine"
+// import "../public/materials/ImageLine"
 import events from "./js/events";
 const viewer = new Cesium.Viewer("app", {
     // animation: false,
@@ -11,7 +11,7 @@ const viewer = new Cesium.Viewer("app", {
     vrButton: false,
     baseLayerPicker: false,
     infoBox: false,
-    // shadows:true,
+    // shadows: true,
     fullscreenButton: false,
     geocoder: false,//搜索按钮
     homeButton: false,
@@ -114,7 +114,7 @@ tile.readyPromise.then(tileset => {
     );
     let offset = Cesium.Cartesian3.fromRadians(
         cartographic.longitude,
-        cartographic.latitude, -cartographic.height
+        cartographic.latitude, -cartographic.height + 12
     );
     let translation = Cesium.Cartesian3.subtract(
         offset,
@@ -125,3 +125,25 @@ tile.readyPromise.then(tileset => {
     // viewer.flyTo(tileset);
 })
 events(viewer)
+
+
+let camera1 = new Cesium.Camera(scene);
+camera1.direction = new Cesium.Cartesian3(0.3679649465778106,
+    -0.8045994346859792,
+    0.46607032494355605);
+camera1.position = new Cesium.Cartesian3(-2212527.989324894,
+    4837953.918071975,
+    3506908.080654449)
+
+let sm = new Cesium.ShadowMap({
+    context: scene.context,
+    lightCamera: camera1,
+    enabled: true,
+    isPointLight: true,
+    pointLightRadius: 100.0,
+    cascadesEnabled: false,
+    softShadows: true,
+    normalOffset: false,
+    fromLightSource: false
+});
+console.log(sm);

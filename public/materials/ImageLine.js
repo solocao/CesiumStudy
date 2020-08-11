@@ -1,4 +1,6 @@
-export function PolylineTrailLinkMaterialProperty(color, duration, image) {
+console.log(Cesium);
+
+function PolylineTrailLinkMaterialProperty(color, duration, image) {
 
   this._definitionChanged = new Cesium.Event();
 
@@ -187,7 +189,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailLinkType
 
 
 
-export function ODLineMaterialProperty(color, duration) {
+function ODLineMaterialProperty(color, duration) {
 
   this._definitionChanged = new Cesium.Event();
 
@@ -295,7 +297,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.ODLineType, {
 
 
 //扫描线
-export function ScanLineMaterialProperty(color, duration) {
+function ScanLineMaterialProperty(color, duration) {
 
   this._definitionChanged = new Cesium.Event();
 

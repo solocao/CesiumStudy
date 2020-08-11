@@ -1,4 +1,4 @@
-export function addCircleScanPostStage(viewer, cartographicCenter, maxRadius, scanColor, duration) {
+function addCircleScanPostStage(viewer, cartographicCenter, maxRadius, scanColor, duration) {
   var _Cartesian3Center = Cesium.Cartographic.toCartesian(cartographicCenter);
   var _Cartesian4Center = new Cesium.Cartesian4(_Cartesian3Center.x, _Cartesian3Center.y, _Cartesian3Center.z, 1);
 
@@ -100,7 +100,7 @@ function getScanSegmentShader() {
   scanColor 扫描颜色
   duration 持续时间 毫秒
 */
-export function addRadarScanPostStage(viewer, cartographicCenter, radius, scanColor, duration) {
+function addRadarScanPostStage(viewer, cartographicCenter, radius, scanColor, duration) {
   var _Cartesian3Center = Cesium.Cartographic.toCartesian(cartographicCenter);
   var _Cartesian4Center = new Cesium.Cartesian4(_Cartesian3Center.x, _Cartesian3Center.y, _Cartesian3Center.z, 1);
 

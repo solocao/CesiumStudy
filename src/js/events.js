@@ -1,9 +1,6 @@
 import pointEntities from "./points"
 import lineEntities from "./lines"
 import polygonEntities from "./polygons"
-import { addCircleScanPostStage, addRadarScanPostStage } from "./materials/scan"
-
-
 export default function (viewer) {
   console.log(Cesium.Cartesian3.fromDegreesArray([117.74524327559975, 35.38476706965578, 114.20500875723677, 33.32715123237522]));
   let scene = viewer.scene;
@@ -186,10 +183,10 @@ export default function (viewer) {
   elBindClick("water", () => {
     if (!waterPrimitive) {
       let waterFace = [
-        114.57764581645323, 33.57116444757951, 32,
-        114.57420069500392, 33.57116444757951, 32,
-        114.57420069500392, 33.57399014528327, 32,
-        114.57764581645323, 33.57399014528327, 32
+        114.57764581645323, 33.57116444757951, 20,
+        114.57420069500392, 33.57116444757951, 20,
+        114.57420069500392, 33.57399014528327, 20,
+        114.57764581645323, 33.57399014528327, 20
       ];
       waterPrimitive = new Cesium.Primitive({
         // show: true,// 默认隐藏
@@ -197,7 +194,7 @@ export default function (viewer) {
         geometryInstances: new Cesium.GeometryInstance({
           geometry: new Cesium.PolygonGeometry({
             polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
-            extrudedHeight: 10,//注释掉此属性可以只显示水面
+            extrudedHeight: 12,//注释掉此属性可以只显示水面
             // perPositionHeight : true//注释掉此属性水面就贴地了
           })
         }),
@@ -207,7 +204,7 @@ export default function (viewer) {
             fabric: {
               type: 'Water',
               uniforms: {
-                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.6),
+                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.7),
                 blendColor: new Cesium.Color(0 / 255 * 1.0, 0 / 255 * 1.0, 255 / 255 * 1.0, 1.0),
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
@@ -349,7 +346,6 @@ export default function (viewer) {
           },
         });
       }
-      console.log(shape.polygon.hierarchy._value.positions);
       return shape;
     }
     function createPoint(worldPosition) {
@@ -794,7 +790,7 @@ export default function (viewer) {
       ds.load(require("../js/车行路.json")).then(source => {
         source.entities.values.forEach(en => {
           en.polyline.material = new Cesium.ODLineMaterialProperty(
-            Cesium.Color.fromCssColorString(`rgb(${Math.random() * 255}, 183, 49,1.0)`),
+            Cesium.Color.fromCssColorString(`rgb(0, 156, ${Math.random() * 255},1.0)`),
             100
           )
           en.polyline.width = 5
@@ -975,3 +971,6 @@ export default function (viewer) {
 function elBindClick(id, cb) {
   document.getElementById(id).addEventListener('click', cb);
 }
+
+
+
