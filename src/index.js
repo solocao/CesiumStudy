@@ -1,7 +1,9 @@
 import './css/common.css';
 // import "../public/materials/ImageLine"
 // import events from "./js/events";
-const viewer = new Cesium.Viewer("app", {
+import controller from './js/controler'
+controller()
+const viewer = new Cesium.Viewer("CesiumContainer", {
     // animation: false,
     // scene3DOnly: true,
     // timeline: false,//时间线
@@ -48,7 +50,7 @@ viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvi
 viewer.scene.postProcessStages.fxaa.enabled = true;
 const popup = document.createElement('div');
 popup.className = "popup";
-document.getElementById("app").appendChild(popup);
+document.getElementById("CesiumContainer").appendChild(popup);
 popup.style.position = "absolute";
 popup.style.display = "none";
 const scene = viewer.scene;

@@ -8,11 +8,11 @@
     <script src="./Cesium/Cesium.js"></script>
     <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
     <script src="./heatmap.min.js"></script>
-    
+
 </head>
 
 <body>
-    <div id="app"></div>
+    <!-- <div id="app"></div>
     <input id="menu_switch" type="checkbox" checked>
     <label class="menu_switch" for="menu_switch"></label>
     <div class="menu">
@@ -74,6 +74,28 @@
         <div class="heatmap"
             style="width: 968px;height: 968px;position: absolute !important;top: 0 !important;right: 0 !important;">
         </div>
+    </div> -->
+
+    <div class="container">
+        <header>
+            Cesium
+            <label for="switch">e2w</label>
+        </header>
+        <input style="display: none;" type="checkbox" id="switch" checked>
+        <div class="menu">
+            <input type="radio" name="menu" value="1" id="m1" checked>
+            <input type="radio" name="menu" value="2" id="m2">
+            <div class="menu_first">
+                <label for="m1">视图</label>
+                <label for="m2">服务</label>
+            </div>
+            <div class="menu_second">
+
+            </div>
+        </div>
+        <main>
+            <div id="CesiumContainer" class="CesiumContainer"></div>
+        </main>
     </div>
     <script src="./materials/ImageLine.js"></script>
     <script src="./materials/scan.js"></script>
@@ -81,7 +103,7 @@
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOGRjOTc1Ny1kYTk2LTQ1ODktYTcxNi1jYTcwNjllNGRmNDYiLCJpZCI6Mjc4MzAsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMzYzNTd9.p5tdyN9GYejwSppDN55BHcLEM9V1jyxEoPU1VZB8CC8";
         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(73.0, 3.0, 135.0, 53.0);
     </script>
-    
+
 </body>
 
 </html>
