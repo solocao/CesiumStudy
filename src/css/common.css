@@ -40,12 +40,12 @@ header>label {
 }
 
 .CesiumContainer {
-    height: calc(100vh - 210px);
+    height: calc(100vh - 230px);
     position: relative;
 }
 
 .menu {
-    height: 120px;
+    height: 140px;
     overflow: hidden;
     background: #fff;
     color: #dcdde1;
@@ -68,7 +68,7 @@ header>label {
 }
 
 .menu_second {
-    height: 86px;
+    height: 106px;
     background-color: #747d8c;
     padding: 7px;
     border: 7px solid #57606f;
@@ -120,4 +120,7 @@ footer>a:hover{
 
 .unchecked {
     background-color: transparent;
+}
+.cesium-viewer-bottom{
+    display: none;
 }
