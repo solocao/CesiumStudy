@@ -28,12 +28,20 @@ header {
     align-items: center;
 }
 
+.icon {
+    background-image: url('../assets/地理.png');
+    width: 40px;
+    height: 40px;
+    background-size: 100%;
+}
+
 header>label {
     margin-left: auto;
 }
 
 .CesiumContainer {
-    height: calc(100vh - 170px);
+    height: calc(100vh - 210px);
+    position: relative;
 }
 
 .menu {
@@ -41,12 +49,13 @@ header>label {
     overflow: hidden;
     background: #fff;
     color: #dcdde1;
+    box-shadow: 0 0 5px #FFF;
 }
 
 .menu_first {
     height: 34px;
     display: flex;
-    background-color: #a4b0be;
+    background-color: #57606f;
 }
 
 .menu_first>label {
@@ -54,23 +63,59 @@ header>label {
     transition: .3s ease-in-out all;
 }
 
-.menu_second {
+.menu_first>label:hover {
     background-color: #353b48;
-    height: 86px;
-    box-shadow: inset 0 -2px 4px #fff, inset 0 0 8px #ccc;
 }
-.menu_second>div{
+
+.menu_second {
+    height: 86px;
+    background-color: #747d8c;
+    padding: 7px;
+    border: 7px solid #57606f;
+}
+
+.menu_second>div {
     width: 100%;
     height: 100%;
     display: flex;
     overflow: auto;
+    /* padding: 20px 0; */
 }
+
+.menu_second>div:nth-of-type(n+2) {
+    display: none;
+}
+
 .menu>input[type="radio"] {
     display: none;
 }
 
+footer {
+    height: 40px;
+    background-color: #353b48;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-weight: 600;
+    padding: 0 10px;
+    box-sizing: content-box;
+    border-top: 3px solid #a4b0be;
+}
+
+footer>a {
+    color: #ced6e0;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0 10px;
+    text-decoration: none;
+}
+footer>a:hover{
+    text-decoration: underline;
+}
+
 .checked {
     background-color: #353b48;
+    border-bottom: 1px solid #fff;
 }
 
 .unchecked {

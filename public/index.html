@@ -12,80 +12,23 @@
 </head>
 
 <body>
-    <!-- <div id="app"></div>
-    <input id="menu_switch" type="checkbox" checked>
-    <label class="menu_switch" for="menu_switch"></label>
-    <div class="menu">
-        <button id="modellocated">3DTiles</button>
-        <button id="flyHome">显示地球</button>
-        <button id="getCamera">获取相机</button>
-        <button id="addGeojson">GeoJSON</button>
-        <button id="point">点</button>
-        <button id="line">线</button>
-        <button id="polygon">面</button>
-        <button id="polygonVol">立体面</button>
-        <button id="Billboard">图标</button>
-        <button id="water">水面</button>
-        <button id="playvideo">视频</button>
-        <button id="draw">绘图</button>
-        <button id="model">GLB模型</button>
-        <button id="radar">雷达</button>
-        <button id="wms">WMS</button>
-        <button id="pandm">primitive和材质</button>
-        <button id="translate">平移</button>
-        <button id="scale">缩放</button>
-        <button id="rotate">旋转</button>
-        <button id="odline">OD线</button>
-        <button id="heatmap">热力图</button>
-        <button id="radarScan">雷达扫描</button>
-        <button id="circleScan">圆形扫描</button>
-        <button id="flowWall">流动墙</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-        <button>内容</button>
-
-    </div>
-    <video style="position: absolute;top: 0;right: 0;display: none;" id="video" muted="" autoplay="autoplay" loop=""
-        crossorigin="" controls="" src="big-buck-bunny_trailer.mp4"></video>
-    <div
-        style="width: 968px;height: 968px;position: absolute !important;top: 0 !important;right: 0 !important;pointer-events: none;display: none;">
-        <div class="heatmap"
-            style="width: 968px;height: 968px;position: absolute !important;top: 0 !important;right: 0 !important;">
-        </div>
-    </div> -->
-
     <div class="container">
         <header>
+            <div class="icon"></div>
             Cesium
         </header>
         <div class="menu">
             <input type="radio" name="menu" value="1" id="m1" checked>
             <input type="radio" name="menu" value="2" id="m2">
+            <input type="radio" name="menu" value="3" id="m3">
+            <input type="radio" name="menu" value="4" id="m4">
+            <input type="radio" name="menu" value="5" id="m5">
             <div class="menu_first">
                 <label for="m1">视图</label>
                 <label for="m2">服务</label>
+                <label for="m3">效果</label>
+                <label for="m4">分析</label>
+                <label for="m5">标绘</label>
             </div>
             <div class="menu_second">
                 <div id="s1">
@@ -98,9 +41,7 @@
                     <button id="polygon">面</button>
                     <button id="polygonVol">立体面</button>
                     <button id="Billboard">图标</button>
-                    <button id="water">水面</button>
                     <button id="playvideo">视频</button>
-                    <button id="draw">绘图</button>
                     <button id="model">GLB模型</button>
                     <button id="radar">雷达</button>
                     <button id="wms">WMS</button>
@@ -108,16 +49,30 @@
                     <button id="translate">平移</button>
                     <button id="scale">缩放</button>
                     <button id="rotate">旋转</button>
-                    <button id="odline">OD线</button>
                     <button id="heatmap">热力图</button>
                     <button id="radarScan">雷达扫描</button>
                     <button id="circleScan">圆形扫描</button>
-                    <button id="flowWall">流动墙</button>
                 </div>
                 <div id="s2">2</div>
+                <div id="s3">
+                    <button id="water">水面</button>
+                    <button id="odline">OD线</button>
+                    <button id="flowWall">流动墙</button>
+                </div>
+                <div id="s4">4</div>
+                <div id="s5">
+                    <button id="draw">绘图</button>
+                </div>
             </div>
         </div>
-        <div id="CesiumContainer" class="CesiumContainer"></div>
+        <div id="CesiumContainer" class="CesiumContainer">
+            <video style="position: absolute;top: 0;right: 0;display: none;z-index: 1;" id="video" muted=""
+                autoplay="autoplay" loop="" crossorigin="" controls="" src="big-buck-bunny_trailer.mp4"></video>
+        </div>
+        <footer>
+            <a href="https://cesium.com/cesiumjs/">cesium官网</a>
+            <a href="http://10.20.10.174:6999/Documentation/">cesium本地文档</a>
+        </footer>
     </div>
     <script src="./materials/ImageLine.js"></script>
     <script src="./materials/scan.js"></script>

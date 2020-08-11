@@ -16,6 +16,10 @@ module.exports = {
     },
 
     resolve: {   // 需要打包的文件后缀
+        alias: {
+			//修改Vue被导入的路径
+			"@": path.join(__dirname, './src'),
+		},
         extensions: [".tsx", ".ts", ".js"]
     },
     module: {
