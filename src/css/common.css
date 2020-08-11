@@ -39,7 +39,7 @@ header {
     height: 50px;
     background-color: #353b48;
     display: flex;
-    color: #FFF;
+    color: #0fb9b1;
     font-size: 28px;
     font-weight: 600;
     justify-content: flex-start;
@@ -141,9 +141,9 @@ footer {
 }
 
 footer>a {
-    color: #ced6e0;
+    color: #0fb9b1;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 20px;
     margin: 0 10px;
     text-decoration: none;
 }
