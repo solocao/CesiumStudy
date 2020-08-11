@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font: 18px "微软雅黑";
+    font-weight: 600;
 }
 
 body, html {
@@ -80,6 +81,10 @@ header>label {
     display: flex;
     overflow: auto;
     /* padding: 20px 0; */
+}
+.menu_second>div>div{
+    flex-shrink: 0;
+    min-width: 60px;
 }
 
 .menu_second>div:nth-of-type(n+2) {
