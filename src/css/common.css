@@ -59,7 +59,12 @@ header>label {
     height: 86px;
     box-shadow: inset 0 -2px 4px #fff, inset 0 0 8px #ccc;
 }
-
+.menu_second>div{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: auto;
+}
 .menu>input[type="radio"] {
     display: none;
 }

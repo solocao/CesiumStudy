@@ -1,6 +1,6 @@
 import './css/common.css';
 // import "../public/materials/ImageLine"
-// import events from "./js/events";
+import events from "./js/events";
 import controller from './js/controler'
 controller()
 const viewer = new Cesium.Viewer("CesiumContainer", {
@@ -126,7 +126,7 @@ tile.readyPromise.then(tileset => {
     tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
     // viewer.flyTo(tileset);
 })
-// events(viewer)
+events(viewer)
 
 
 let camera1 = new Cesium.Camera(scene);
