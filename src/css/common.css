@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font: 18px "微软雅黑" ;
+    font: 18px "微软雅黑";
 }
 
 body, html {
@@ -10,51 +10,64 @@ body, html {
     height: 100vh;
     overflow: hidden;
 }
-.container{
+
+.container {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-header {
-    flex-shrink: 0;
-    height: 50px;
-    background-color: aqua;
 }
 
-main {
-    flex: 1;
-    flex-shrink: 0;
+header {
+    height: 50px;
+    background-color: #353b48;
     display: flex;
+    color: #FFF;
+    font-size: 28px;
+    font-weight: 600;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+header>label {
+    margin-left: auto;
 }
 
 .CesiumContainer {
-    width: 100%;
+    height: calc(100vh - 170px);
 }
 
 .menu {
-    flex-shrink: 0;
     height: 120px;
-    background-color: rgb(206, 180, 180);
-    transition: .3s all ease-in-out;
-}
-#switch:checked+.menu{
-    height: 0;
+    overflow: hidden;
+    background: #fff;
+    color: #dcdde1;
 }
 
 .menu_first {
+    height: 34px;
     display: flex;
+    background-color: #a4b0be;
 }
-.menu_first>label{
+
+.menu_first>label {
     padding: 5px 20px;
+    transition: .3s ease-in-out all;
+}
+
+.menu_second {
+    background-color: #353b48;
+    height: 86px;
+    box-shadow: inset 0 -2px 4px #fff, inset 0 0 8px #ccc;
 }
 
 .menu>input[type="radio"] {
     display: none;
 }
-.checked{
-    background-color: chartreuse;
+
+.checked {
+    background-color: #353b48;
 }
-.unchecked{
+
+.unchecked {
     background-color: transparent;
 }
