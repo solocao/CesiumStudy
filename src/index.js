@@ -1,7 +1,7 @@
 import './css/common.css';
 // import "../public/materials/ImageLine"
 import events from "./js/events";
-import controller from './js/controler'
+import controller from './js/controller'
 controller()
 const viewer = new Cesium.Viewer("CesiumContainer", {
     // animation: false,

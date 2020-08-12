@@ -4,11 +4,15 @@
     "btns": [
       {
         "id": "flyHome",
-        "name": "显示地球"
+        "name": "显示地球",
+        "src":"地球.png",
+        "activesrc":"地球 (1).png"
       },
       {
         "id": "getCamera",
-        "name": "获取相机"
+        "name": "获取相机",
+        "src":"摄像机.png",
+        "activesrc":"摄像机 (1).png"
       }
     ]
   },
