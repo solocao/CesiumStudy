@@ -78,6 +78,18 @@
         "name": "测面积",
         "src":"面积-面.png",
         "activesrc":"面积-面 (1).png"
+      },
+      {
+        "id": "length",
+        "name": "测长度",
+        "src":"菜单-长度测量.png",
+        "activesrc":"菜单-长度测量 (1).png"
+      },
+      {
+        "id": "height",
+        "name": "测高度",
+        "src":"iconfont图标_高度.png",
+        "activesrc":"iconfont图标_高度 (1).png"
       }
     ]
   },
