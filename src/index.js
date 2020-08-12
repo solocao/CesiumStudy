@@ -8,6 +8,7 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // scene3DOnly: true,
     // timeline: false,//时间线
     // terrainShadows: Cesium.ShadowMode.ENABLED,
+    
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
