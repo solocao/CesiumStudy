@@ -7,10 +7,10 @@ export default function () {
     let img = tab.querySelector('img')
     if (img) {
       tab.onmouseover = () => {
-        img.src=require(`@/assets/btnIcons/${img.getAttribute('data-usrc')}`).default
+        img.src = require(`@/assets/btnIcons/${img.getAttribute('data-usrc')}`).default
       }
       tab.onmouseout = () => {
-        img.src=require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default
+        img.src = require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default
       }
     }
   })
@@ -45,7 +45,7 @@ function createMenu() {
   let menu = document.querySelector(".menu");
   let input = '', mf = '', ms = '';
   menuConf.forEach((item, index) => {
-    input += `<input type="radio" name="menu" value="${index + 1}" id="m${index + 1}" ${index==0?'checked':''}>`;
+    input += `<input type="radio" name="menu" value="${index + 1}" id="m${index + 1}" ${index == 0 ? 'checked' : ''}>`;
     mf += `<label for="m${index + 1}">${item.tabName}</label>`;
     let btns = ''
     item.btns.forEach(btn => {

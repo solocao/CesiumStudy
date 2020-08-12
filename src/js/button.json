@@ -69,7 +69,9 @@
     "btns": [
       {
         "id": "heatmap",
-        "name": "热力图"
+        "name": "热力图",
+        "src":"热力图.png",
+        "activesrc":"热力图 (1).png"
       },
       {
         "id": "area",
