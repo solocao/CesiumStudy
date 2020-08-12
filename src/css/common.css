@@ -43,7 +43,7 @@ header {
     font-weight: 600;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 10px;
+    padding: 0  0 0 10px;
     position: relative;
     z-index: 5;
 }
@@ -55,8 +55,27 @@ header {
     background-size: 100%;
 }
 
-header>label {
+header>.decorate{
+    width: 20vw;
     margin-left: auto;
+    height: 100%;
+    position: relative;
+    background:linear-gradient(
+        45deg, 
+        #778ca360 0, #778ca360 25%, transparent 25%, transparent 50%, 
+        #778ca360 50%, #778ca360 75%, transparent 75%, transparent
+      );
+      background-size: 40px 40px ;
+      margin-right: 0;
+}
+header>.decorate::before{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 25px solid transparent;
+    position: absolute;
+    border-left-color: #353b48;
+    border-bottom-color: #353b48;
 }
 
 .CesiumContainer {

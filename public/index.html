@@ -12,108 +12,13 @@
 </head>
 
 <body>
-    <div class="container" >
+    <div class="container">
         <header>
             <div class="icon"></div>
             Cesium
+            <div class="decorate"></div>
         </header>
         <div class="menu">
-            <!-- <input type="radio" name="menu" value="1" id="m1" checked>
-            <input type="radio" name="menu" value="2" id="m2">
-            <input type="radio" name="menu" value="3" id="m3">
-            <input type="radio" name="menu" value="4" id="m4">
-            <input type="radio" name="menu" value="5" id="m5"> -->
-            <!-- <div class="menu_first"> -->
-            <!-- <label for="m1">视图</label>
-                <label for="m2">服务</label>
-                <label for="m3">效果</label>
-                <label for="m4">分析</label>
-                <label for="m5">标绘</label> -->
-            <!-- </div> -->
-            <!-- <div class="menu_second"> -->
-            <!-- <div>
-                    <div id="modellocated">
-                        <div></div>
-                        3DTiles
-                    </div>
-
-                    <div id="flyHome">
-                        <div></div>显示地球
-                    </div>
-                    <div id="getCamera">
-                        <div></div>获取相机
-                    </div>
-                    <div id="addGeojson">
-                        <div></div>GeoJSON
-                    </div>
-                    <div id="point">
-                        <div></div>点
-                    </div>
-                    <div id="line">
-                        <div></div>线
-                    </div>
-                    <div id="polygon">
-                        <div></div>面
-                    </div>
-                    <div id="polygonVol">
-                        <div></div>立体面
-                    </div>
-                    <div id="Billboard">
-                        <div></div>图标
-                    </div>
-                    <div id="playvideo">
-                        <div></div>视频
-                    </div>
-                    <div id="model">
-                        <div></div>GLB模型
-                    </div>
-                    <div id="radar">
-                        <div></div>雷达
-                    </div>
-                    <div id="wms">
-                        <div></div>WMS
-                    </div>
-                    <div id="pandm">
-                        <div></div>primitive和材质
-                    </div>
-                    <div id="translate">
-                        <div></div>平移
-                    </div>
-                    <div id="scale">
-                        <div></div>缩放
-                    </div>
-                    <div id="rotate">
-                        <div></div>旋转
-                    </div>
-                    <div id="heatmap">
-                        <div></div>热力图
-                    </div>
-                    <div id="radarScan">
-                        <div></div>雷达扫描
-                    </div>
-                    <div id="circleScan">
-                        <div></div>圆形扫描
-                    </div>
-                </div>
-                <div>2</div>
-                <div>
-                    <div id="water">
-                        <div></div>水面
-                    </div>
-                    <div id="odline">
-                        <div></div>OD线
-                    </div>
-                    <div id="flowWall">
-                        <div></div>流动墙
-                    </div>
-                </div>
-                <div>4</div>
-                <div >
-                    <div id="draw">
-                        <div></div>绘图
-                    </div>
-                </div> -->
-            <!-- </div> -->
         </div>
         <div id="CesiumContainer" class="CesiumContainer">
             <video style="position: absolute;top: 0;right: 0;display: none;z-index: 1;" id="video" muted=""
@@ -125,14 +30,12 @@
             <a href="http://10.20.10.174:6999/Documentation/">cesium本地文档</a>
         </footer>
     </div>
-
     <script>
         Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOGRjOTc1Ny1kYTk2LTQ1ODktYTcxNi1jYTcwNjllNGRmNDYiLCJpZCI6Mjc4MzAsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMzYzNTd9.p5tdyN9GYejwSppDN55BHcLEM9V1jyxEoPU1VZB8CC8";
         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(73.0, 3.0, 135.0, 53.0);
     </script>
     <script src="./materials/ImageLine.js"></script>
     <script src="./materials/scan.js"></script>
-
 </body>
 
 </html>
