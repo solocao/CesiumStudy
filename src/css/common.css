@@ -101,6 +101,7 @@ header>label {
     /* padding: 20px 0; */
 }
 .menu_second>div>div{
+    position: relative;
     flex-shrink: 0;
     min-width: 60px;
     min-height: 60px;
@@ -113,12 +114,27 @@ header>label {
     font-size: 16px;
     line-height: 20px;
 }
-.menu_second>div>div>div{
+.menu_second>div>div::before{
+    width: 2px;
+    height: 50px;
+    content: "";
+    position: absolute;
+    right: -15px;
+    background-color: #57606f60;
+    border-radius: 1px;
+}
+.menu_second>div>div:last-of-type::before{
+    width: 0
+}
+.menu_second>div>div:hover{
+    color: #1296db;
+
+}
+/* .menu_second>div>div>img{
     width: 30px;
     height: 30px;
     background-size: 100% 100%;
-
-}
+} */
 
 .menu_second>div:nth-of-type(n+2) {
     display: none;
@@ -141,18 +157,22 @@ footer {
 }
 
 footer>a {
+    flex-shrink: 0;
     color: #0fb9b1;
     font-weight: 600;
     font-size: 20px;
     margin: 0 10px;
     text-decoration: none;
 }
+footer>a:first-of-type{
+    margin-left: auto;
+}
 footer>a:hover{
     text-decoration: underline;
 }
 
 .checked {
-    background-color: #353b48;
+    background-color: #e15f41;
     border-bottom: 1px solid #fff;
 }
 

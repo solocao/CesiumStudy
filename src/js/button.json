@@ -1,0 +1,141 @@
+[
+  {
+    "tabName": "视图",
+    "btns": [
+      {
+        "id": "flyHome",
+        "name": "显示地球"
+      },
+      {
+        "id": "getCamera",
+        "name": "获取相机"
+      }
+    ]
+  },
+  {
+    "tabName": "模型",
+    "btns": [
+      {
+        "id": "modellocated",
+        "name": "3DTiles",
+        "src": "模型管理.png",
+        "activesrc": "模型管理1.png"
+      },
+      {
+        "id": "model",
+        "name": "GLB模型"
+      }
+    ]
+  },
+  {
+    "tabName": "服务",
+    "btns": []
+  },
+  {
+    "tabName": "效果",
+    "btns": [
+      {
+        "id": "water",
+        "name": "水面"
+      },
+      {
+        "id": "radar",
+        "name": "雷达"
+      },
+      {
+        "id": "odline",
+        "name": "OD线"
+      },
+      {
+        "id": "flowWall",
+        "name": "流动墙"
+      },
+      {
+        "id": "radarScan",
+        "name": "雷达扫描"
+      },
+      {
+        "id": "circleScan",
+        "name": "圆形扫描"
+      }
+    ]
+  },
+  {
+    "tabName": "分析",
+    "btns": [
+      {
+        "id": "heatmap",
+        "name": "热力图"
+      }
+    ]
+  },
+  {
+    "tabName": "标绘",
+    "btns": [
+      {
+        "id": "draw",
+        "name": "绘图",
+        "src": "drawing-palette.png",
+        "activesrc": "drawing-palette (1).png"
+      }
+    ]
+  },
+  {
+    "tabName": "数据",
+    "btns": [
+      {
+        "id": "addGeojson",
+        "name": "GeoJSON"
+      },
+      {
+        "id": "wms",
+        "name": "WMS"
+      }
+    ]
+  },
+  {
+    "tabName": "基本功能",
+    "btns": [
+      {
+        "id": "point",
+        "name": "点"
+      },
+      {
+        "id": "line",
+        "name": "线"
+      },
+      {
+        "id": "polygon",
+        "name": "面"
+      },
+      {
+        "id": "polygonVol",
+        "name": "立体面"
+      },
+      {
+        "id": "Billboard",
+        "name": "图标"
+      },
+      {
+        "id": "playvideo",
+        "name": "视频"
+      },
+      {
+        "id": "pandm",
+        "name": "primitive和材质"
+      },
+      {
+        "id": "translate",
+        "name": "平移"
+      },
+      {
+        "id": "scale",
+        "name": "缩放"
+      },
+      {
+        "id": "rotate",
+        "name": "旋转"
+      }
+    ]
+  }
+]
