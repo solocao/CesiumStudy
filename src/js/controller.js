@@ -54,7 +54,7 @@ function createMenu() {
                 ${btn.name}
               </div>`;
     });
-    ms += `<div>${btns}</div>`
+    ms += `<div>${btns}</div>`;
   })
   menu.innerHTML = input + `<div class='menu_first'>${mf}</div>` + `<div class="menu_second">${ms}</div>`
 }
