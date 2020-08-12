@@ -2,7 +2,6 @@ import pointEntities from "./points"
 import lineEntities from "./lines"
 import polygonEntities from "./polygons"
 export default function (viewer) {
-  console.log(Cesium.Cartesian3.fromDegreesArray([117.74524327559975, 35.38476706965578, 114.20500875723677, 33.32715123237522]));
   let scene = viewer.scene;
   let camera = viewer.camera;
   elBindClick("modellocated", () => {
@@ -510,7 +509,7 @@ export default function (viewer) {
       let handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
       const popup = document.createElement('div');
       popup.className = "popup";
-      document.getElementById("app").appendChild(popup);
+      document.getElementById("CesiumContainer").appendChild(popup);
       popup.style.position = "absolute";
       popup.style.display = "none";
       handler.setInputAction((evt) => {
@@ -963,6 +962,9 @@ export default function (viewer) {
       flowingWall.show = !flowingWall.show;
       flowingWall.show && viewer.flyTo(flowingWall)
     }
+  });
+  elBindClick('area',()=>{
+    
   })
 }
 

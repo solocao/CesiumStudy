@@ -11,8 +11,9 @@ body, html {
     height: 100vh;
     overflow: hidden;
 }
+
 ::-webkit-scrollbar {
-    width:0;
+    width: 0;
     /*滚动条宽度*/
     height: 5px;
     /*滚动条高度*/
@@ -43,9 +44,29 @@ header {
     font-weight: 600;
     justify-content: flex-start;
     align-items: center;
-    padding: 0  0 0 10px;
+    padding: 0 0 0 10px;
     position: relative;
     z-index: 5;
+    text-shadow: 1px 1px 0px #000, 2px 2px 0px #000, 3px 3px 0px #000, 4px 4px 0px #000,5px 5px 0px #000,6px 6px 0px #000;
+    animation: lighting 12s infinite;
+    background-image: linear-gradient( 45deg, #747d8c20 0, #747d8c20 25%, transparent 25%, transparent 50%, #747d8c20 50%, #747d8c20 75%, transparent 75%, transparent);
+    background-size: 20px 20px;
+}
+
+@keyframes lighting {
+    0% {
+        color: #0fb9b1;
+    }
+    25% {
+    }
+    50% {
+        color: #2d98da;
+    }
+    75% {
+    }
+    100% {
+        color: #20bf6b;
+    }
 }
 
 .icon {
@@ -55,20 +76,42 @@ header {
     background-size: 100%;
 }
 
-header>.decorate{
-    width: 20vw;
+/* header>.decorate_container {
+    width: 200px;
+    height: 100%;
     margin-left: auto;
+    position: relative;
+    overflow: hidden;
+} */
+
+/* header>.decorate_container>.decorate {
+    width: 400px;
     height: 100%;
     position: relative;
-    background:linear-gradient(
-        45deg, 
-        #778ca360 0, #778ca360 25%, transparent 25%, transparent 50%, 
-        #778ca360 50%, #778ca360 75%, transparent 75%, transparent
-      );
-      background-size: 40px 40px ;
-      margin-right: 0;
+    background-image: linear-gradient( 45deg, #747d8c60 0, #747d8c60 25%, transparent 25%, transparent 50%, #747d8c60 50%, #747d8c60 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+    background-repeat: repeat;
+} */
+    /* animation: flowing 20s infinite linear; */
+
+@keyframes flowing {
+    0% {
+        transform: translateX(0);
+        background-color: #2bcbba;
+    }
+    50% {
+        background-color: #2d98da;
+    }
+    100% {
+        transform: translateX(-50%);
+        background-color: #2bcbba;
+    }
+    /* 100%{
+        transform: translateX(-100%);
+    } */
 }
-header>.decorate::before{
+
+header>.decorate_container::before {
     content: "";
     width: 0;
     height: 0;
@@ -76,6 +119,7 @@ header>.decorate::before{
     position: absolute;
     border-left-color: #353b48;
     border-bottom-color: #353b48;
+    z-index: 2;
 }
 
 .CesiumContainer {
@@ -102,11 +146,13 @@ header>.decorate::before{
 
 .menu_first>label {
     padding: 5px 20px;
+    border-radius: 6px;
     transition: .3s ease-in-out all;
 }
 
 .menu_first>label:hover {
     background-color: #353b48;
+
 }
 
 .menu_second {
@@ -123,7 +169,8 @@ header>.decorate::before{
     overflow: auto;
     /* padding: 20px 0; */
 }
-.menu_second>div>div{
+
+.menu_second>div>div {
     position: relative;
     flex-shrink: 0;
     min-width: 60px;
@@ -137,7 +184,8 @@ header>.decorate::before{
     font-size: 16px;
     line-height: 20px;
 }
-.menu_second>div>div::before{
+
+.menu_second>div>div::before {
     width: 2px;
     height: 50px;
     content: "";
@@ -146,13 +194,15 @@ header>.decorate::before{
     background-color: #57606f60;
     border-radius: 1px;
 }
-.menu_second>div>div:last-of-type::before{
+
+.menu_second>div>div:last-of-type::before {
     width: 0
 }
-.menu_second>div>div:hover{
-    color: #1296db;
 
+.menu_second>div>div:hover {
+    color: #1296db;
 }
+
 /* .menu_second>div>div>img{
     width: 30px;
     height: 30px;
@@ -177,6 +227,8 @@ footer {
     padding: 0 10px;
     box-sizing: content-box;
     border-top: 3px solid #a4b0be;
+    background-image: linear-gradient( -45deg, #747d8c20 0, #747d8c20 25%, transparent 25%, transparent 50%, #747d8c20 50%, #747d8c20 75%, transparent 75%, transparent);
+    background-size: 30px 30px;
 }
 
 footer>a {
@@ -187,26 +239,27 @@ footer>a {
     margin: 0 10px;
     text-decoration: none;
 }
-footer>a:first-of-type{
+
+footer>a:first-of-type {
     margin-left: auto;
 }
-footer>a:hover{
+
+footer>a:hover {
     text-decoration: underline;
 }
 
 .checked {
-    background-color: #e15f41;
+    background-color: #227093;
     border-bottom: 1px solid #fff;
 }
 
 .unchecked {
     background-color: transparent;
 }
-.cesium-viewer-bottom{
+
+.cesium-viewer-bottom {
     display: none;
 }
-
-
 
 .popup {
     position: absolute;

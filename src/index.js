@@ -7,14 +7,14 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // animation: false,
     // scene3DOnly: true,
     // timeline: false,//时间线
-    // terrainShadows: Cesium.ShadowMode.ENABLED,
+    terrainShadows: Cesium.ShadowMode.ENABLED,
     
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
     baseLayerPicker: false,
     infoBox: false,
-    // shadows: true,
+    shadows: true,
     fullscreenButton: false,
     geocoder: false,//搜索按钮
     homeButton: false,
@@ -149,4 +149,5 @@ let sm = new Cesium.ShadowMap({
     normalOffset: false,
     fromLightSource: false
 });
+console.log(shadowMap);
 console.log(sm);

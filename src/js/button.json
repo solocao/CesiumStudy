@@ -5,14 +5,14 @@
       {
         "id": "flyHome",
         "name": "显示地球",
-        "src":"地球.png",
-        "activesrc":"地球 (1).png"
+        "src": "地球.png",
+        "activesrc": "地球 (1).png"
       },
       {
         "id": "getCamera",
         "name": "获取相机",
-        "src":"摄像机.png",
-        "activesrc":"摄像机 (1).png"
+        "src": "摄像机.png",
+        "activesrc": "摄像机 (1).png"
       }
     ]
   },
@@ -70,6 +70,12 @@
       {
         "id": "heatmap",
         "name": "热力图"
+      },
+      {
+        "id": "area",
+        "name": "测面积",
+        "src":"面积-面.png",
+        "activesrc":"面积-面 (1).png"
       }
     ]
   },

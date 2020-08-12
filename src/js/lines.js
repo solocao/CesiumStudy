@@ -83,7 +83,7 @@ let entities = [
         114.55661320458698, 30.302251829648743
       ]),
       shape: computeCircle(60000.0),
-      material: require("../assets/墙面.png").default,
+      // material: require("../assets/墙面.png").default,
     }
   },
   {
@@ -101,10 +101,10 @@ let entities = [
         new Cesium.Cartesian2(-50000, 50000),
       ],
       cornerType: Cesium.CornerType.BEVELED,
-      material: new Cesium.ImageMaterialProperty({
-        image: require("../assets/墙面.png").default,
-        repeat: new Cesium.Cartesian3(2, 2, 5)
-      }),
+      // material: new Cesium.ImageMaterialProperty({
+      //   image: require("../assets/墙面.png").default,
+      //   repeat: new Cesium.Cartesian3(2, 2, 5)
+      // }),
       outline: true,
       outlineColor: Cesium.Color.BLACK,
     },
@@ -138,7 +138,7 @@ let entities = [
       extrudedHeight: 100000.0,
       width: 200000.0,
       cornerType: Cesium.CornerType.BEVELED,
-      material: require("../assets/墙面.png").default,
+      // material: require("../assets/墙面.png").default,
       outline: true, // height or extrudedHeight must be set for outlines to display
       outlineColor: Cesium.Color.WHITE,
     },
@@ -148,14 +148,14 @@ let entities = [
     position: Cesium.Cartesian3.fromDegrees(-107.0, 40.0, 0.0),
     box: {
       dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 40000.0),
-      material: new Cesium.ImageMaterialProperty({
-        image: require("../assets/墙面.png").default,
-        repeat: {
-          x: 1,
-          y: 3 / 4,
-          z: 0.1
-        }
-      }),
+      // material: new Cesium.ImageMaterialProperty({
+      //   image: require("../assets/墙面.png").default,
+      //   repeat: {
+      //     x: 1,
+      //     y: 3 / 4,
+      //     z: 0.1
+      //   }
+      // }),
       // outline: true,
       // outlineColor: Cesium.Color.BLACK,
     },
