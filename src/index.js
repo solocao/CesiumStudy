@@ -28,6 +28,11 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // navigationInstructionsInitiallyVisible: false,
     // imageryProvider: 
 });
+//移除默认鼠标事件
+console.log(viewer.screenSpaceEventHandler.getInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK));
+viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
+    Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+);
 var shadowMap = viewer.shadowMap;
 shadowMap.maximumDistance = 10000.0;
 viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({

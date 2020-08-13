@@ -19,7 +19,8 @@ module.exports = {
         alias: {
 			//修改Vue被导入的路径
 			"@": path.resolve(__dirname, 'src'),
-		},
+        },
+        modules: ['node_modules'],
         extensions: [".tsx", ".ts", ".js"]
     },
     module: {
