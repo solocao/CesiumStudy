@@ -953,7 +953,7 @@ export default function (viewer) {
           positions: Cesium.Cartesian3.fromDegreesArray([117.154815, 31.853495, 117.181255, 31.854257, 117.182284, 31.848255, 117.184748, 31.840141, 117.180557, 31.835556, 117.180023, 31.833741, 117.166846, 31.833737, 117.155531, 31.833151, 117.154787, 31.835978, 117.151994, 31.839036, 117.150691, 31.8416, 117.151215, 31.844734, 117.154457, 31.848152, 117.154814, 31.853494]),
           maximumHeights: [600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600],
           minimumHeights: [43.9, 49.4, 38.7, 40, 54, 51, 66.7, 44.6, 41.2, 31.2, 50.1, 53.8, 46.9, 43.9],
-          material: new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal),
+          material: new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal,true),
         },
       })
       viewer.flyTo(flowingWall)

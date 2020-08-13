@@ -16,19 +16,19 @@ export default class Events {
     Object.keys(Events.EVENT_TYPE).forEach(key => {
       this[`_${key}`] = new Map();
       this._handler.setInputAction((evt) => {
+        let position = viewer.camera.pickEllipsoid(
+          evt.position?evt.position:evt.endPosition,
+          viewer.scene.globe.ellipsoid
+        );
+        let event = {}
+        // 转为wgs84坐标系，弧度
+        if (position) {
+          let cartographic = Cesium.Cartographic.fromCartesian(position);
+          event.degrees = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height];
+          event.cartographic = cartographic;
+          event.cartesian = position
+        }
         for (let cb of this[`_${key}`].values()) {
-          let position = viewer.camera.pickEllipsoid(
-            evt.position,
-            viewer.scene.globe.ellipsoid
-          );
-          let event = {}
-          // 转为wgs84坐标系，弧度
-          if (position) {
-            let cartographic = Cesium.Cartographic.fromCartesian(position);
-            event.degrees = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height];
-            event.cartographic = cartographic;
-            event.cartesian = position
-          }
           cb(event)
         }
       }, Events.EVENT_TYPE[key])

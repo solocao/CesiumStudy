@@ -4,7 +4,7 @@ export default class Globe {
     this.viewer = new Cesium.Viewer(elementId, options);
     this.scene = this.viewer.scene;
     this.camera = this.viewer.camera;
-    this.sources = this.viewer.dataSources;
+    this.dataSources = this.viewer.dataSources;
     this.entities = this.viewer.entities;
     this.primitives = this.scene.primitives;
     this._events = new Events(this.viewer);

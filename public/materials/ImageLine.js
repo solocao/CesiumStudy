@@ -1,6 +1,4 @@
-console.log(Cesium);
-
-function PolylineTrailLinkMaterialProperty(color, duration, image) {
+function PolylineTrailLinkMaterialProperty(color, duration, image, direction=true, reverse=false) {
 
   this._definitionChanged = new Cesium.Event();
 
@@ -13,6 +11,8 @@ function PolylineTrailLinkMaterialProperty(color, duration, image) {
   this.duration = duration;
 
   this.image = image;
+  this.direction = direction;
+  this.reverse = reverse
 
   this._time = (new Date()).getTime();
 
@@ -61,7 +61,8 @@ PolylineTrailLinkMaterialProperty.prototype.getValue = function (time, result) {
   result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
 
   result.image = this.image;
-
+  result.direction = this.direction
+  result.reverse = this.reverse
   result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration;
 
   return result;
@@ -93,9 +94,23 @@ Cesium.Material.PolylineTrailLinkSource = `czm_material czm_getMaterial(czm_mate
 
 	czm_material material = czm_getDefaultMaterial(materialInput); 
 
-	vec2 st = materialInput.st; 
-
-	vec4 colorImage = texture2D(image, vec2(fract(st.t - time), st.s)); 
+  vec2 st = materialInput.st; 
+  vec2 direc;
+  if(!direction){
+    if(reverse){
+      direc=vec2(fract(st.t + time), st.s);
+    }else{
+      direc=vec2(fract(st.t - time), st.s);
+    }
+    
+  }else{
+    if(reverse){
+      direc=vec2(fract(st.s + time), st.s);
+    }else{
+      direc=vec2(fract(st.s - time), st.s);
+    }
+  }
+	vec4 colorImage = texture2D(image, direc); 
 	// vec4 colorImage = texture2D(image, vec2(st.s, st.t)); 
 
 	material.alpha =colorImage.a;
@@ -120,13 +135,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.PolylineTrailLinkType
     type: Cesium.Material.PolylineTrailLinkType,
 
     uniforms: {
-
       color: new Cesium.Color(1.0, 0.0, 0.0, 0.5),
-
       image: '',
-
-      time: 0
-
+      time: 0,
+      direction: true,
+      reverse:false
     },
 
     source: Cesium.Material.PolylineTrailLinkSource
