@@ -1,29 +1,38 @@
-import Event from './Event';
-export class Globe{
-  constructor(elementId,options){
-    this.viewer=new Cesium.Viewer(elementId,options);
-    this.scene=this.viewer.scene;
-    this.camera=this.viewer.camera;
-    this.sources=this.viewer.dataSources;
-    this.entities=this.viewer.entities;
-    this.primitives=this.scene.primitives;
+import Events from './Events.js';
+export default class Globe {
+  constructor(elementId, options) {
+    this.viewer = new Cesium.Viewer(elementId, options);
+    this.scene = this.viewer.scene;
+    this.camera = this.viewer.camera;
+    this.sources = this.viewer.dataSources;
+    this.entities = this.viewer.entities;
+    this.primitives = this.scene.primitives;
+    this._events = new Events(this.viewer);
   }
-  on(type,cb){
+  //添加一个监听事件，返回唯一的key值
+  on(type, cb) {
+    return this._events.addEvent(type, cb);
+  }
+  un(type){
+    this._events.removeAll(type)
+  }
+  //根据key值删除鼠标事件监听
+  unByKey(type,key) {
+    this._events.removeEvent(type,key)
+  }
+  addInteraction() {
 
   }
-  un(){
+  removeInteraction() {
 
   }
-  addInteraction(){
+  addOverLay() {
 
   }
-  removeInteraction(){
+  removeOverLay() {
 
   }
-  addOverLay(){
-
-  }
-  removeOverLay(){
-
+  getEntitiesAtPosition(position){
+    return this.scene.drillPick(position)
   }
 }

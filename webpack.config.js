@@ -8,7 +8,8 @@ module.exports = {
     mode: 'development', //production
     devtool: 'cheap-module-source-map',
     entry: {
-        app: "./src/index.js"
+        index: "./src/index.js",
+        test:"./src/test/index.js"
     },
     output: {
         path: path.resolve(__dirname, './dist'),
@@ -76,7 +77,13 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            filename: "index.html"
+            filename: "index.html",
+            chunks:['index']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/test/test.html',
+            filename: "test.html",
+            chunks:['test']
         }),
     ],
     devServer: {
