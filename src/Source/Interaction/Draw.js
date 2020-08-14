@@ -5,10 +5,10 @@ export default class Draw extends Interaction{
     super(options)
   }
   init(){
+    this._handler=new Cesium.ScreenSpaceEventHandler(this._viewer.canvas);
     
   }
   destroy(){
 
   }
 }
-let draw=new Draw();

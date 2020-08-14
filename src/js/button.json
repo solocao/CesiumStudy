@@ -39,26 +39,26 @@
       {
         "id": "mapworld",
         "name": "天地图",
-        "src":"湖泊.png",
-        "activesrc":"湖泊 (1).png"
+        "src":"地图 (2).png",
+        "activesrc":"地图 (3).png"
       },
       {
         "id": "goolglemap",
         "name": "谷歌影像",
-        "src":"湖泊.png",
-        "activesrc":"湖泊 (1).png"
+        "src":"谷歌.png",
+        "activesrc":"谷歌 (1).png"
       },
       {
         "id": "arcgismap",
         "name": "ArcGIS地图",
-        "src":"湖泊.png",
-        "activesrc":"湖泊 (1).png"
+        "src":"地图 (6).png",
+        "activesrc":"地图 (7).png"
       },
       {
         "id": "gaodeMap",
         "name": "高德地图",
-        "src":"湖泊.png",
-        "activesrc":"湖泊 (1).png"
+        "src":"地图 (4).png",
+        "activesrc":"地图 (5).png"
       }
     ]
   },
