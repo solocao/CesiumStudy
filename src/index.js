@@ -8,7 +8,8 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // scene3DOnly: true,
     // timeline: false,//时间线
     terrainShadows: Cesium.ShadowMode.ENABLED,
-
+    baseLayerPicker: false,
+    shouldAnimate: true,
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
@@ -21,7 +22,8 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     selectionIndicator: false,
     navigationInstructionsInitiallyVisible: false,
     skyBox: false,
-    automaticallyTrackDataSourceClocks: false,
+    // automaticallyTrackDataSourceClocks: false,
+    terrainProvider: Cesium.createWorldTerrain(),
     // globe: false
     // showRenderLoopErrors: false
     // contextOptions: false

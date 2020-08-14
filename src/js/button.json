@@ -35,34 +35,71 @@
   },
   {
     "tabName": "服务",
-    "btns": []
+    "btns": [
+      {
+        "id": "mapworld",
+        "name": "天地图",
+        "src":"湖泊.png",
+        "activesrc":"湖泊 (1).png"
+      },
+      {
+        "id": "goolglemap",
+        "name": "谷歌影像",
+        "src":"湖泊.png",
+        "activesrc":"湖泊 (1).png"
+      },
+      {
+        "id": "arcgismap",
+        "name": "ArcGIS地图",
+        "src":"湖泊.png",
+        "activesrc":"湖泊 (1).png"
+      },
+      {
+        "id": "gaodeMap",
+        "name": "高德地图",
+        "src":"湖泊.png",
+        "activesrc":"湖泊 (1).png"
+      }
+    ]
   },
   {
     "tabName": "效果",
     "btns": [
       {
         "id": "water",
-        "name": "水面"
+        "name": "水面",
+        "src":"湖泊.png",
+        "activesrc":"湖泊 (1).png"
       },
       {
         "id": "radar",
-        "name": "雷达"
+        "name": "雷达",
+        "src":"雷达.png",
+        "activesrc":"雷达 (1).png"
       },
       {
         "id": "odline",
-        "name": "OD线"
+        "name": "OD线",
+        "src":"OD分析.png",
+        "activesrc":"OD分析 (1).png"
       },
       {
         "id": "flowWall",
-        "name": "流动墙"
+        "name": "流动墙",
+        "src":"指定范围.png",
+        "activesrc":"指定范围 (1).png"
       },
       {
         "id": "radarScan",
-        "name": "雷达扫描"
+        "name": "雷达扫描",
+        "src":"扫描.png",
+        "activesrc":"扫描 (1).png"
       },
       {
         "id": "circleScan",
-        "name": "圆形扫描"
+        "name": "圆形扫描",
+        "src":"avds 漏洞扫描器.png",
+        "activesrc":"avds 漏洞扫描器 (1).png"
       }
     ]
   },
@@ -111,11 +148,21 @@
     "btns": [
       {
         "id": "addGeojson",
-        "name": "GeoJSON"
+        "name": "GeoJSON",
+        "src":"json file.png",
+        "activesrc":"json file (1).png"
       },
       {
         "id": "wms",
-        "name": "WMS"
+        "name": "WMS",
+        "src":"地图.png",
+        "activesrc":"地图 (1).png"
+      },
+      {
+        "id": "czmlpath",
+        "name": "CZML-Path",
+        "src":"地图.png",
+        "activesrc":"地图 (1).png"
       }
     ]
   },

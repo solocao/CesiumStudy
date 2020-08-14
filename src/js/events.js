@@ -961,24 +961,24 @@ export default function (viewer) {
   elBindClick('flowWall', () => {
     if (!flowingWall) {
       const newLocal = require("../assets/红色流动墙.png").default
-      let bool = false,reverse=false
+      let bool = false, reverse = false
       flowingWall = viewer.entities.add({
         wall: {
           positions: Cesium.Cartesian3.fromDegreesArray([117.154815, 31.853495, 117.181255, 31.854257, 117.182284, 31.848255, 117.184748, 31.840141, 117.180557, 31.835556, 117.180023, 31.833741, 117.166846, 31.833737, 117.155531, 31.833151, 117.154787, 31.835978, 117.151994, 31.839036, 117.150691, 31.8416, 117.151215, 31.844734, 117.154457, 31.848152, 117.154814, 31.853494]),
           maximumHeights: [600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600, 600],
           minimumHeights: [43.9, 49.4, 38.7, 40, 54, 51, 66.7, 44.6, 41.2, 31.2, 50.1, 53.8, 46.9, 43.9],
-          material: new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool,reverse)
+          material: new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool, reverse)
         },
       })
       document.onkeyup = (e) => {
         console.log(e.keyCode);
         if (e.keyCode == 13) {
           bool = !bool
-          flowingWall.wall.material = new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool,reverse)
+          flowingWall.wall.material = new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool, reverse)
         }
-        if(e.keyCode==39){
-          reverse=!reverse
-          flowingWall.wall.material = new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool,reverse)
+        if (e.keyCode == 39) {
+          reverse = !reverse
+          flowingWall.wall.material = new Cesium.PolylineTrailLinkMaterialProperty(new Cesium.Color(1, 0, 0, 0.4), 2000, newLocal, bool, reverse)
         }
       }
       viewer.flyTo(flowingWall)
@@ -1112,6 +1112,65 @@ export default function (viewer) {
       });
       return point;
     }
+  })
+  elBindClick('czmlpath', () => {
+    let datasource = viewer.dataSources.getByName("CZML Path")[0];
+    if (!datasource) {
+      let czml = require('./assets/path').czml
+      let ds = new Cesium.CzmlDataSource("CZML Path");
+      viewer.dataSources.add(ds);
+      ds.load(czml).then((d) => {
+        viewer.trackedEntity = d.entities.getById("path");
+      });
+    } else {
+      datasource.show = !datasource.show
+      if (datasource.show) {
+        viewer.trackedEntity = datasource.entities.getById("path");
+      }
+    }
+  })
+  elBindClick('mapworld', () => {
+    viewer.imageryLayers.removeAll()
+    viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
+      layer: "tdtBasicLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible",
+      show: false,
+      maximumLevel: 18
+    }))
+    viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+      url: "http://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=ebf64362215c081f8317203220f133eb",
+      layer: "tdtAnnoLayer",
+      style: "default",
+      format: "image/jpeg",
+      tileMatrixSetID: "GoogleMapsCompatible",
+      show: false
+    }))
+  })
+  elBindClick('goolglemap', () => {
+    viewer.imageryLayers.removeAll()
+    viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
+      tilingScheme: new Cesium.WebMercatorTilingScheme(),
+      minimumLevel: 1,
+      maximumLevel: 20
+    }))
+  })
+  elBindClick('arcgismap',()=>{
+    viewer.imageryLayers.removeAll()
+    viewer.imageryLayers.addImageryProvider(new Cesium.ArcGisMapServerImageryProvider({
+      url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
+    }))
+  })
+  elBindClick('gaodeMap',()=>{
+    viewer.imageryLayers.removeAll()
+    viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+      url : 'https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}'
+      //高德路网数据
+      // url:'https://wprd02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=2&style=8&ltype=11'
+    }))
   })
 }
 
