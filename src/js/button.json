@@ -13,6 +13,12 @@
         "name": "获取相机",
         "src": "摄像机.png",
         "activesrc": "摄像机 (1).png"
+      },
+      {
+        "id": "terrain",
+        "name": "地形",
+        "src": "摄像机.png",
+        "activesrc": "摄像机 (1).png"
       }
     ]
   },
@@ -56,7 +62,7 @@
       },
       {
         "id": "gaodeMap",
-        "name": "高德地图",
+        "name": "高德路网",
         "src":"地图 (4).png",
         "activesrc":"地图 (5).png"
       }

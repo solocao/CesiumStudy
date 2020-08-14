@@ -8,8 +8,7 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // scene3DOnly: true,
     // timeline: false,//时间线
     terrainShadows: Cesium.ShadowMode.ENABLED,
-    baseLayerPicker: false,
-    shouldAnimate: true,
+    // terrainProvider: ,
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
@@ -23,7 +22,7 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     navigationInstructionsInitiallyVisible: false,
     skyBox: false,
     // automaticallyTrackDataSourceClocks: false,
-    terrainProvider: Cesium.createWorldTerrain(),
+    shouldAnimate: true,
     // globe: false
     // showRenderLoopErrors: false
     // contextOptions: false
@@ -31,30 +30,25 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // imageryProvider: 
 });
 //移除默认鼠标事件
-console.log(viewer.screenSpaceEventHandler.getInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK));
+
 viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
     Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
 );
 var shadowMap = viewer.shadowMap;
 shadowMap.maximumDistance = 10000.0;
-viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-    url: "http://t0.tianditu.com/img_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=img&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default&format=tiles&tk=ebf64362215c081f8317203220f133eb",
-    layer: "tdtBasicLayer",
+viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+    url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
+    tilingScheme: new Cesium.WebMercatorTilingScheme(),
+    minimumLevel: 1,
+    maximumLevel: 20
+  }));
+  viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+    url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
+    layer: "cia",
     style: "default",
-    format: "image/jpeg",
-    tileMatrixSetID: "GoogleMapsCompatible",
-    show: false,
-    maximumLevel: 18
-}))
-viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-    url: "http://t0.tianditu.com/cia_w/wmts?service=wmts&request=GetTile&version=1.0.0&LAYER=cia&tileMatrixSet=w&TileMatrix={TileMatrix}&TileRow={TileRow}&TileCol={TileCol}&style=default.jpg&tk=ebf64362215c081f8317203220f133eb",
-    layer: "tdtAnnoLayer",
-    style: "default",
-    format: "image/jpeg",
-    tileMatrixSetID: "GoogleMapsCompatible",
-    show: false
-}))
-
+    format: "tiles",
+    tileMatrixSetID: "w",
+  }))
 viewer.scene.postProcessStages.fxaa.enabled = true;
 const popup = document.createElement('div');
 popup.className = "popup";
