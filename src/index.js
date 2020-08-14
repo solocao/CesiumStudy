@@ -52,6 +52,7 @@ viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvi
     tileMatrixSetID: "GoogleMapsCompatible",
     show: false
 }))
+
 viewer.scene.postProcessStages.fxaa.enabled = true;
 const popup = document.createElement('div');
 popup.className = "popup";
