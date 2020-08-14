@@ -14,8 +14,8 @@ let entities = [
       semiMajorAxis: 500000,
       // fill:false,
       height:0,
-      material: new Cesium.ScanLineMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 100000),
-      outline: true, // height must be set for outline to display
+      material: new Cesium.ScanMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 1000.0),
+      // outline: true, // height must be set for outline to display
     },
   },
   {

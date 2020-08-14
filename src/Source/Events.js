@@ -1,4 +1,4 @@
-
+import {CoordsTransform,defined} from "./Utils"
 export default class Events {
   static EVENT_TYPE = {
     'click': Cesium.ScreenSpaceEventType.LEFT_CLICK,
@@ -11,22 +11,22 @@ export default class Events {
     viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
       Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
     );
+    const coordsTrans=new CoordsTransform(viewer);
     viewer.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
     this._handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     Object.keys(Events.EVENT_TYPE).forEach(key => {
       this[`_${key}`] = new Map();
       this._handler.setInputAction((evt) => {
-        let position = viewer.camera.pickEllipsoid(
-          evt.position?evt.position:evt.endPosition,
-          viewer.scene.globe.ellipsoid
-        );
+        let position = coordsTrans.winPositionToCarte3(evt.position?evt.position:evt.endPosition)
         let event = {}
         // 转为wgs84坐标系，弧度
-        if (position) {
+        if (defined(position)) {
           let cartographic = Cesium.Cartographic.fromCartesian(position);
           event.degrees = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height];
           event.cartographic = cartographic;
           event.cartesian = position
+        }else{
+          event=undefined
         }
         for (let cb of this[`_${key}`].values()) {
           cb(event)

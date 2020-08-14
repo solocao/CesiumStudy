@@ -27,7 +27,9 @@
       },
       {
         "id": "model",
-        "name": "GLB模型"
+        "name": "GLB模型",
+        "src":"飞机.png",
+        "activesrc":"飞机 (1).png"
       }
     ]
   },

@@ -1,4 +1,5 @@
 import Events from './Events.js';
+import Interaction from './BaseClasses/Interaction'
 export default class Globe {
   constructor(elementId, options) {
     this.viewer = new Cesium.Viewer(elementId, options);
@@ -20,19 +21,21 @@ export default class Globe {
   unByKey(type,key) {
     this._events.removeEvent(type,key)
   }
-  addInteraction() {
-
+  addInteraction(interaction) {
+    if(interaction instanceof Interaction){
+      interaction.setViewer(this.viewer);
+    }
   }
-  removeInteraction() {
-
+  removeInteraction(interaction) {
+    if(interaction instanceof Interaction){
+      interaction.destroy();
+      interaction=null;
+    }
   }
   addOverLay() {
 
   }
   removeOverLay() {
 
-  }
-  getEntitiesAtPosition(position){
-    return this.scene.drillPick(position)
   }
 }
