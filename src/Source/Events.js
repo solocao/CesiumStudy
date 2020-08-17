@@ -24,7 +24,8 @@ export default class Events {
           let cartographic = Cesium.Cartographic.fromCartesian(position);
           event.degrees = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height];
           event.cartographic = cartographic;
-          event.cartesian = position
+          event.cartesian = position;
+          event.position=evt.position?evt.position:evt.endPosition
         }else{
           event=undefined
         }

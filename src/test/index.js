@@ -18,14 +18,29 @@ let globe = new Globe('app', true);
 
 
 let popup = new Overlay({
-  element: document.getElementById('popup')
+  element: document.getElementById('popup'),
+  positioning: 'center-center',
+  autoPan: true
 })
 globe.addOverLay(popup)
-popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
-setTimeout(() => {
-  popup.setPosition(undefined)
 
-}, 5000)
+globe.viewer.entities.add({
+  position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
+  point: {
+    color: Cesium.Color.RED,
+    pixelSize: 20
+  }
+})
+globe.on('click', (evt) => {
+  let feature = globe.scene.pick(evt.position);
+  if (feature) {
+    popup.setPosition(evt.cartesian);
+  }else{
+    popup.setPosition(undefined);
+  }
+})
+// popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
+
 // let key = globe.on('click', (evt) => {
 //   // let features=globe.getEntitiesAtPosition(evt.cartesian);
 //   console.log(evt);

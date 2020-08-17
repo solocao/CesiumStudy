@@ -34,7 +34,6 @@ export default class Globe {
   addOverLay(overlay) {
     if(overlay instanceof Overlay){
       overlay.setViewer(this.viewer);
-      
     }
   }
   removeOverLay(overlay) {
