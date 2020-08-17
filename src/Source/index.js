@@ -38,8 +38,8 @@ export default class Globe {
   }
   removeOverLay(overlay) {
     if(overlay instanceof Overlay){
+      console.log(213213);
       overlay.destory();
-      overlay=null;
     }
   }
 }

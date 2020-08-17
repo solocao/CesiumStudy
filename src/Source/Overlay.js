@@ -5,9 +5,12 @@ export default class Overlay {
       element: null,
       position: null,
       positioning: 'top-center',
-      autoPan:false
+      autoPan:false,
     }
     this._option = Object.assign(_option, option)
+    if(this._option.viewer&&(this._option.viewer instanceof Cesium.Viewer)){
+      this.setViewer(this._option.viewer)
+    }
   }
   _init() {
     if (!this._option.element) return;
@@ -59,12 +62,13 @@ export default class Overlay {
     })
   }
   setPosition(position) {
+    if(!this._viewer||!this._option.element) return
     if (position) {
       this._option.position = position;
       (!this._listener) && this._addListener()
       this._option.element.style.display = 'block';
       if(this._option.autoPan){
-        
+
       }
     } else {
       this._option.element.style.display = 'none';
@@ -74,7 +78,10 @@ export default class Overlay {
     }
   }
   destory() {
+    if(!this._viewer) return;
     this._listener && this._listener();
     this._option.element.style.display = 'none';
+    this._viewer=null;
+    this._option.element=null
   }
 }
