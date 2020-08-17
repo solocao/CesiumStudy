@@ -47,7 +47,7 @@ header {
     padding: 0 0 0 10px;
     position: relative;
     z-index: 5;
-    text-shadow: 1px 1px 0px #000, 2px 2px 0px #000, 3px 3px 0px #000, 4px 4px 0px #000,5px 5px 0px #000,6px 6px 0px #000;
+    text-shadow: 1px 1px 0px #000, 2px 2px 0px #000, 3px 3px 0px #000, 4px 4px 0px #000, 5px 5px 0px #000, 6px 6px 0px #000;
     animation: lighting 12s infinite;
     background-image: linear-gradient( 45deg, #747d8c20 0, #747d8c20 25%, transparent 25%, transparent 50%, #747d8c20 50%, #747d8c20 75%, transparent 75%, transparent);
     background-size: 20px 20px;
@@ -58,14 +58,13 @@ header {
         color: #0fb9b1;
     }
     25% {
-    }
-    50% {
         color: #2d98da;
     }
     75% {
+        color: #20bf6b;
     }
     100% {
-        color: #20bf6b;
+        color: #0fb9b1;
     }
 }
 
@@ -92,7 +91,8 @@ header {
     background-size: 40px 40px;
     background-repeat: repeat;
 } */
-    /* animation: flowing 20s infinite linear; */
+
+/* animation: flowing 20s infinite linear; */
 
 @keyframes flowing {
     0% {
@@ -152,7 +152,6 @@ header>.decorate_container::before {
 
 .menu_first>label:hover {
     background-color: #353b48;
-
 }
 
 .menu_second {

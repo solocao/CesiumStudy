@@ -33,7 +33,5 @@
     "webpack-dev-server": "^3.11.0",
     "xml-loader": "^1.2.1"
   },
-  "dependencies": {
-    "ol": "^6.4.3"
-  }
+  "dependencies": {}
 }

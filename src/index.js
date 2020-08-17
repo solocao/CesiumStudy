@@ -7,14 +7,14 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // animation: false,
     // scene3DOnly: true,
     // timeline: false,//时间线
-    terrainShadows: Cesium.ShadowMode.ENABLED,
+    // terrainShadows: Cesium.ShadowMode.ENABLED,
     // terrainProvider: ,
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
     baseLayerPicker: false,
     infoBox: false,
-    shadows: true,
+    // shadows: true,
     fullscreenButton: false,
     geocoder: false,//搜索按钮
     homeButton: false,
@@ -68,6 +68,7 @@ handler.setInputAction(evt => {
         evt.position,
         scene.globe.ellipsoid
     );
+    console.log(position);
     // 转为wgs84坐标系，弧度
     if (position) {
         let cartographic = Cesium.Cartographic.fromCartesian(position);

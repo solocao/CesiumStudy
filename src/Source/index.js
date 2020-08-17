@@ -1,5 +1,6 @@
 import Events from './Events.js';
-import Interaction from './BaseClasses/Interaction'
+import Interaction from './BaseClasses/Interaction';
+import Overlay from './Overlay'
 export default class Globe {
   constructor(elementId, options) {
     this.viewer = new Cesium.Viewer(elementId, options);
@@ -14,28 +15,32 @@ export default class Globe {
   on(type, cb) {
     return this._events.addEvent(type, cb);
   }
-  un(type){
+  un(type) {
     this._events.removeAll(type)
   }
   //根据key值删除鼠标事件监听
-  unByKey(type,key) {
-    this._events.removeEvent(type,key)
+  unByKey(type, key) {
+    this._events.removeEvent(type, key)
   }
   addInteraction(interaction) {
-    if(interaction instanceof Interaction){
-      interaction.setViewer(this.viewer);
-    }
+    (interaction instanceof Interaction) && interaction.setViewer(this.viewer);
   }
   removeInteraction(interaction) {
-    if(interaction instanceof Interaction){
+    if (interaction instanceof Interaction) {
       interaction.destroy();
-      interaction=null;
+      interaction = null;
     }
   }
-  addOverLay() {
-
+  addOverLay(overlay) {
+    if(overlay instanceof Overlay){
+      overlay.setViewer(this.viewer);
+      
+    }
   }
-  removeOverLay() {
-
+  removeOverLay(overlay) {
+    if(overlay instanceof Overlay){
+      overlay.destory();
+      overlay=null;
+    }
   }
 }
