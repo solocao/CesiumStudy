@@ -41,14 +41,15 @@ viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
     tilingScheme: new Cesium.WebMercatorTilingScheme(),
     minimumLevel: 1,
     maximumLevel: 20
-  }));
-  viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
+}));
+viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
     url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
     layer: "cia",
     style: "default",
     format: "tiles",
     tileMatrixSetID: "w",
-  }))
+}))
+
 viewer.scene.postProcessStages.fxaa.enabled = true;
 const popup = document.createElement('div');
 popup.className = "popup";

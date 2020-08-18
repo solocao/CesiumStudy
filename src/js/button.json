@@ -65,6 +65,12 @@
         "name": "高德路网",
         "src":"地图 (4).png",
         "activesrc":"地图 (5).png"
+      },
+      {
+        "id":"MapBox",
+        "name": "MapBox",
+        "src":"地图 (4).png",
+        "activesrc":"地图 (5).png"
       }
     ]
   },

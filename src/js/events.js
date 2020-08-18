@@ -793,6 +793,7 @@ export default function (viewer) {
             Cesium.Color.fromCssColorString(`rgb(0, 156, ${Math.random() * 255},1.0)`),
             100
           )
+          en.polyline.clampToGround=true
           en.polyline.width = 5
         })
         viewer.flyTo(source)
@@ -935,8 +936,9 @@ export default function (viewer) {
           semiMinorAxis: 500000,
           semiMajorAxis: 500000,
           // fill:false,
+          heightReference:Cesium.HeightReference.CLAMP_TO_GROUND,
           height: 0,
-          material: new Cesium.ScanMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 1000.0),
+          material: new Cesium.ScanCircleMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 1000.0),
           // outline: true, // height must be set for outline to display
         },
       });
@@ -1116,7 +1118,7 @@ export default function (viewer) {
   })
   let czmlds;
   elBindClick('czmlpath', () => {
-    
+
     if (!czmlds) {
       let czml = require('./assets/path').czml
       czmlds = new Cesium.CzmlDataSource("CZML Path");
@@ -1126,7 +1128,7 @@ export default function (viewer) {
       });
     } else {
       viewer.dataSources.remove(czmlds)
-      czmlds=null
+      czmlds = null
     }
   })
   elBindClick('mapworld', () => {
@@ -1182,6 +1184,17 @@ export default function (viewer) {
       // url: 'https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}'
       //高德路网数据
       url: 'https://wprd02.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scl=2&style=8&ltype=11'
+    }))
+  })
+  elBindClick('MapBox', () => {
+    viewer.imageryLayers.removeAll()
+    viewer.imageryLayers.addImageryProvider(new Cesium.MapboxStyleImageryProvider({
+      url: 'https://api.mapbox.com/styles/v1',
+      username: 'wanghan394598004',
+      styleId: 'ckdzmsxf40lkr1amifv8g2f13',
+      accessToken: 'pk.eyJ1Ijoid2FuZ2hhbjM5NDU5ODAwNCIsImEiOiJja2R6N2hyOG8yaHk0MnduOXNpeHF0NDZqIn0.jR7-1lBQD0mqANBamoXYsA',
+      // scaleFactor:true
+
     }))
   })
 }

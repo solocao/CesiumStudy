@@ -42,6 +42,7 @@ globe.on('click', (evt) => {
 
   }
 })
+
 // popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
 
 // let key = globe.on('click', (evt) => {

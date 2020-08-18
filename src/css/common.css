@@ -40,19 +40,21 @@ header {
     background-color: #353b48;
     display: flex;
     color: #0fb9b1;
-    font-size: 28px;
-    font-weight: 600;
     justify-content: flex-start;
     align-items: center;
     padding: 0 0 0 10px;
     position: relative;
     z-index: 5;
     text-shadow: 1px 1px 0px #000, 2px 2px 0px #000, 3px 3px 0px #000, 4px 4px 0px #000, 5px 5px 0px #000, 6px 6px 0px #000;
-    animation: lighting 12s infinite;
     background-image: linear-gradient( 45deg, #747d8c20 0, #747d8c20 25%, transparent 25%, transparent 50%, #747d8c20 50%, #747d8c20 75%, transparent 75%, transparent);
     background-size: 20px 20px;
 }
 
+header>span {
+    /* animation: lighting 12s infinite linear; */
+    transition: .5s all ease-in-out;
+    font-weight: 900;
+}
 @keyframes lighting {
     0% {
         color: #0fb9b1;
@@ -65,6 +67,23 @@ header {
     }
     100% {
         color: #0fb9b1;
+    }
+}
+
+@keyframes lighting-hover {
+    0% {
+        color: #b98c0f;
+    }
+    
+    25% {
+        color: #2d98da;
+    }
+   
+    75% {
+        color: #20bf6b;
+    }
+    100% {
+        color: #b98c0f;
     }
 }
 
