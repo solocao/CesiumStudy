@@ -1,5 +1,4 @@
 import Interaction from "../BaseClasses/Interaction";
-
 export default class Draw extends Interaction {
   constructor(options = {}) {
     super(options);
@@ -9,7 +8,10 @@ export default class Draw extends Interaction {
       fillColor: Cesium.Color.WHITE.withAlpha(0.7),
       outlineColor: Cesium.Color.BLACK
     }
-    this._options = Object.assign(_options, options)
+    this._options = Object.assign(_options, options);
+    if(this._options.viewer&&this._options.viewer instanceof Cesium.Viewer){
+      this.setViewer(this._options.viewer)
+    }
   }
 
   _init() {
@@ -47,11 +49,10 @@ export default class Draw extends Interaction {
             return this._activeShapePoints;
           }, false);
           this._activeShape = this._drawShape(dynamicPositions);
+          this.startcb&&this.startcb(this._activeShape)
         }
         this._activeShapePoints.push(earthPosition);
         this._createPoint(earthPosition);
-        console.log(this._pointsBuffer.length, 'fsafsa');
-
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     this._handler.setInputAction(event => {
@@ -75,12 +76,17 @@ export default class Draw extends Interaction {
       this._floatingPoints.entities.remove(point);
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
   }
-
+  on(type,cb){
+    if(!['start','end'].some(v=>v===type)) return;
+    if(typeof cb !=='function') return;
+    this[`${type}cb`]=cb;
+  }
   _terminateShape() {
     this._activeShapePoints.pop();
-    this._drawShape(this._activeShapePoints);
-    this._floatingPoints.entities.remove(this._floatingPoint);
     this._shapes.entities.remove(this._activeShape);
+    let shape=this._drawShape(this._activeShapePoints);
+    this.endcb&&this.endcb(shape)
+    this._floatingPoints.entities.remove(this._floatingPoint);
     this._floatingPoint = undefined;
     this._activeShape = undefined;
     this._activeShapePoints = [];
@@ -149,7 +155,7 @@ export default class Draw extends Interaction {
   close() {
     this._floatingPoint && this._pointsBuffer.forEach(point => {
       this._floatingPoints.entities.remove(point)
-    })
+    })  
     this._activeShape && this._shapes.entities.remove(this._activeShape);
     this._handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
     this._handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK);
@@ -166,5 +172,4 @@ export default class Draw extends Interaction {
     this._viewer.dataSources.remove(this._floatingPoints);
     this._handler.destroy();
   }
-
 }

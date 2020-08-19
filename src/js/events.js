@@ -1191,10 +1191,9 @@ export default function (viewer) {
     viewer.imageryLayers.addImageryProvider(new Cesium.MapboxStyleImageryProvider({
       url: 'https://api.mapbox.com/styles/v1',
       username: 'wanghan394598004',
-      styleId: 'ckdzmsxf40lkr1amifv8g2f13',
+      styleId: 'ckdz7l2v706r819o69jt4ve5u',
       accessToken: 'pk.eyJ1Ijoid2FuZ2hhbjM5NDU5ODAwNCIsImEiOiJja2R6N2hyOG8yaHk0MnduOXNpeHF0NDZqIn0.jR7-1lBQD0mqANBamoXYsA',
-      // scaleFactor:true
-
+      tilesize:256
     }))
   })
 }

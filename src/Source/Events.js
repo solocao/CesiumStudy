@@ -11,33 +11,34 @@ export default class Events {
     viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
       Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
     );
-    const coordsTrans=new CoordsTransform(viewer);
+    this.coordsTrans=new CoordsTransform(viewer);
     viewer.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
     this._handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     Object.keys(Events.EVENT_TYPE).forEach(key => {
       this[`_${key}`] = new Map();
+    });
+  }
+  addEvent(type, cb) {
+    if(!Object.keys(Events.EVENT_TYPE).some(v=>v===type)) return;
+    let symbolId = Symbol()
+    this[`_${type}`].set(symbolId, cb);
+    if(!this._handler.getInputAction(Events.EVENT_TYPE[type])){
       this._handler.setInputAction((evt) => {
-        let position = coordsTrans.winPositionToCarte3(evt.position?evt.position:evt.endPosition)
         let event = {}
+        event.position=evt.position?evt.position:evt.endPosition
         // 转为wgs84坐标系，弧度
+        let position = this.coordsTrans.winPositionToCarte3(evt.position?evt.position:evt.endPosition)
         if (defined(position)) {
           let cartographic = Cesium.Cartographic.fromCartesian(position);
           event.degrees = [Cesium.Math.toDegrees(cartographic.longitude), Cesium.Math.toDegrees(cartographic.latitude), cartographic.height];
           event.cartographic = cartographic;
           event.cartesian = position;
-          event.position=evt.position?evt.position:evt.endPosition
-        }else{
-          event=undefined
         }
-        for (let cb of this[`_${key}`].values()) {
+        for (let cb of this[`_${type}`].values()) {
           cb(event)
         }
-      }, Events.EVENT_TYPE[key])
-    });
-  }
-  addEvent(type, cb) {
-    let symbolId = Symbol()
-    this[`_${type}`].set(symbolId, cb);
+      }, Events.EVENT_TYPE[type])
+    }
     return symbolId;
   }
   removeEvent(type, key) {
