@@ -10,6 +10,7 @@ export default class Globe {
     this.entities = this.viewer.entities;
     this.primitives = this.scene.primitives;
     this._events = new Events(this.viewer);
+    this._overlays=[]
   }
   //添加一个监听事件，返回唯一的key值
   on(type, cb) {
