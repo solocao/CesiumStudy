@@ -118,12 +118,7 @@
   {
     "tabName": "分析",
     "btns": [
-      {
-        "id": "heatmap",
-        "name": "热力图",
-        "src":"热力图.png",
-        "activesrc":"热力图 (1).png"
-      },
+      
       {
         "id": "area",
         "name": "测面积",
@@ -141,6 +136,17 @@
         "name": "测高度",
         "src":"iconfont图标_高度.png",
         "activesrc":"iconfont图标_高度 (1).png"
+      }
+    ]
+  },
+  {
+    "tabName":"可视化",
+    "btns":[
+      {
+        "id": "heatmap",
+        "name": "热力图",
+        "src":"热力图.png",
+        "activesrc":"热力图 (1).png"
       }
     ]
   },

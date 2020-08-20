@@ -1157,7 +1157,9 @@ export default function (viewer) {
       url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
       tilingScheme: new Cesium.WebMercatorTilingScheme(),
       minimumLevel: 1,
-      maximumLevel: 20
+      maximumLevel: 20,
+      tileWidth:256,
+      tileHeight:256
     }));
     viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
       url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
@@ -1165,6 +1167,8 @@ export default function (viewer) {
       style: "default",
       format: "tiles",
       tileMatrixSetID: "w",
+      tileWidth:256,
+      tileHeight:256
     }))
   })
   elBindClick('arcgismap', () => {
