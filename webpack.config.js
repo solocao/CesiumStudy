@@ -3,23 +3,25 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { env } = require("process");
+const CopyWebpackPlugin=require('copy-webpack-plugin')
 
 module.exports = {
     mode: 'development', //production
     devtool: 'cheap-module-source-map',
     entry: {
         index: "./src/index.js",
-        test:"./src/test/index.js"
+        test: "./src/test/index.js"
     },
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].bundle.js',
+        // publicPath: '/tdhl3D',
     },
 
     resolve: {   // 需要打包的文件后缀
         alias: {
-			//修改Vue被导入的路径
-			"@": path.resolve(__dirname, 'src'),
+            //修改Vue被导入的路径
+            "@": path.resolve(__dirname, 'src'),
         },
         modules: ['node_modules'],
         extensions: [".tsx", ".ts", ".js"]
@@ -33,43 +35,43 @@ module.exports = {
                 }
             },
             {
-            test: /\.css$/,
-            use: [
-                'style-loader',
-                'css-loader'
-            ]
-        },
-        {
-            test: /\.js$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/
-        },
-        {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-            loader: 'url-loader',
-            options: {
-                limit: 7000000,
-                name: 'img/[name].[hash:7].[ext]'
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 7000000,
+                    name: 'img/[name].[hash:7].[ext]'
+                }
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(csv|tsv)$/,
+                use: [
+                    'csv-loader'
+                ]
+            },
+            {
+                test: /\.xml$/,
+                use: [
+                    'xml-loader'
+                ]
             }
-        },
-        {
-            test: /\.(woff|woff2|eot|ttf|otf)$/,
-            use: [
-                'file-loader'
-            ]
-        },
-        {
-            test: /\.(csv|tsv)$/,
-            use: [
-                'csv-loader'
-            ]
-        },
-        {
-            test: /\.xml$/,
-            use: [
-                'xml-loader'
-            ]
-        }
 
         ]
     },
@@ -78,13 +80,19 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: "index.html",
-            chunks:['index']
+            chunks: ['index']
         }),
         new HtmlWebpackPlugin({
             template: './src/test/test.html',
             filename: "test.html",
-            chunks:['test']
+            chunks: ['test']
         }),
+        // new CopyWebpackPlugin({
+        //     patterns:[{
+        //         from: __dirname + '/public',
+        //         to: __dirname + '/dist'
+        //     }]
+        // }),
     ],
     devServer: {
         contentBase: 'public',

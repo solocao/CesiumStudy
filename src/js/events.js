@@ -7,6 +7,7 @@ export default function (viewer) {
   let camera = viewer.camera;
   elBindClick("modellocated", () => {
     camera.flyTo({
+      // 115.2642653284367, 35.64433922239355, 439.85915385085417, 4.847274998169155, -1.4939655622532495, 0.00012924851333195875
       destination: {
         x: -2212505.2474972415,
         y: 4837907.76249825,
