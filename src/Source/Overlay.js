@@ -17,27 +17,29 @@ export default class Overlay {
     let element = this._option.element
     let positioning = this._option.positioning.split('-');
     element.style.transform = ''
+    let x,y;
     switch (positioning[0]) {
       case 'bottom':
-        element.style.transform += 'translateY(-100%)'
+        y= `-100% + ${this._option.offset[1]}`
         break;
       case 'center':
-        element.style.transform += 'translateY(-50%)';
+        y=`-50% + ${this._option.offset[1]}`
         break;
       case 'top':
-        element.style.transform += 'translateY(0)'
+        y=`${this._option.offset[1]}`
     }
     switch (positioning[1]) {
       case 'left':
-        element.style.transform += 'translateX(0)';
+        x=`${this._option.offset[0]}`
         break;
       case 'center':
-        element.style.transform += 'translateX(-50%)';
+        x=`-50% + ${this._option.offset[0]}`;
         break;
       case 'right':
-        element.style.transform += 'translateX(-100%)';
+        x=`-100% + ${this._option.offset[0]}`;
         break;
     }
+    element.style.transform=`translate(calc(${x} calc(${y})))`
     this._option.position && this._addListener();
   }
   setElement(element) {

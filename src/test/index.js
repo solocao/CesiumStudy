@@ -48,29 +48,30 @@ globe.camera.setView({
 // },10000);
 
 
-// let popup = new Overlay({
-//   element: document.getElementById('popup'),
-//   positioning: 'bottom-center',
-//   autoPan: true,
-//   viewer:globe.viewer
-// })
-// // globe.addOverLay(popup)
+let popup = new Overlay({
+  element: document.getElementById('popup'),
+  positioning: 'center-left',
+  autoPan: true,
+  offset:[500,0],
+  viewer:globe.viewer
+})
+// globe.addOverLay(popup);
 
-// globe.entities.add({
-//   position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
-//   point: {
-//     color: Cesium.Color.RED,
-//     pixelSize: 20
-//   }
-// })
-// globe.on('click', (evt) => {
-//   let feature = globe.scene.pick(evt.position);
-//   if (feature) {
-//     popup.setPosition(evt.cartesian);
-//   }else{
-//     popup.setPosition(undefined)
-//   }
-// })
+globe.entities.add({
+  position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
+  point: {
+    color: Cesium.Color.RED,
+    pixelSize: 20
+  }
+})
+globe.on('click', (evt) => {
+  let feature = globe.scene.pick(evt.position);
+  if (feature) {
+    popup.setPosition(evt.cartesian);
+  }else{
+    popup.setPosition(undefined)
+  }
+})
 
 // popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
 
