@@ -3,26 +3,26 @@ import Draw from "../Source/Interaction/Draw"
 import Overlay from '../Source/Overlay';
 
 let globe = new Globe('app', {
-  // selectionIndicator: false,
-  // infoBox: false,
-  terrainProvider: Cesium.createWorldTerrain(),
+    // selectionIndicator: false,
+    // infoBox: false,
+    terrainProvider: Cesium.createWorldTerrain(),
 });
 // globe.viewer.terrainProvider = Cesium.createWorldTerrain()
 globe.viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
-  url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
-  tilingScheme: new Cesium.WebMercatorTilingScheme(),
-  minimumLevel: 1,
-  maximumLevel: 20
+    url: 'http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali',
+    tilingScheme: new Cesium.WebMercatorTilingScheme(),
+    minimumLevel: 1,
+    maximumLevel: 20
 }));
 globe.viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
-  url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
-  layer: "cia",
-  style: "default",
-  format: "tiles",
-  tileMatrixSetID: "w",
+    url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
+    layer: "cia",
+    style: "default",
+    format: "tiles",
+    tileMatrixSetID: "w",
 }))
 globe.camera.setView({
-  destination:new Cesium.Cartesian3(-2852838.955648131,  4654137.236666314,  3287695.3615018753)
+    destination: new Cesium.Cartesian3(-2852838.955648131, 4654137.236666314, 3287695.3615018753)
 })
 
 // let draw=new Draw({
@@ -47,30 +47,32 @@ globe.camera.setView({
 //   },5000);
 // },10000);
 
-
+let el=document.createElement('div');
+el.className="popup";
+// document.getElementById('app').appendChild(el)
 let popup = new Overlay({
-  element: document.getElementById('popup'),
-  positioning: 'center-left',
-  autoPan: true,
-  offset:[500,0],
-  viewer:globe.viewer
+    element: el,
+    positioning: 'center-left',
+    offset: [100, 100],
+    autoPan: true,
+    viewer: globe.viewer
 })
 // globe.addOverLay(popup);
 
 globe.entities.add({
-  position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
-  point: {
-    color: Cesium.Color.RED,
-    pixelSize: 20
-  }
+    position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
+    point: {
+        color: Cesium.Color.RED,
+        pixelSize: 20
+    }
 })
 globe.on('click', (evt) => {
-  let feature = globe.scene.pick(evt.position);
-  if (feature) {
-    popup.setPosition(evt.cartesian);
-  }else{
-    popup.setPosition(undefined)
-  }
+    let feature = globe.scene.pick(evt.position);
+    if (feature) {
+        popup.setPosition(evt.cartesian);
+    } else {
+        popup.setPosition(undefined)
+    }
 })
 
 // popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
@@ -228,33 +230,33 @@ globe.on('click', (evt) => {
 //   new Cesium.Cartesian3(5000.0, 5000.0, 5000.0)
 // );
 // viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
-let viewer=globe.viewer
+let viewer = globe.viewer
 
-let lightCamera=new Cesium.Camera(viewer.scene);
-lightCamera.position=new Cesium.Cartesian3(-2852838.955648131,  4654137.236666314,  3287695.3615018753);
-lightCamera.frustum.fov=Cesium.Math.PI_OVER_THREE;
-lightCamera.frustum.near=1.0;
-lightCamera.frustum.far=1000;
+let lightCamera = new Cesium.Camera(viewer.scene);
+lightCamera.position = new Cesium.Cartesian3(-2852838.955648131, 4654137.236666314, 3287695.3615018753);
+lightCamera.frustum.fov = Cesium.Math.PI_OVER_THREE;
+lightCamera.frustum.near = 1.0;
+lightCamera.frustum.far = 1000;
 lightCamera.setView({
-    destination:new Cesium.Cartesian3(-2852838.955648131,  4654137.236666314,  3287695.3615018753),
-    orientation:{
-        heading:6.074354589652639 ,pitch:  0.06751239637465978 ,roll:  6.282567622990175
+    destination: new Cesium.Cartesian3(-2852838.955648131, 4654137.236666314, 3287695.3615018753),
+    orientation: {
+        heading: 6.074354589652639, pitch: 0.06751239637465978, roll: 6.282567622990175
     }
 })
 viewer.camera.setView({
-    destination:new Cesium.Cartesian3(-2852838.955648131,  4654137.236666314,  3287695.3615018753),
+    destination: new Cesium.Cartesian3(-2852838.955648131, 4654137.236666314, 3287695.3615018753),
 })
-let shadowMap=new Cesium.ShadowMap({
-    context:viewer.scene.context,
+let shadowMap = new Cesium.ShadowMap({
+    context: viewer.scene.context,
     lightCamera,
-    enabled:true,
-    isPointLight:true,
-    pointLightRadius:1000,
-    softShadows:true,
-    normalOffset:false,
-    fromLightSource:false
+    enabled: true,
+    isPointLight: true,
+    pointLightRadius: 1000,
+    softShadows: true,
+    normalOffset: false,
+    fromLightSource: false
 });
-viewer.scene.shadowMap=shadowMap;
+viewer.scene.shadowMap = shadowMap;
 
 const fragmentShader = `
  #define USE_CUBE_MAP_SHADOW true
@@ -387,53 +389,53 @@ const fragmentShader = `
  }`;
 
 
- const postStage = new Cesium.PostProcessStage({
+const postStage = new Cesium.PostProcessStage({
     fragmentShader,
     uniforms: {
         camera_projection_matrix: lightCamera.frustum.projectionMatrix,
         camera_view_matrix: lightCamera.viewMatrix,
-    far: () => {
-        return 1000;
-    },
-    shadowMap_textureCube: () => {
-        shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
-        return Reflect.get(shadowMap, "_shadowMapTexture");
-    },
-    shadowMap_matrix: () => {
-        shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
-        return Reflect.get(shadowMap, "_shadowMapMatrix");
-    },
-    shadowMap_lightPositionEC: () => {
-        shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
-        return Reflect.get(shadowMap, "_lightPositionEC");
-    },
-    shadowMap_normalOffsetScaleDistanceMaxDistanceAndDarkness: () => {
-        shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
-        const bias = shadowMap._pointBias;
-        return Cesium.Cartesian4.fromElements(
-            bias.normalOffsetScale,
-            shadowMap._distance,
-            shadowMap.maximumDistance,
-            0.0,
-            new Cesium.Cartesian4()
-      );
-    },
-    shadowMap_texelSizeDepthBiasAndNormalShadingSmooth: () => {
-        shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
-        const bias = shadowMap._pointBias;
-        const scratchTexelStepSize = new Cesium.Cartesian2();
-        const texelStepSize = scratchTexelStepSize;
-        texelStepSize.x = 1.0 / shadowMap._textureSize.x;
-        texelStepSize.y = 1.0 / shadowMap._textureSize.y;
-        return Cesium.Cartesian4.fromElements(
-            texelStepSize.x,
-            texelStepSize.y,
-            bias.depthBias,
-            bias.normalShadingSmooth,
-            new Cesium.Cartesian4()
-        );
+        far: () => {
+            return 1000;
+        },
+        shadowMap_textureCube: () => {
+            shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
+            return Reflect.get(shadowMap, "_shadowMapTexture");
+        },
+        shadowMap_matrix: () => {
+            shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
+            return Reflect.get(shadowMap, "_shadowMapMatrix");
+        },
+        shadowMap_lightPositionEC: () => {
+            shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
+            return Reflect.get(shadowMap, "_lightPositionEC");
+        },
+        shadowMap_normalOffsetScaleDistanceMaxDistanceAndDarkness: () => {
+            shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
+            const bias = shadowMap._pointBias;
+            return Cesium.Cartesian4.fromElements(
+                bias.normalOffsetScale,
+                shadowMap._distance,
+                shadowMap.maximumDistance,
+                0.0,
+                new Cesium.Cartesian4()
+            );
+        },
+        shadowMap_texelSizeDepthBiasAndNormalShadingSmooth: () => {
+            shadowMap.update(Reflect.get(viewer.scene, "_frameState"));
+            const bias = shadowMap._pointBias;
+            const scratchTexelStepSize = new Cesium.Cartesian2();
+            const texelStepSize = scratchTexelStepSize;
+            texelStepSize.x = 1.0 / shadowMap._textureSize.x;
+            texelStepSize.y = 1.0 / shadowMap._textureSize.y;
+            return Cesium.Cartesian4.fromElements(
+                texelStepSize.x,
+                texelStepSize.y,
+                bias.depthBias,
+                bias.normalShadingSmooth,
+                new Cesium.Cartesian4()
+            );
+        }
     }
-  }
 });
 viewer.scene.postProcessStages.add(postStage);
 

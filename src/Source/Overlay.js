@@ -1,88 +1,98 @@
 export default class Overlay {
-  constructor(option = {}) {
-    let _option = {
-      element: null,
-      position: null,
-      positioning: 'top-center',
-      autoPan:false,
-      offset:[0,0]
-    }
-    this._option = Object.assign(_option, option)
-    if(this._option.viewer&&(this._option.viewer instanceof Cesium.Viewer)){
-      this.setViewer(this._option.viewer)
+  constructor({
+    element,
+    position,
+    positioning ,
+    autoPan,
+    offset,
+    viewer
+  }) {
+    
+    this._element=element;
+    this._position=position;
+    this._positioning=(positioning||'top-center');
+    this._autoPan=(autoPan||false);
+    this._offset=(offset||[0, 0]);
+    this._viewer=viewer;
+    if (this._viewer && (this._viewer instanceof Cesium.Viewer)) {
+      
+      this.setViewer(this._viewer)
     }
   }
   _init() {
-    if (!this._option.element) return;
-    let element = this._option.element
-    let positioning = this._option.positioning.split('-');
+    if (!this._element) return;
+    let element = this._element
+    let positioning = this._positioning.split('-');
     element.style.transform = ''
-    let x,y;
+    let x, y;
     switch (positioning[0]) {
       case 'bottom':
-        y= `-100% + ${this._option.offset[1]}`
+        y = `translateY(calc(-100% + ${this._offset[1]}px))`
         break;
       case 'center':
-        y=`-50% + ${this._option.offset[1]}`
+        y = `translateY(calc(-50% + ${this._offset[1]}px))`
         break;
       case 'top':
-        y=`${this._option.offset[1]}`
+        y = `translateY(${this._offset[1]}px)`
     }
     switch (positioning[1]) {
       case 'left':
-        x=`${this._option.offset[0]}`
+        x = `translateX(${this._offset[0]}px)`
         break;
       case 'center':
-        x=`-50% + ${this._option.offset[0]}`;
+        x = `translateX(calc(-50% + ${this._offset[0]}px))`;
         break;
       case 'right':
-        x=`-100% + ${this._option.offset[0]}`;
+        x = `translateX(calc(-100% + ${this._offset[0]}px))`;
         break;
     }
-    element.style.transform=`translate(calc(${x} calc(${y})))`
-    this._option.position && this._addListener();
+    element.style.transform = `${x} ${y}`;
+    this._position && this._addListener();
   }
   setElement(element) {
     if (element instanceof HTMLElement) {
-      this._option.element = element;
+      this._element = element;
       this._viewer && this._init();
     }
   }
   setViewer(viewer) {
+    viewer.container.style.position="relative";
+      this._element.style.position="absolute";
+      (!viewer.container.contains(this._element))&&viewer.container.appendChild(this._element)
     this._viewer = viewer;
     this._init();
   }
   getElement() {
-    return this._option.element
+    return this._element
   }
-  
+
   _addListener() {
     this._listener = this._viewer.scene.postRender.addEventListener(() => {
-      if(!this._option.position) return;
-      let windowPosition = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this._viewer.scene, this._option.position);
+      if (!this._position) return;
+      let windowPosition = Cesium.SceneTransforms.wgs84ToWindowCoordinates(this._viewer.scene, this._position);
       if (!windowPosition) return;
-      this._option.element.style.left = windowPosition.x + 'px';
-      this._option.element.style.top = windowPosition.y + 'px';
+      this._element.style.left = windowPosition.x + 'px';
+      this._element.style.top = windowPosition.y + 'px';
     })
   }
   setPosition(position) {
-    if(!this._viewer||!this._option.element) return;
+    if (!this._viewer || !this._element) return;
     this._listener && this._listener();
-    this._listener=null;
+    this._listener = null;
     if (position) {
-      this._option.position = position;
+      this._position = position;
       (!this._listener) && this._addListener()
-      this._option.element.style.display = 'block';
+      this._element.style.display = 'block';
     } else {
-      this._option.element.style.display = 'none';
-      this._option.position = undefined;
+      this._element.style.display = 'none';
+      this._position = undefined;
     }
   }
   destory() {
-    if(!this._viewer) return;
+    if (!this._viewer) return;
     this._listener && this._listener();
-    this._option.element.style.display = 'none';
-    this._viewer=null;
-    this._option.element=null
+    this._element.style.display = 'none';
+    this._viewer = null;
+    this._element = null
   }
 }

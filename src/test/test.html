@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试</title>
+    <script src="./Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css" />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>测试</title>
-  <script src="./Cesium/Cesium.js"></script>
-  <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-    }
+      #app {
+        width: 100vw;
+        height: 100vh;
+      }
+      .popup {
+        position: absolute;
+        width: 200px;
+        height: 300px;
+        background-color: aliceblue;
+        z-index: 2;
+        top: 0;
+        display: none;
+      }
+    </style>
+  </head>
 
-    #app {
-      width: 100vw;
-      height: 100vh;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="app" style="position: relative;">
-    <div id="popup" style="position: absolute;width: 200px;height: 300px;background-color: aliceblue;z-index: 2;top: 0;display: none"></div>
-  </div>
-</body>
-
+  <body>
+    <div id="app" style="position: relative">
+    </div>
+  </body>
 </html>
