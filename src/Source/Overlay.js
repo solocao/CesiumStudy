@@ -7,7 +7,6 @@ export default class Overlay {
     offset,
     viewer
   }) {
-    
     this._element=element;
     this._position=position;
     this._positioning=(positioning||'top-center');
