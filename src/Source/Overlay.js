@@ -14,7 +14,6 @@ export default class Overlay {
     this._offset=(offset||[0, 0]);
     this._viewer=viewer;
     if (this._viewer && (this._viewer instanceof Cesium.Viewer)) {
-      
       this.setViewer(this._viewer)
     }
   }

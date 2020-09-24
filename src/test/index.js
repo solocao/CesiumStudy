@@ -49,7 +49,6 @@ globe.camera.setView({
 
 let el=document.createElement('div');
 el.className="popup";
-// document.getElementById('app').appendChild(el)
 let popup = new Overlay({
     element: el,
     positioning: 'center-left',

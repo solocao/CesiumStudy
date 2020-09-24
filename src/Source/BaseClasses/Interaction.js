@@ -2,14 +2,10 @@ export default class Interaction{
   constructor(options){
     options=Object.assign({},options);
   }
-  _init(){
-
-  }
+  _init(){}
   setViewer(viewer){
     this._viewer=viewer;
     this._init();
   }
-  destroy(){
-    
-  }
+  destroy(){}
 }
