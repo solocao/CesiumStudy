@@ -47,17 +47,16 @@ globe.camera.setView({
 //   },5000);
 // },10000);
 
-let el=document.createElement('div');
-el.className="popup";
+let el = document.createElement('div');
+el.className = "popup";
 let popup = new Overlay({
     element: el,
-    positioning: 'center-left',
-    offset: [100, 100],
+    positioning: 'top-left',
+    offset: [0, 0],
     autoPan: true,
-    viewer: globe.viewer
 })
-// globe.addOverLay(popup);
-
+globe.addOverLay(popup);
+new Draw(globe.viewer,"line");
 globe.entities.add({
     position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
     point: {
@@ -66,17 +65,16 @@ globe.entities.add({
     }
 })
 globe.on('click', (evt) => {
+    console.log(globe.getOverlays());
     let feature = globe.scene.pick(evt.position);
     if (feature) {
         popup.setPosition(evt.cartesian);
     } else {
-        popup.setPosition(undefined)
+        globe.removeOverLay(popup);
     }
-})
+});
 
 // popup.setPosition(Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675));
-
-
 // let arr=[]
 // let key1 = globe.on('mouseMove', (evt) => {
 //   if(evt){
@@ -96,8 +94,6 @@ globe.on('click', (evt) => {
 // setTimeout(() => {
 //   globe.un('click')
 // }, 10000)
-
-
 
 
 

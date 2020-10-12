@@ -2,40 +2,40 @@ export default class Overlay {
   constructor({
     element,
     position,
-    positioning ,
+    positioning,
     autoPan,
     offset,
     viewer
   }) {
-    this._element=element;
-    this._position=position;
-    this._positioning=(positioning||'top-center');
-    this._autoPan=(autoPan||false);
-    this._offset=(offset||[0, 0]);
-    this._viewer=viewer;
+    this._element = element;
+    this._position = position;
+    this._positioning = (positioning || 'top-center');
+    this._autoPan = (autoPan || false);
+    this._offset = (offset || [0, 0]);
+    this._viewer = viewer;
     if (this._viewer && (this._viewer instanceof Cesium.Viewer)) {
       this.setViewer(this._viewer)
     }
   }
   _init() {
     if (!this._element) return;
-    let element = this._element
+    let element = this._element;
     let positioning = this._positioning.split('-');
-    element.style.transform = ''
+    element.style.transform = '';
     let x, y;
     switch (positioning[0]) {
       case 'bottom':
-        y = `translateY(calc(-100% + ${this._offset[1]}px))`
+        y = `translateY(calc(-100% + ${this._offset[1]}px))`;
         break;
       case 'center':
-        y = `translateY(calc(-50% + ${this._offset[1]}px))`
+        y = `translateY(calc(-50% + ${this._offset[1]}px))`;
         break;
       case 'top':
-        y = `translateY(${this._offset[1]}px)`
+        y = `translateY(${this._offset[1]}px)`;
     }
     switch (positioning[1]) {
       case 'left':
-        x = `translateX(${this._offset[0]}px)`
+        x = `translateX(${this._offset[0]}px)`;
         break;
       case 'center':
         x = `translateX(calc(-50% + ${this._offset[0]}px))`;
@@ -54,14 +54,14 @@ export default class Overlay {
     }
   }
   setViewer(viewer) {
-    viewer.container.style.position="relative";
-      this._element.style.position="absolute";
-      (!viewer.container.contains(this._element))&&viewer.container.appendChild(this._element)
+    viewer.container.style.position = "relative";
+    this._element.style.position = "absolute";
+    (!viewer.container.contains(this._element)) && viewer.container.appendChild(this._element)
     this._viewer = viewer;
     this._init();
   }
   getElement() {
-    return this._element
+    return this._element;
   }
 
   _addListener() {
@@ -89,8 +89,8 @@ export default class Overlay {
   destory() {
     if (!this._viewer) return;
     this._listener && this._listener();
-    this._element.style.display = 'none';
+    this._element && this._viewer.container.removeChild(this._element)
     this._viewer = null;
-    this._element = null
+    this._element = null;
   }
 }
