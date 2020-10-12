@@ -217,9 +217,9 @@ header>.decorate_container::before {
     width: 0
 }
 
-.menu_second>div>div:hover {
+/* .menu_second>div>div:hover {
     color: #1296db;
-}
+} */
 
 /* .menu_second>div>div>img{
     width: 30px;

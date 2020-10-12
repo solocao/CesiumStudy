@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { env } = require("process");
-const CopyWebpackPlugin=require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
     mode: 'development', //production
@@ -15,7 +15,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: '[name].bundle.js',
-        // publicPath: '/tdhl3D',
+        publicPath: '/3Dplatform',
     },
 
     resolve: {   // 需要打包的文件后缀
@@ -47,7 +47,7 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+                test: /\.(png|jpe?g|gif|svg|glb)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
                     limit: 7000000,
@@ -87,12 +87,12 @@ module.exports = {
             filename: "test.html",
             chunks: ['test']
         }),
-        // new CopyWebpackPlugin({
-        //     patterns:[{
-        //         from: __dirname + '/public',
-        //         to: __dirname + '/dist'
-        //     }]
-        // }),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: __dirname+'/public',
+                to:__dirname+"/dist"
+            }]
+        }),
     ],
     devServer: {
         contentBase: 'public',
@@ -101,13 +101,13 @@ module.exports = {
         disableHostCheck: true,
         // host:'0.0.0.0'
         proxy: {
-            '/3DTiles': {
-                target: 'http://localhost:6999',
-                changeOrigin: true,
-                // pathRewrite: {
-                //     '^/tile': '/'
-                // }
-            },
+            // '/3DTiles': {
+            //     target: 'http://localhost:6999',
+            //     changeOrigin: true,
+            //     // pathRewrite: {
+            //     //     '^/tile': '/'
+            //     // }
+            // },
             '/geoserver': {
                 target: 'http://localhost:8080',
                 changeOrigin: true

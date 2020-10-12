@@ -13,7 +13,7 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     vrButton: false,
     baseLayerPicker: false,
     infoBox: false,
-    shadows: true,
+    // shadows: true,
     fullscreenButton: false,
     geocoder: false,//搜索按钮
     homeButton: false,
@@ -30,7 +30,6 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // imageryProvider: 
 });
 //移除默认鼠标事件
-
 viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
     Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
 );
@@ -104,8 +103,14 @@ scene.postRender.addEventListener(() => {
         popup.style.top = windowPosition.y - 10 + 'px';
     }
 })
+let url3D="";
+// if (process.env.NODE_ENV == 'development') { // 开发环境
+//   url3D=""
+// } else if (process.env.NODE_ENV == 'production') { // 生产环境
+//   url3D = '/3Dplatform'
+// }
 let tile = scene.primitives.add(new Cesium.Cesium3DTileset({
-    url: "/3DTiles/tileset.json"
+    url: url3D+"/3DTiles/tileset.json"
 }))
 tile.readyPromise.then(tileset => {
     let bound = tileset.boundingSphere;

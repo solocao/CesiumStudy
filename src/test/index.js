@@ -56,7 +56,14 @@ let popup = new Overlay({
     autoPan: true,
 })
 globe.addOverLay(popup);
-new Draw(globe.viewer,"line");
+let dra=new Draw(globe.viewer,"line");
+document.getElementById("btn").onclick=()=>{
+    if(dra.isActive){
+        dra.deactive()
+    }else{
+        dra.active()
+    }
+}
 globe.entities.add({
     position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
     point: {

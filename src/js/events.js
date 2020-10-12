@@ -188,7 +188,7 @@ export default function (viewer) {
       }
     }
   })
-  let waterPrimitive;
+  let waterPrimitive,waterLine;
   elBindClick("water", () => {
     if (!waterPrimitive) {
       let waterFace = [
@@ -213,14 +213,37 @@ export default function (viewer) {
             fabric: {
               type: 'Water',
               uniforms: {
-                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.7),
+                baseWaterColor: new Cesium.Color(45 / 255 * 1.0, 71 / 255 * 1.0, 140 / 255 * 1.0, 0.8),
                 blendColor: new Cesium.Color(0 / 255 * 1.0, 0 / 255 * 1.0, 255 / 255 * 1.0, 1.0),
                 //specularMap: 'gray.jpg',
                 //normalMap: '../assets/waterNormals.jpg',
                 normalMap: require('../assets/waterNormals.jpg').default,
-                frequency: 10000.0,
+                frequency: 2000.0,
                 animationSpeed: 0.05,
-                amplitude: 1.0
+                amplitude: 10
+              }
+            }
+          }),
+
+        })
+      });
+      waterLine = new Cesium.Primitive({
+        // show: true,// 默认隐藏
+        allowPicking: false,
+        geometryInstances: new Cesium.GeometryInstance({
+          geometry: new Cesium.PolygonOutlineGeometry({
+            polygonHierarchy: new Cesium.PolygonHierarchy(Cesium.Cartesian3.fromDegreesArrayHeights(waterFace)),
+            extrudedHeight: 12,//注释掉此属性可以只显示水面
+            // perPositionHeight : true//注释掉此属性水面就贴地了
+          })
+        }),
+        // 可以设置内置的水面shader
+        appearance: new Cesium.EllipsoidSurfaceAppearance({
+          material: new Cesium.Material({
+            fabric: {
+              type: 'Color',
+              uniforms: {
+                color:Cesium.Color.RED
               }
             }
           }),
@@ -228,13 +251,13 @@ export default function (viewer) {
         })
       });
       viewer.scene.primitives.add(waterPrimitive);
+      viewer.scene.primitives.add(waterLine);
       viewer.camera.flyTo({ destination: { x: -2212505.247497241, y: 4837907.762498249, z: 3506938.8608193123 }, orientation: { heading: 6.283185307179586, pitch: -0.500031662064985, roll: 6.283185307179586 } });
     } else {
       waterPrimitive.show = !waterPrimitive.show;
+      waterLine.show = !waterLine.show;
       waterPrimitive.show && viewer.camera.flyTo({ destination: { x: -2212505.247497241, y: 4837907.762498249, z: 3506938.8608193123 }, orientation: { heading: 6.283185307179586, pitch: -0.500031662064985, roll: 6.283185307179586 } });
     }
-
-
   })
   let videoEntity;
   let videoElement = document.getElementById('video')
@@ -368,7 +391,7 @@ export default function (viewer) {
         id: 'plane',
         position: Cesium.Cartesian3.fromDegrees(114.6200877719163, 33.442230242824415, 5000),
         model: {
-          uri: "/Cesium_Air.glb",
+          uri: require("./assets/Cesium_Air.glb").default,
           minimumPixelSize: 128,
           maximumScale: 20000
         }

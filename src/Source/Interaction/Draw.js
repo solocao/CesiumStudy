@@ -8,12 +8,15 @@ export default class Draw {
     this._activePoint = null;
     this._activeGeomPoints = [];
     this._activeGeom = null;
-    this._dataSource = new Cesium.CustomDataSource();
+    this._active = false;
     this._viewer && this._init();
   }
 
-  
+  get isActive() {
+    return this._active;
+  }
   _init() {
+    this._dataSource = new Cesium.CustomDataSource();
     this._viewer.dataSources.add(this._dataSource);
     this._handler = new Cesium.ScreenSpaceEventHandler(this._viewer.canvas);
     this._handler.setInputAction((event) => {
@@ -47,15 +50,16 @@ export default class Draw {
       }
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-    this._handler.setInputAction((event) => {
+    this._handler.setInputAction(() => {
       this._activeGeomPoints.pop();
       this._drawShape(this._activeGeomPoints);
       this._viewer.entities.remove(this._activeGeom);
       this._viewer.entities.remove(this._activePoint);
       this._activePoint = null;
       this._activeGeom = null;
-      this._activeGeomPoints = []
+      this._activeGeomPoints = [];
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+    this._active = true;
   }
   _drawShape(positions) {
     let shape;
@@ -64,8 +68,8 @@ export default class Draw {
         polyline: {
           positions: positions,
           clampToGround: true,
-          width: 3,
-        },
+          width: 3
+        }
       });
     } else if (this._mode === "polygon") {
       shape = this._dataSource.entities.add({
@@ -73,7 +77,7 @@ export default class Draw {
           hierarchy: positions,
           material: new Cesium.ColorMaterialProperty(
             Cesium.Color.WHITE.withAlpha(0.7)
-          ),
+          )
         },
       });
     }
@@ -90,14 +94,20 @@ export default class Draw {
     });
     return point
   }
-  setViewer() {
-
+  setViewer(viewer) {
+    this._viewer = viewer;
+    this._init();
   }
   active() {
-
+    if (this._handler) {
+      return
+    }
+    this._init();
   }
   deactive() {
-
+    this._handler && this._handler.destroy();
+    this._handler = null;
+    this._active = false
   }
   destroy() {
 

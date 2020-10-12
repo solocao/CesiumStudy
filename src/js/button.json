@@ -17,6 +17,7 @@
       {
         "id": "terrain",
         "name": "地形",
+        "check":"true",
         "src": "摄像机.png",
         "activesrc": "摄像机 (1).png"
       }
@@ -29,12 +30,14 @@
         "id": "modellocated",
         "name": "3DTiles",
         "src": "模型管理.png",
+        
         "activesrc": "模型管理1.png"
       },
       {
         "id": "model",
         "name": "GLB模型",
         "src":"飞机.png",
+        "check":"true",
         "activesrc":"飞机 (1).png"
       }
     ]
@@ -81,23 +84,27 @@
         "id": "water",
         "name": "水面",
         "src":"湖泊.png",
-        "activesrc":"湖泊 (1).png"
+        "activesrc":"湖泊 (1).png",
+        "check":"true"
       },
       {
         "id": "radar",
         "name": "雷达",
         "src":"雷达.png",
+        "check":"true",
         "activesrc":"雷达 (1).png"
       },
       {
         "id": "odline",
         "name": "OD线",
+        "check":"true",
         "src":"OD分析.png",
         "activesrc":"OD分析 (1).png"
       },
       {
         "id": "flowWall",
         "name": "流动墙",
+        "check":"true",
         "src":"指定范围.png",
         "activesrc":"指定范围 (1).png"
       },
@@ -145,6 +152,7 @@
       {
         "id": "heatmap",
         "name": "热力图",
+        "check":"true",
         "src":"热力图.png",
         "activesrc":"热力图 (1).png"
       }
@@ -168,18 +176,21 @@
         "id": "addGeojson",
         "name": "GeoJSON",
         "src":"json file.png",
+        "check":"true",
         "activesrc":"json file (1).png"
       },
       {
         "id": "wms",
         "name": "WMS",
         "src":"地图.png",
+        "check":"true",
         "activesrc":"地图 (1).png"
       },
       {
         "id": "czmlpath",
         "name": "CZML-Path",
         "src":"地图.png",
+        "check":"true",
         "activesrc":"地图 (1).png"
       }
     ]
@@ -189,42 +200,52 @@
     "btns": [
       {
         "id": "point",
+        "check":"true",
         "name": "点"
       },
       {
         "id": "line",
+        "check":"true",
         "name": "线"
       },
       {
         "id": "polygon",
+        "check":"true",
         "name": "面"
       },
       {
         "id": "polygonVol",
+        "check":"true",
         "name": "立体面"
       },
       {
         "id": "Billboard",
+        "check":"true",
         "name": "图标"
       },
       {
         "id": "playvideo",
+        "check":"true",
         "name": "视频"
       },
       {
         "id": "pandm",
+        "check":"true",
         "name": "primitive和材质"
       },
       {
         "id": "translate",
+        "check":"true",
         "name": "平移"
       },
       {
         "id": "scale",
+        "check":"true",
         "name": "缩放"
       },
       {
         "id": "rotate",
+        "check":"true",
         "name": "旋转"
       }
     ]

@@ -6,11 +6,39 @@ export default function () {
   tabs.forEach(tab => {
     let img = tab.querySelector('img')
     if (img) {
-      tab.onmouseover = () => {
-        img.src = require(`@/assets/btnIcons/${img.getAttribute('data-usrc')}`).default
+      
+      if (tab.getAttribute('data-check')==="true") {
+        tab.onclick = () => {
+          if (img.src === require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default) {
+            img.src = require(`@/assets/btnIcons/${img.getAttribute('data-usrc')}`).default
+            tab.style.color = "#1296db"
+          } else {
+            img.src = require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default;
+            tab.style.color = ""
+          }
+        }
+      } else {
+        tab.onmouseover = () => {
+          tab.style.color = "#1296db"
+          img.src = require(`@/assets/btnIcons/${img.getAttribute('data-usrc')}`).default
+        }
+        tab.onmouseout = () => {
+          tab.style.color = ""
+          img.src = require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default
+        }
       }
-      tab.onmouseout = () => {
-        img.src = require(`@/assets/btnIcons/${img.getAttribute('data-src')}`).default
+
+    }else{
+      if(tab.getAttribute('data-check')==="true"){
+        tab.onclick = () => {
+          if (tab.style.color === "rgb(18, 150, 219)") {
+            tab.style.color = ""
+          } else {
+            tab.style.color = "rgb(18, 150, 219)"
+          }
+        }
+      }else{
+        
       }
     }
   })
@@ -49,11 +77,13 @@ function createMenu() {
     mf += `<label for="m${index + 1}">${item.tabName}</label>`;
     let btns = ''
     item.btns.forEach(btn => {
-      btns += `<div id="${btn.id}">
-                ${btn.src ? `<img width="30" data-src="${btn.src}" data-usrc="${btn.activesrc}" height="30" src="${require(`../assets/btnIcons/${btn.src}`).default}"/>` : ''}
+      console.log(btn.check);
+      btns += `<div data-check="${btn.check}" id="${btn.id}">
+                ${btn.src ? `<img width="30"  data-src="${btn.src}" data-usrc="${btn.activesrc}" height="30" src="${require(`../assets/btnIcons/${btn.src}`).default}"/>` : ''}
                 ${btn.name}
               </div>`;
     });
+    
     ms += `<div>${btns}</div>`;
   })
   menu.innerHTML = input + `<div class='menu_first'>${mf}</div>` + `<div class="menu_second">${ms}</div>`
