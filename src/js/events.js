@@ -219,8 +219,8 @@ export default function (viewer) {
                 //normalMap: '../assets/waterNormals.jpg',
                 normalMap: require('../assets/waterNormals.jpg').default,
                 frequency: 2000.0,
-                animationSpeed: 0.05,
-                amplitude: 10
+                animationSpeed: 0.03,
+                amplitude: 6
               }
             }
           }),

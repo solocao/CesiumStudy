@@ -87,12 +87,12 @@ module.exports = {
             filename: "test.html",
             chunks: ['test']
         }),
-        new CopyWebpackPlugin({
-            patterns: [{
-                from: __dirname+'/public',
-                to:__dirname+"/dist"
-            }]
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [{
+        //         from: __dirname+'/public',
+        //         to:__dirname+"/dist"
+        //     }]
+        // }),
     ],
     devServer: {
         contentBase: 'public',
