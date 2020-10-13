@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>测试</title>
-    <script src="./Cesium/Cesium.js"></script>
-    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css" />
+    <script src="/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="/Cesium/Widgets/widgets.css" />
     <style>
       * {
         padding: 0;
@@ -25,7 +25,7 @@
         top: 0;
         display: none;
       }
-      #btn {
+      .btn {
         position: absolute;
         top: 40px;
         left: 40px;
@@ -40,7 +40,8 @@
 
   <body>
     <div id="app" style="position: relative">
-      <div id="btn">开始</div>
+      <div id="btn" class="btn">开始</div>
+      <div id="btn1" class="btn" style="top: 90px;">清除</div>
     </div>
   </body>
 </html>

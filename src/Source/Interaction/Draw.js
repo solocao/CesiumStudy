@@ -1,26 +1,33 @@
-
 export default class Draw {
   constructor(
-    viewer, mode
+    viewer, mode, clampMode = "clampToGround"
   ) {
     this._viewer = (viewer || null);
     this._mode = (mode || null);
     this._activePoint = null;
     this._activeGeomPoints = [];
+    this._clampMode = clampMode;
     this._activeGeom = null;
     this._active = false;
+    this._deactivePoints=[];
+    this._actionCollection = {
+      "end": []
+    };
     this._viewer && this._init();
+
   }
 
   get isActive() {
     return this._active;
   }
+
   _init() {
     this._dataSource = new Cesium.CustomDataSource();
     this._viewer.dataSources.add(this._dataSource);
     this._handler = new Cesium.ScreenSpaceEventHandler(this._viewer.canvas);
     this._handler.setInputAction((event) => {
-      let earthPosition = this._viewer.scene.pickPosition(event.position);
+
+      let earthPosition = this._getPosition(event.position);
       if (Cesium.defined(earthPosition)) {
         if (this._activeGeomPoints.length === 0) {
           this._activePoint = this._createPoint(earthPosition);
@@ -34,13 +41,13 @@ export default class Draw {
           this._activeGeom = this._drawShape(dynamicPoints);
         }
         this._activeGeomPoints.push(earthPosition);
-        this._createPoint(earthPosition);
+        this._deactivePoints.push(this._createPoint(earthPosition));
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
     this._handler.setInputAction(event => {
       if (Cesium.defined(this._activePoint)) {
-        let earthPosition = this._viewer.scene.pickPosition(event.endPosition);
+        let earthPosition = this._getPosition(event.endPosition);
         if (Cesium.defined(earthPosition)) {
           console.log(34535);
           this._activePoint.position.setValue(earthPosition);
@@ -52,7 +59,8 @@ export default class Draw {
 
     this._handler.setInputAction(() => {
       this._activeGeomPoints.pop();
-      this._drawShape(this._activeGeomPoints);
+      let s = this._drawShape(this._activeGeomPoints);
+      this._actionCollection.end.forEach(cb => cb(s));
       this._viewer.entities.remove(this._activeGeom);
       this._viewer.entities.remove(this._activePoint);
       this._activePoint = null;
@@ -60,6 +68,16 @@ export default class Draw {
       this._activeGeomPoints = [];
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     this._active = true;
+  }
+  _getPosition(position) {
+    if (this._clampMode === "clampToGround") {
+      return this._viewer.scene.pickPosition(position)
+    } else {
+      return this._viewer.camera.pickEllipsoid(
+        position,
+        this._viewer.scene.globe.ellipsoid
+      );
+    }
   }
   _drawShape(positions) {
     let shape;
@@ -89,7 +107,8 @@ export default class Draw {
       point: {
         pixelSize: 10,
         color: Cesium.Color.fromCssColorString("rgba(255, 255, 255,0.5)"),
-        outlineColor: Cesium.Color.fromCssColorString("rgba(235, 59, 90,1.0)")
+        outlineColor: Cesium.Color.fromCssColorString("rgba(235, 59, 90,1.0)"),
+        outlineWidth :2
       }
     });
     return point
@@ -109,7 +128,31 @@ export default class Draw {
     this._handler = null;
     this._active = false
   }
+  clear() {
+    this._activePoint && this._viewer.entities.remove(this._activePoint);
+    this._deactivePoints.forEach(e=>this._viewer.entities.remove(e))
+    this._activePoint = null;
+    this._activeGeom = null;
+    this._activeGeomPoints = [];
+    this._dataSource.entities.removeAll();
+  }
+  on(key, cb) {
+    if (typeof key === "string" && this._actionCollection[key] !== undefined) {
+      this._actionCollection[key].push(cb)
+    } else {
+      console.error("The type of the first parameter must be string")
+    }
+  }
   destroy() {
-
+    if(!this._viewer) return;
+    this._handler && this._handler.destroy();
+    this._handler = null;
+    this._activeGeom && this._viewer.entities.remove(this._activeGeom);
+    this._activeGeom = null;
+    this._activePoint && this._viewer.entities.remove(this._activePoint);
+    this._activePoint = null;
+    this._activeGeomPoints = [];
+    this._viewer.dataSources.remove(this._dataSource);
+    this._dataSource=null;
   }
 }

@@ -10,7 +10,7 @@ export default class Globe {
     this.entities = this.viewer.entities;
     this.primitives = this.scene.primitives;
     this._events = new Events(this.viewer);
-    this._overlays=[];
+    this._overlays = [];
   }
   //添加一个监听事件，返回唯一的key值
   on(type, cb) {
@@ -33,18 +33,18 @@ export default class Globe {
     }
   }
   addOverLay(overlay) {
-    if(overlay instanceof Overlay){
+    if (overlay instanceof Overlay) {
       overlay.setViewer(this.viewer);
       this._overlays.push(overlay)
     }
   }
-  getOverlays(){
+  getOverlays() {
     return this._overlays;
   }
   removeOverLay(overlay) {
-    if(overlay instanceof Overlay){
-      this._overlays=this._overlays.filter(ol=>{
-        return ol!==overlay;
+    if (overlay instanceof Overlay) {
+      this._overlays = this._overlays.filter(ol => {
+        return ol !== overlay;
       });
       overlay.destory();
     }

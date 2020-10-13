@@ -5,7 +5,7 @@ import Overlay from '../Source/Overlay';
 let globe = new Globe('app', {
     // selectionIndicator: false,
     // infoBox: false,
-    terrainProvider: Cesium.createWorldTerrain(),
+    // terrainProvider: Cesium.createWorldTerrain(),
 });
 // globe.viewer.terrainProvider = Cesium.createWorldTerrain()
 globe.viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
@@ -56,13 +56,19 @@ let popup = new Overlay({
     autoPan: true,
 })
 globe.addOverLay(popup);
-let dra=new Draw(globe.viewer,"line");
-document.getElementById("btn").onclick=()=>{
-    if(dra.isActive){
+let dra = new Draw(globe.viewer, "polygon", "");
+dra.on("end", (entity) => {
+    console.log(entity);
+})
+document.getElementById("btn").onclick = () => {
+    if (dra.isActive) {
         dra.deactive()
-    }else{
+    } else {
         dra.active()
     }
+}
+document.getElementById("btn1").onclick = () => {
+    dra.clear();
 }
 globe.entities.add({
     position: Cesium.Cartesian3.fromDegrees(105.08310805754294, 31.832973133585675),
