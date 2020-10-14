@@ -1,12 +1,12 @@
 export default class Draw {
   constructor(
-    viewer, mode, clampMode = "clampToGround"
+    viewer, mode, clampMode
   ) {
     this._viewer = (viewer || null);
     this._mode = (mode || null);
     this._activePoint = null;
     this._activeGeomPoints = [];
-    this._clampMode = clampMode;
+    this._clampMode = (clampMode||Draw.clampMode.Normal);
     this._activeGeom = null;
     this._active = false;
     this._deactivePoints=[];
@@ -16,11 +16,15 @@ export default class Draw {
     this._viewer && this._init();
 
   }
-
+  static clampMode={
+    ClampToGround:"ClampToGround",
+    Normal:"Normal"
+  }
   get isActive() {
     return this._active;
   }
 
+  //初始化生成事件处理监听
   _init() {
     this._dataSource = new Cesium.CustomDataSource();
     this._viewer.dataSources.add(this._dataSource);
@@ -69,8 +73,9 @@ export default class Draw {
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
     this._active = true;
   }
+  //获取位置
   _getPosition(position) {
-    if (this._clampMode === "clampToGround") {
+    if (this._clampMode === Draw.clampMode.ClampToGround) {
       return this._viewer.scene.pickPosition(position)
     } else {
       return this._viewer.camera.pickEllipsoid(
@@ -79,6 +84,7 @@ export default class Draw {
       );
     }
   }
+  //绘制线/面
   _drawShape(positions) {
     let shape;
     if (this._mode === "line") {
@@ -101,6 +107,7 @@ export default class Draw {
     }
     return shape;
   }
+  //绘制点
   _createPoint(position) {
     let point = this._viewer.entities.add({
       position,

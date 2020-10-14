@@ -16,6 +16,7 @@ export default class Globe {
   on(type, cb) {
     return this._events.addEvent(type, cb);
   }
+  //移除某一种类型下的所有事件监听
   un(type) {
     this._events.removeAll(type)
   }

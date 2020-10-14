@@ -103,14 +103,14 @@ scene.postRender.addEventListener(() => {
         popup.style.top = windowPosition.y - 10 + 'px';
     }
 })
-let url3D="";
-// if (process.env.NODE_ENV == 'development') { // 开发环境
-//   url3D=""
-// } else if (process.env.NODE_ENV == 'production') { // 生产环境
-//   url3D = '/3Dplatform'
-// }
+let url3D = "";
+if (process.env.NODE_ENV == 'development') { // 开发环境
+  url3D=""
+} else if (process.env.NODE_ENV == 'production') { // 生产环境
+  url3D = '/3Dplatform'
+}
 let tile = scene.primitives.add(new Cesium.Cesium3DTileset({
-    url: url3D+"/3DTiles/tileset.json"
+    url: url3D + "/3DTiles/tileset.json"
 }))
 tile.readyPromise.then(tileset => {
     let bound = tileset.boundingSphere;

@@ -2,9 +2,29 @@ const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { env } = require("process");
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-
+let plugins=[
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+        template: './public/index.html',
+        filename: "index.html",
+        chunks: ['index']
+    }),
+    new HtmlWebpackPlugin({
+        template: './public/test.html',
+        filename: "test.html",
+        chunks: ['test']
+    }),
+];
+if(process.env.NODE_ENV==="production"){
+    plugins.push(new CopyWebpackPlugin({
+        patterns: [{
+            from: __dirname+'/public',
+            to:__dirname+"/dist"
+        }]
+    }))
+}
 module.exports = {
     mode: 'development', //production
     devtool: 'cheap-module-source-map',
@@ -75,39 +95,15 @@ module.exports = {
 
         ]
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: './public/index.html',
-            filename: "index.html",
-            chunks: ['index']
-        }),
-        new HtmlWebpackPlugin({
-            template: './public/test.html',
-            filename: "test.html",
-            chunks: ['test']
-        }),
-        // new CopyWebpackPlugin({
-        //     patterns: [{
-        //         from: __dirname+'/public',
-        //         to:__dirname+"/dist"
-        //     }]
-        // }),
-    ],
+    plugins,
     devServer: {
         contentBase: 'public',
         hot: true,
+        stats:"errors-only",
         // port: 80,
         disableHostCheck: true,
         // host:'0.0.0.0'
         proxy: {
-            // '/3DTiles': {
-            //     target: 'http://localhost:6999',
-            //     changeOrigin: true,
-            //     // pathRewrite: {
-            //     //     '^/tile': '/'
-            //     // }
-            // },
             '/geoserver': {
                 target: 'http://localhost:8080',
                 changeOrigin: true
