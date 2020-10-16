@@ -4,6 +4,7 @@ export default class Draw extends Interaction{
   constructor(
     viewer, mode, clampMode
   ) {
+    super()
     this._viewer = (viewer || null);
     this._mode = (mode || null);
     this._activePoint = null;
@@ -16,12 +17,13 @@ export default class Draw extends Interaction{
       "end": []
     };
     this._viewer && this._init();
-
   }
+
   static clampMode={
     ClampToGround:"ClampToGround",
     Normal:"Normal"
   }
+
   get isActive() {
     return this._active;
   }
