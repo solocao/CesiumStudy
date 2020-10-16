@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>三维展示平台</title>
     <script src="./Cesium/Cesium.js"></script>
-    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css">
+    <link rel="stylesheet" href="./Cesium/Widgets/widgets.css" />
     <script src="./heatmap.min.js"></script>
-<link rel="shortcut icon" type="image/png" href="tubiao.png" />
-</head>
+    <link rel="shortcut icon" type="image/png" href="tubiao.png" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <header>
-            <div class="icon"></div>
-            <span style="font-size: 26px;">三维展示平台<sub style="font-size: 14px;">v0.0.1</sub></span>
-            <div class="decorate_container">
-                <div class="decorate"></div>
-            </div>
-        </header>
-        <div class="menu">
+      <header>
+        <div class="icon"></div>
+        <span style="font-size: 26px"
+          >三维展示平台<sub style="font-size: 14px">v0.0.1</sub></span
+        >
+        <div class="decorate_container">
+          <div class="decorate"></div>
         </div>
-        <div id="CesiumContainer" class="CesiumContainer">
-            <video style="position: absolute;top: 0;right: 0;display: none;z-index: 1;" id="video" muted=""
-                autoplay="autoplay" loop="" crossorigin="" controls="" src="big-buck-bunny_trailer.mp4"></video>
-        </div>
-        <footer>
-            Copyright © TDHL
-            <!-- <a href="https://cesium.com/cesiumjs/">cesium官网</a> -->
-            <!-- <a href="http://10.20.10.174:6999/Documentation/">cesium本地文档</a> -->
-        </footer>
+      </header>
+      <div class="menu"></div>
+      <div id="CesiumContainer" class="CesiumContainer">
+        <video
+          style="
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: none;
+            z-index: 1;
+          "
+          id="video"
+          muted=""
+          autoplay="autoplay"
+          loop=""
+          crossorigin=""
+          controls=""
+          src="big-buck-bunny_trailer.mp4"
+        ></video>
+      </div>
+      <footer>
+        Copyright © TDHL
+        <!-- <a href="https://cesium.com/cesiumjs/">cesium官网</a> -->
+        <!-- <a href="http://10.20.10.174:6999/Documentation/">cesium本地文档</a> -->
+      </footer>
     </div>
     <script>
-        Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOGRjOTc1Ny1kYTk2LTQ1ODktYTcxNi1jYTcwNjllNGRmNDYiLCJpZCI6Mjc4MzAsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMzYzNTd9.p5tdyN9GYejwSppDN55BHcLEM9V1jyxEoPU1VZB8CC8";
-        Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(73.0, 3.0, 135.0, 53.0);
+      Cesium.Ion.defaultAccessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmOGRjOTc1Ny1kYTk2LTQ1ODktYTcxNi1jYTcwNjllNGRmNDYiLCJpZCI6Mjc4MzAsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMzYzNTd9.p5tdyN9GYejwSppDN55BHcLEM9V1jyxEoPU1VZB8CC8";
+      Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(
+        73.0,
+        3.0,
+        135.0,
+        53.0
+      );
     </script>
-</body>
-
+  </body>
 </html>

@@ -2,6 +2,7 @@ import pointEntities from "./points"
 import lineEntities from "./lines"
 import polygonEntities from "./polygons"
 import * as turf from '@turf/turf'
+import Draw from "../Source/Interaction/Draw";
 export default function (viewer) {
   let scene = viewer.scene;
   let camera = viewer.camera;
@@ -188,7 +189,7 @@ export default function (viewer) {
       }
     }
   })
-  let waterPrimitive,waterLine;
+  let waterPrimitive, waterLine;
   elBindClick("water", () => {
     if (!waterPrimitive) {
       let waterFace = [
@@ -243,7 +244,7 @@ export default function (viewer) {
             fabric: {
               type: 'Color',
               uniforms: {
-                color:Cesium.Color.RED
+                color: Cesium.Color.RED
               }
             }
           }),
@@ -283,106 +284,38 @@ export default function (viewer) {
   let handler;
   let drawDataSource = new Cesium.CustomDataSource();
   viewer.dataSources.add(drawDataSource)
-  elBindClick("draw", () => {
-    if (!handler) {
-      if (!viewer.scene.pickPositionSupported) {
-        window.alert("This browser does not support pickPosition.");
-      }
-
-      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
-        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
-      );
-      function createPoint(worldPosition) {
-        var point = viewer.entities.add({
-          position: worldPosition,
-          point: {
-            color: Cesium.Color.WHITE,
-            pixelSize: 5,
-            heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-          },
-        });
-        return point;
-      }
-      var drawingMode = "line";
-      let p = prompt('1画面')
-      drawingMode = (p == 1 ? 'polygon' : 'line')
-      function drawShape(positionData) {
-        var shape;
-        if (drawingMode === "line") {
-          shape = viewer.entities.add({
-            polyline: {
-              positions: positionData,
-              clampToGround: true,
-              width: 3,
-            },
-          });
-        } else if (drawingMode === "polygon") {
-          shape = viewer.entities.add({
-            polygon: {
-              hierarchy: positionData,
-              material: new Cesium.ColorMaterialProperty(
-                Cesium.Color.WHITE.withAlpha(0.7)
-              ),
-            },
-          });
-        }
-        return shape;
-      }
-      var activeShapePoints = [];
-      var activeShape;
-      var floatingPoint;
-      var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-      handler.setInputAction(function (event) {
-        // We use `viewer.scene.pickPosition` here instead of `viewer.camera.pickEllipsoid` so that
-        // we get the correct point when mousing over terrain.
-        var earthPosition = viewer.camera.pickEllipsoid(event.position, scene.globe.ellipsoid);
-        // `earthPosition` will be undefined if our mouse is not over the globe.
-        if (Cesium.defined(earthPosition)) {
-          if (activeShapePoints.length === 0) {
-            floatingPoint = createPoint(earthPosition);
-            activeShapePoints.push(earthPosition);
-            var dynamicPositions = new Cesium.CallbackProperty(function () {
-              if (drawingMode === "polygon") {
-                return new Cesium.PolygonHierarchy(activeShapePoints);
-              }
-              return activeShapePoints;
-            }, false);
-            activeShape = drawShape(dynamicPositions);
-          }
-          activeShapePoints.push(earthPosition);
-          createPoint(earthPosition);
-        }
-      }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-
-      handler.setInputAction(function (event) {
-        if (Cesium.defined(floatingPoint)) {
-          var newPosition = viewer.camera.pickEllipsoid(event.endPosition, scene.globe.ellipsoid);
-          if (Cesium.defined(newPosition)) {
-            floatingPoint.position.setValue(newPosition);
-            activeShapePoints.pop();
-            activeShapePoints.push(newPosition);
-          }
-        }
-      }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-      // Redraw the shape so it's not dynamic and remove the dynamic shape.
-      function terminateShape() {
-        activeShapePoints.pop();
-        drawShape(activeShapePoints);
-        viewer.entities.remove(floatingPoint);
-        viewer.entities.remove(activeShape);
-        floatingPoint = undefined;
-        activeShape = undefined;
-        activeShapePoints = [];
-      }
-      handler.setInputAction(function (event) {
-        terminateShape();
-      }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
-
-    } else {
-      handler.destroy();
-      drawDataSource.entities.removeAll();
-      handler = null
+  let draw;
+  elBindClick("drawline", () => {
+    if (!draw) {
+      draw = new Draw(viewer, Draw.mode.LINE, Draw.clampMode.Normal)
+      return;
     }
+    draw.destroy();
+    draw = null
+  })
+  elBindClick("drawpolygon", () => {
+    if (!draw) {
+      draw = new Draw(viewer, Draw.mode.POLYGON, Draw.clampMode.Normal)
+      return;
+    }
+    draw.destroy();
+    draw = null
+  })
+  elBindClick("drawline-terrian", () => {
+    if (!draw) {
+      draw = new Draw(viewer, Draw.mode.LINE, Draw.clampMode.ClampToGround)
+      return;
+    }
+    draw.destroy();
+    draw = null
+  })
+  elBindClick("drawpolygon-terrian", () => {
+    if (!draw) {
+      draw = new Draw(viewer, Draw.mode.POLYGON, Draw.clampMode.ClampToGround)
+      return;
+    }
+    draw.destroy();
+    draw = null
   })
   elBindClick("model", () => {
     let entity = viewer.entities.getById('plane');
@@ -817,7 +750,7 @@ export default function (viewer) {
             Cesium.Color.fromCssColorString(`rgb(0, 156, ${Math.random() * 255},1.0)`),
             100
           )
-          en.polyline.clampToGround=true
+          en.polyline.clampToGround = true
           en.polyline.width = 5
         })
         viewer.flyTo(source)
@@ -942,50 +875,7 @@ export default function (viewer) {
       rectang.show && camera.flyTo({ destination: { x: -1971975.4191203448, y: -14803000.39336014, z: 4949683.691860933 }, orientation: { heading: 0.007126499771088035, pitch: -1.5625996938330577, roll: 0 } })
     }
   })
-  let lastStage;
-  elBindClick('radarScan', () => {
-    viewer.scene.postProcessStages.remove(lastStage);
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(117.270739, 31.84309, 3213.48)
-    })
-    showRadarScan()
-  })
-  let circle;
-  elBindClick('circleScan', () => {
-    if (!circle) {
-      circle = viewer.entities.add({
-        position: Cesium.Cartesian3.fromDegrees(-111.0, 40.0, 150000.0),
-        name: "Green circle at height with outline",
-        ellipse: {
-          semiMinorAxis: 500000,
-          semiMajorAxis: 500000,
-          // fill:false,
-          heightReference:Cesium.HeightReference.CLAMP_TO_GROUND,
-          height: 0,
-          material: new Cesium.ScanCircleMaterialProperty(new Cesium.Color(1.0, 1.0, 0.0, 1.0), 1000.0),
-          // outline: true, // height must be set for outline to display
-        },
-      });
-      viewer.flyTo(circle)
-    } else {
-      circle.show = !circle.show;
-      circle.show && viewer.flyTo(circle)
-    }
-  })
 
-  function showCircleScan() {
-    viewer.scene.globe.depthTestAgainstTerrain = true; //开启深度检测
-    var cartographicCenter = new Cesium.Cartographic(Cesium.Math.toRadians(117.270739), Cesium.Math.toRadians(31.84309), 32);
-    var scanColor = new Cesium.Color(0.0, 1.0, 0.0, 1);
-    lastStage = addCircleScanPostStage(viewer, cartographicCenter, 1000, scanColor, 2000);
-  }
-
-  function showRadarScan() {
-    viewer.scene.globe.depthTestAgainstTerrain = true; //开启深度检测
-    var cartographicCenter = new Cesium.Cartographic(Cesium.Math.toRadians(117.270739), Cesium.Math.toRadians(31.84309), 32);
-    var scanColor = new Cesium.Color(1.0, 0.0, 0.0, 1);
-    lastStage = addRadarScanPostStage(viewer, cartographicCenter, 1000, scanColor, 3000);
-  }
   let flowingWall;
   elBindClick('flowWall', () => {
     if (!flowingWall) {
@@ -1182,8 +1072,8 @@ export default function (viewer) {
       tilingScheme: new Cesium.WebMercatorTilingScheme(),
       minimumLevel: 1,
       maximumLevel: 20,
-      tileWidth:256,
-      tileHeight:256
+      tileWidth: 256,
+      tileHeight: 256
     }));
     viewer.imageryLayers.addImageryProvider(new Cesium.WebMapTileServiceImageryProvider({
       url: "http://t0.tianditu.gov.cn/cia_w/wmts?tk=d71915a4c9b3f7e23a0e06b49c4c83c4",
@@ -1191,8 +1081,8 @@ export default function (viewer) {
       style: "default",
       format: "tiles",
       tileMatrixSetID: "w",
-      tileWidth:256,
-      tileHeight:256
+      tileWidth: 256,
+      tileHeight: 256
     }))
   })
   elBindClick('arcgismap', () => {
@@ -1221,7 +1111,7 @@ export default function (viewer) {
       username: 'wanghan394598004',
       styleId: 'ckdz7l2v706r819o69jt4ve5u',
       accessToken: 'pk.eyJ1Ijoid2FuZ2hhbjM5NDU5ODAwNCIsImEiOiJja2R6N2hyOG8yaHk0MnduOXNpeHF0NDZqIn0.jR7-1lBQD0mqANBamoXYsA',
-      tilesize:256
+      tilesize: 256
     }))
   })
 }

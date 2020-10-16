@@ -55,6 +55,7 @@ header>span {
     transition: .5s all ease-in-out;
     font-weight: 900;
 }
+
 @keyframes lighting {
     0% {
         color: #0fb9b1;
@@ -74,11 +75,9 @@ header>span {
     0% {
         color: #b98c0f;
     }
-    
     25% {
         color: #2d98da;
     }
-   
     75% {
         color: #20bf6b;
     }

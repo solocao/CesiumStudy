@@ -79,7 +79,7 @@ function createMenu() {
     item.btns.forEach(btn => {
       console.log(btn.check);
       btns += `<div data-check="${btn.check}" id="${btn.id}">
-                ${btn.src ? `<img width="30"  data-src="${btn.src}" data-usrc="${btn.activesrc}" height="30" src="${require(`../assets/btnIcons/${btn.src}`).default}"/>` : ''}
+                ${btn.src ? `<img width="30"  data-src="${btn.src}" data-usrc="${btn.activesrc}" height="30" src="${require(`@/assets/btnIcons/${btn.src}`).default}"/>` : ''}
                 ${btn.name}
               </div>`;
     });

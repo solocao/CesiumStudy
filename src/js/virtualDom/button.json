@@ -107,18 +107,6 @@
         "check":"true",
         "src":"指定范围.png",
         "activesrc":"指定范围 (1).png"
-      },
-      {
-        "id": "radarScan",
-        "name": "雷达扫描",
-        "src":"扫描.png",
-        "activesrc":"扫描 (1).png"
-      },
-      {
-        "id": "circleScan",
-        "name": "圆形扫描",
-        "src":"avds 漏洞扫描器.png",
-        "activesrc":"avds 漏洞扫描器 (1).png"
       }
     ]
   },
@@ -162,8 +150,26 @@
     "tabName": "标绘",
     "btns": [
       {
-        "id": "draw",
-        "name": "绘图",
+        "id": "drawline",
+        "name": "画线",
+        "src": "drawing-palette.png",
+        "activesrc": "drawing-palette (1).png"
+      },
+      {
+        "id": "drawpolygon",
+        "name": "画面",
+        "src": "drawing-palette.png",
+        "activesrc": "drawing-palette (1).png"
+      },
+      {
+        "id": "drawline-terrian",
+        "name": "画线-地形",
+        "src": "drawing-palette.png",
+        "activesrc": "drawing-palette (1).png"
+      },
+      {
+        "id": "drawpolygon-terrian",
+        "name": "画面-地形",
         "src": "drawing-palette.png",
         "activesrc": "drawing-palette (1).png"
       }

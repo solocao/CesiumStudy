@@ -1,17 +1,17 @@
 import './css/common.css';
 // import "../public/materials/ImageLine"
 import events from "./js/events";
-import controller from './js/controller'
+import controller from './js/virtualDom/controller'
 controller()
 const viewer = new Cesium.Viewer("CesiumContainer", {
-    // animation: false,
+    animation: false,
     // scene3DOnly: true,
-    // timeline: false,//时间线
+    timeline: false,//时间线
     // terrainShadows: Cesium.ShadowMode.ENABLED,
     navigationHelpButton: false,
     sceneModePicker: false,
     vrButton: false,
-    baseLayerPicker: false,
+    // baseLayerPicker: false,
     infoBox: false,
     // shadows: true,
     fullscreenButton: false,
@@ -29,6 +29,7 @@ const viewer = new Cesium.Viewer("CesiumContainer", {
     // navigationInstructionsInitiallyVisible: false,
     // imageryProvider: 
 });
+document.querySelector('.cesium-viewer-toolbar').style.display="none"
 //移除默认鼠标事件
 viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(
     Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
@@ -134,8 +135,8 @@ tile.readyPromise.then(tileset => {
     tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
     // viewer.flyTo(tileset);
 })
-events(viewer)
 
+events(viewer)
 
 
 

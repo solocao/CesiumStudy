@@ -6,7 +6,7 @@ export default class Draw extends Interaction{
   ) {
     super();
     this._viewer = (viewer || null);
-    this._mode = (mode || null);
+    this._mode = (mode || Draw.mode.LINE);
     this._activePoint = null;
     this._activeGeomPoints = [];
     this._clampMode = (clampMode||Draw.clampMode.Normal);
@@ -22,6 +22,10 @@ export default class Draw extends Interaction{
   static clampMode={
     ClampToGround:"ClampToGround",
     Normal:"Normal"
+  }
+  static mode={
+    LINE:'line',
+    POLYGON:'polygon'
   }
 
   get isActive() {
@@ -117,7 +121,7 @@ export default class Draw extends Interaction{
       position,
       point: {
         pixelSize: 10,
-        color: Cesium.Color.fromCssColorString("rgba(255, 255, 255,0.5)"),
+        color: Cesium.Color.fromCssColorString("rgba(255, 255, 255,0.7)"),
         outlineColor: Cesium.Color.fromCssColorString("rgba(235, 59, 90,1.0)"),
         outlineWidth :2
       }
@@ -142,6 +146,7 @@ export default class Draw extends Interaction{
   clear() {
     this._activePoint && this._viewer.entities.remove(this._activePoint);
     this._deactivePoints.forEach(e=>this._viewer.entities.remove(e))
+    this._deactivePoints=[]
     this._activePoint = null;
     this._activeGeom = null;
     this._activeGeomPoints = [];
@@ -162,6 +167,8 @@ export default class Draw extends Interaction{
     this._activeGeom = null;
     this._activePoint && this._viewer.entities.remove(this._activePoint);
     this._activePoint = null;
+    this._deactivePoints.forEach(e=>this._viewer.entities.remove(e))
+    this._deactivePoints=[]
     this._activeGeomPoints = [];
     this._viewer.dataSources.remove(this._dataSource);
     this._dataSource=null;

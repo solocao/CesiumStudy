@@ -5,7 +5,7 @@ import Overlay from '../Source/Overlay';
 let globe = new Globe('app', {
     // selectionIndicator: false,
     // infoBox: false,
-    // terrainProvider: Cesium.createWorldTerrain(),
+    terrainProvider: Cesium.createWorldTerrain(),
 });
 // globe.viewer.terrainProvider = Cesium.createWorldTerrain()
 globe.viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
@@ -56,7 +56,7 @@ let popup = new Overlay({
     autoPan: true,
 })
 globe.addOverLay(popup);
-let dra = new Draw(globe.viewer, "polygon", "");
+let dra = new Draw(globe.viewer, "polygon", Draw.clampMode.ClampToGround);
 dra.on("end", (entity) => {
     console.log(entity);
 })
