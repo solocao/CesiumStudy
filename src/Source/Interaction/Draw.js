@@ -4,7 +4,7 @@ export default class Draw extends Interaction{
   constructor(
     viewer, mode, clampMode
   ) {
-    super()
+    super();
     this._viewer = (viewer || null);
     this._mode = (mode || null);
     this._activePoint = null;
@@ -69,7 +69,7 @@ export default class Draw extends Interaction{
       this._activeGeomPoints.pop();
       let s = this._drawShape(this._activeGeomPoints);
       this._actionCollection.end.forEach(cb => cb(s));
-      this._viewer.entities.remove(this._activeGeom);
+      this._dataSource.entities.remove(this._activeGeom);
       this._viewer.entities.remove(this._activePoint);
       this._activePoint = null;
       this._activeGeom = null;
