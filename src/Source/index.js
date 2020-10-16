@@ -11,6 +11,7 @@ export default class Globe {
     this.primitives = this.scene.primitives;
     this._events = new Events(this.viewer);
     this._overlays = [];
+    this._interactions = []
   }
   //添加一个监听事件，返回唯一的key值
   on(type, cb) {
@@ -25,12 +26,15 @@ export default class Globe {
     this._events.removeEvent(type, key)
   }
   addInteraction(interaction) {
-    (interaction instanceof Interaction) && interaction.setViewer(this.viewer);
+    if (interaction instanceof Interaction) {
+      interaction.setViewer(this.viewer);
+      this._interactions.push(interaction);
+    }
   }
   removeInteraction(interaction) {
     if (interaction instanceof Interaction) {
+      this._interactions = this._interactions.filter(i => i !== interaction)
       interaction.destroy();
-      interaction = null;
     }
   }
   addOverLay(overlay) {
@@ -44,9 +48,7 @@ export default class Globe {
   }
   removeOverLay(overlay) {
     if (overlay instanceof Overlay) {
-      this._overlays = this._overlays.filter(ol => {
-        return ol !== overlay;
-      });
+      this._overlays = this._overlays.filter(ol => ol !== overlay);
       overlay.destory();
     }
   }

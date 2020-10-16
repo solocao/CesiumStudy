@@ -1,4 +1,6 @@
-export default class Draw {
+import Interaction from "../BaseClasses/Interaction";
+
+export default class Draw extends Interaction{
   constructor(
     viewer, mode, clampMode
   ) {
