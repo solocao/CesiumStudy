@@ -107,6 +107,8 @@ export default class Draw extends Interaction{
       shape = this._dataSource.entities.add({
         polygon: {
           hierarchy: positions,
+          
+          heightReference:Cesium.HeightReference.CLAMP_TO_GROUND,
           material: new Cesium.ColorMaterialProperty(
             Cesium.Color.WHITE.withAlpha(0.7)
           )
